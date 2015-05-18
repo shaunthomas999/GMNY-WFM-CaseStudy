@@ -1,0 +1,19 @@
+<template name="appMain">
+	<header>
+		<img class="main-logo" src="/images/GMNY%20Logo.png" alt="GMNY Bank" height="100">
+	</header>
+	<section>
+		{{#ionTabs class="tabs-positive tabs-icon-top"}}
+			{{> ionTab title="Home" path="home" iconOff="ios-paper" iconOn="ios-paper"}}
+			{{> ionTab title="Status" path="status" iconOff="checkmark-circled" iconOn="checkmark-circled"}}
+			{{> ionTab title="Contact" path="contact" iconOff="person" iconOn="person"}}
+		{{/ionTabs}}
+	</section>
+	<div>
+		{{#ionBody}}
+			{{> yield}}
+		{{/ionBody}}
+	</div>
+	<footer>
+	</footer>
+</template>
