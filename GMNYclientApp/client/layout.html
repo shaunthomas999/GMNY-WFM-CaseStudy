@@ -1,10 +1,7 @@
 <template name="layout">
-	{{#contentFor "headerTitle"}}
-		<h1 class="title">GMNY Bank</h1>
-	{{/contentFor}}
+	{{> headerBanner}}
 
 	{{#ionBody}}
-
 		{{> ionNavBar class="bar-positive"}}
 
 		{{#ionTabs class="tabs-positive tabs-top tabs-icon-right"}}
@@ -14,8 +11,12 @@
 		{{/ionTabs}}
 
 		{{#ionNavView}}
-			{{> yield}}
-		{{/ionNavView}}
-
+    		{{> yield}}
+  		{{/ionNavView}}
 	{{/ionBody}}
+</template>
+<template name="headerBanner">
+	{{#contentFor "headerTitle"}}
+		<h1 class="title">GMNY Bank</h1>
+	{{/contentFor}}
 </template>
