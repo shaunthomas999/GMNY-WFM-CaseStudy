@@ -1,19 +1,9 @@
 Router.configure({
-  layoutTemplate: 'appMain'
+  layoutTemplate: 'layout'
 });
 
-Router.route('/', function () {
-  this.render('home');
-});
-
-Router.route('/home', function () {
-  this.render('home');
-});
-
-Router.route('/status', function () {
-  this.render('status');
-});
-
-Router.route('/contact', function () {
-  this.render('contact');
+Router.map(function() {
+  this.route('home', {path: '/'});
+  this.route('status');
+  this.route('contact');
 });

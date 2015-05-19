@@ -1,7 +1,12 @@
 <template name="contact">
-	{{#ionContent}}
-		<div>
+
+	{{#contentFor "headerTitle"}}
+	  <h1 class="title">GMNY Bank</h1>
+	{{/contentFor}}
+
+	{{#ionView}}
+		{{#ionContent}}
 			Contact
-		</div>
-	{{/ionContent}}
+		{{/ionContent}}
+	{{/ionView}}
 </template>
