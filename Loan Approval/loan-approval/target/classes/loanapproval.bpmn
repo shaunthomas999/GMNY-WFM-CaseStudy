@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_-OG-IAbWEeWCMt4VkJRBPw" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:collaboration id="_Collaboration_3">
-    <bpmn2:participant id="_Participant_3" name="GMNY" processRef="Process_1"/>
+    <bpmn2:participant id="_Participant_3" name="GMNY" processRef="GMNY_loan_process"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_1" isExecutable="true">
+  <bpmn2:process id="GMNY_loan_process" name="GMNY Loan Process" isExecutable="true">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="Loan Applicant">
         <bpmn2:flowNodeRef>EndEvent_1</bpmn2:flowNodeRef>
@@ -37,83 +37,83 @@
     <bpmn2:startEvent id="StartEvent_2" name="Loan application completed">
       <bpmn2:extensionElements>
         <camunda:formData>
-          <camunda:formField id="Applicant_Name" type="string">
+          <camunda:formField id="Applicant_Name" label="Applicant's Name" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Applicant_Surname" label="Applicant's Surname" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Email" label="Email" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Phone" label="Phone" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Address" label="Address" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Employer" label="Employer" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Monthly_Net_Revenue" label="Monthly_Net_Revenue" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Account_Number" label="Account_Number" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Loan_Type" label="Loan_Type" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Loan_Amount" label="Loan_Amount" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Loan_Duration" label="Loan_Duration" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Loan_Start_Date" label="Loan_Start_Date" type="date">
             <camunda:properties>
-              <camunda:property id="default" value="&quot;&quot;"/>
+              <camunda:property id="Datepattern" value="DD/MM/YYYY"/>
             </camunda:properties>
             <camunda:validation>
               <camunda:constraint name="required" config="true"/>
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Applicant_Surname" type="string">
+          <camunda:formField id="Loan_Interest_Rate" label="Loan_Interest_Rate" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="Application_Submission_Date" label="Application_Submission_Date" type="date">
             <camunda:properties>
-              <camunda:property id="default" value="&quot;&quot;"/>
+              <camunda:property id="datePattern" value="DD/MM/YYYY"/>
             </camunda:properties>
             <camunda:validation>
               <camunda:constraint name="required" config="true"/>
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Email" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Phone" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Address" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Employer" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Monthly_Net_Revenue" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Account_Number" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Loan_Type" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Loan_Amount" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Loan_Duration" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Loan_Start_Date" type="date">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Loan_Interest_Rate" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Application_Submission_Date" type="date">
-            <camunda:validation>
-              <camunda:constraint name="required" config="true"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Application_Status" type="enum">
+          <camunda:formField id="Application_Status" label="Application_Status" type="enum">
             <camunda:value id="Complete" name="Complete"/>
             <camunda:value id="Incomplete" name="Incomplete"/>
             <camunda:value id="Assessed" name="Assessed"/>
@@ -121,8 +121,8 @@
             <camunda:value id="Cancelled" name="Cancelled"/>
             <camunda:value id="Approved" name="Approved"/>
           </camunda:formField>
-          <camunda:formField id="Application_Status_Comment" type="string"/>
-          <camunda:formField id="Application_Identifier" type="string"/>
+          <camunda:formField id="Application_Status_Comment" label="Application_Status_Comment" type="string"/>
+          <camunda:formField id="Application_Identifier" label="Application_Identifier" type="string"/>
         </camunda:formData>
       </bpmn2:extensionElements>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
