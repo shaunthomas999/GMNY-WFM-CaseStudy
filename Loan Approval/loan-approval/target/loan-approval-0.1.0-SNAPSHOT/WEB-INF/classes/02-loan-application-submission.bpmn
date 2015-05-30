@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_kkIpcAYJEeWlCqDG6dAVIw" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_kkIpcAYJEeWlCqDG6dAVIw" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:collaboration id="_Collaboration_2">
     <bpmn2:participant id="_Participant_2" name="GMNY" processRef="Process_1"/>
+    <bpmn2:participant id="Participant_1" name="Customer" processRef="Process_2"/>
   </bpmn2:collaboration>
   <bpmn2:process id="Process_1" isExecutable="false">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="bank teller">
-        <bpmn2:flowNodeRef>StartEvent_1</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>UserTask_1</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ReceiveTask_1</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>StartEvent_2</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ExclusiveGateway_1</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>EndEvent_1</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
-    <bpmn2:startEvent id="StartEvent_1" name="Customer wants to &#xD;&#xA;apply for loan at the bank">
-      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
     <bpmn2:userTask id="UserTask_1" name="Enter application data with customer">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="customer_id" label="Customer ID" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="application_type" label="Application Type" type="enum">
+            <camunda:value id="business_loan" name="Business loan"/>
+            <camunda:value id="personal_loan" name="Personal loan"/>
+          </camunda:formField>
+          <camunda:formField id="amount" label="Amount" type="long"/>
+        </camunda:formData>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -28,10 +37,6 @@
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
     </bpmn2:receiveTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="ReceiveTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:startEvent id="StartEvent_2" name="Customer wants to &#xD;&#xA;apply for loan online">
-      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="StartEvent_2" targetRef="ReceiveTask_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
@@ -42,15 +47,25 @@
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
     </bpmn2:endEvent>
   </bpmn2:process>
+  <bpmn2:process id="Process_2" isExecutable="false">
+    <bpmn2:startEvent id="StartEvent_2" name="Customer wants to &#xD;&#xA;apply for loan online">
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="StartEvent_2" targetRef="ReceiveTask_1"/>
+    <bpmn2:startEvent id="StartEvent_1" name="Customer wants to &#xD;&#xA;apply for loan at the bank">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
+  </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
       <bpmndi:BPMNShape id="_BPMNShape_Participant_2" bpmnElement="_Participant_2" isHorizontal="true">
         <dc:Bounds height="289.0" width="926.0" x="36.0" y="108.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
-        <dc:Bounds height="36.0" width="36.0" x="288.0" y="166.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="180.0" y="453.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="152.0" x="230.0" y="207.0"/>
+          <dc:Bounds height="38.0" width="152.0" x="122.0" y="494.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="UserTask_1">
@@ -60,26 +75,30 @@
         <dc:Bounds height="289.0" width="896.0" x="66.0" y="108.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_UserTask_2">
-        <di:waypoint xsi:type="dc:Point" x="324.0" y="184.0"/>
+        <di:waypoint xsi:type="dc:Point" x="216.0" y="471.0"/>
+        <di:waypoint xsi:type="dc:Point" x="318.0" y="471.0"/>
+        <di:waypoint xsi:type="dc:Point" x="318.0" y="184.0"/>
         <di:waypoint xsi:type="dc:Point" x="420.0" y="184.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="369.0" y="184.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="261.0" y="471.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ReceiveTask_2" bpmnElement="ReceiveTask_1">
         <dc:Bounds height="80.0" width="100.0" x="420.0" y="278.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_3" bpmnElement="StartEvent_2">
-        <dc:Bounds height="36.0" width="36.0" x="288.0" y="300.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="336.0" y="453.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="129.0" x="242.0" y="341.0"/>
+          <dc:Bounds height="38.0" width="129.0" x="290.0" y="494.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_StartEvent_3" targetElement="_BPMNShape_ReceiveTask_2">
-        <di:waypoint xsi:type="dc:Point" x="324.0" y="318.0"/>
+        <di:waypoint xsi:type="dc:Point" x="372.0" y="471.0"/>
+        <di:waypoint xsi:type="dc:Point" x="396.0" y="471.0"/>
+        <di:waypoint xsi:type="dc:Point" x="396.0" y="318.0"/>
         <di:waypoint xsi:type="dc:Point" x="420.0" y="318.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="369.0" y="318.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="393.0" y="447.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_2" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
@@ -119,6 +138,9 @@
           <dc:Bounds height="6.0" width="6.0" x="801.0" y="246.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_Participant_3" bpmnElement="Participant_1" isHorizontal="true">
+        <dc:Bounds height="133.0" width="926.0" x="36.0" y="420.0"/>
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn2:definitions>
