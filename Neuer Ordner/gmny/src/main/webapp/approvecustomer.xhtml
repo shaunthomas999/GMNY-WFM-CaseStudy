@@ -1,0 +1,30 @@
+    <!DOCTYPE HTML>
+    <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core">
+     
+    <f:view>
+    <f:metadata>
+      <!-- Start working on a task. Task Id is read internally from
+           request parameters and cached in the CDI conversation scope.
+      -->
+     
+      <f:event type="preRenderView" listener="#{camundaTaskForm.startTaskForm()}" />
+    </f:metadata>
+    <h:head>
+      <title>Approve Customer</title>
+    </h:head>
+    <h:body>
+      <h1>Customer:</h1>
+      <p>First name: #{approveCustomerController.customerEntity.firstname}</p>
+      <p>Last name: #{approveCustomerController.customerEntity.lastname}</p>
+      <p>Customer ID: #{approveCustomerController.customerEntity.customerId}</p>
+      <h:form id="submitForm">
+        <h:outputLabel>Approve Customer?</h:outputLabel>
+        <h:selectBooleanCheckbox value="#{approveCustomerController.customerEntity.approved}"/><br/>
+        <h:commandButton id="submit_button" value="Approve Customer" action="#{approveCustomerController.submitForm()}" />
+      </h:form>
+    </h:body>
+    </f:view>
+    </html>
