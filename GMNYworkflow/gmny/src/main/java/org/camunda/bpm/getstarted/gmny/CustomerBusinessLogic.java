@@ -9,6 +9,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+
 //import java.io.IOException;
 import java.util.Map;
  
@@ -38,7 +39,7 @@ public class CustomerBusinessLogic {
     System.out.println("Saving customer: " + variables.get("firstname") + ", " + variables.get("lastname") + ", " + variables.get("email"));
     
     System.out.println("Generating random password");
-    customerEntity.setEmail(Long.toHexString(Double.doubleToLongBits(Math.random())));
+    customerEntity.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
     
     /*
       Persist customer instance and flush. After the flush the
@@ -64,7 +65,7 @@ public class CustomerBusinessLogic {
   public void loadCustomer(DelegateExecution delegateExecution) {
   	// Get customerId from process memory
     Map<String, Object> variables = delegateExecution.getVariables();
-    String customerId = variables.get("customerId").toString();
+    Long customerId = (Long) variables.get("customerId");
   
     // Load customer entity from database and save it in process memory
   	System.out.println("Loading customer into process memory: " + entityManager.find(CustomerEntity.class, customerId));
@@ -76,11 +77,11 @@ public class CustomerBusinessLogic {
   public void sendEmailToCustomer(DelegateExecution delegateExecution) {
   	// Get customerId from process memory
     Map<String, Object> variables = delegateExecution.getVariables();
-    String customerId = variables.get("customerId").toString();
+    Long customerId = (Long) variables.get("customerId");
     
     // placeholder
-  	System.out.println("Sending email to: " + entityManager.find(CustomerEntity.class, customerId).getEmail() + "--- Hey, your password is: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
-  }
+    System.out.println("Sending email to: " + entityManager.find(CustomerEntity.class, customerId).getEmail() + "--- Hey " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + ", your password is: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
+    }
 	 
 	  /*
 	    Merge updated customer entity and complete task form in one transaction. This ensures
