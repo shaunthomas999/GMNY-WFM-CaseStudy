@@ -9,7 +9,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.io.IOException;
+//import java.io.IOException;
 import java.io.Serializable;
  
 @Named
@@ -42,8 +42,10 @@ public class ApproveCustomersController implements Serializable {
     return customerEntity;
   }
  
+  /*
   public void submitForm() throws IOException {
     // Persist updated customer entity and complete task form
     customerBusinessLogic.mergeCustomerAndCompleteTask(customerEntity);
   }
+  */
 }

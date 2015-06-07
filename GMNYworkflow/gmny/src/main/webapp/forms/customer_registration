@@ -1,0 +1,14 @@
+<form name="customer_registration">
+  <div class="form-group">
+    <label for="firstname">Customer's first name</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"/>
+  </div>
+  <div class="form-group">
+    <label for="lastname">Customer's first name</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname"/>
+  </div>
+  <div class="form-group">
+    <label for="email">Customer's email address</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email"/>
+  </div>
+</form>

@@ -6,22 +6,22 @@
   <bpmn2:process id="Process_1" name="registerCustomer" isExecutable="true">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="Bank Clerk">
-        <bpmn2:flowNodeRef>StartEvent_1</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>CustomerRegStart</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ServiceTask_1</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ServiceTask_2</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>EndEvent_3</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
-    <bpmn2:startEvent id="StartEvent_1" camunda:formKey="app:customerreg.jsf" name="Collect customer data">
+    <bpmn2:startEvent id="CustomerRegStart" camunda:formKey="embedded:app:forms/customer_registration.html" name="Collect customer data">
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="CustomerRegStart" targetRef="ServiceTask_1"/>
     <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${customerBusinessLogic.persistCustomer(execution)}" name="Persist Customer">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ServiceTask_1" targetRef="ServiceTask_2"/>
-    <bpmn2:serviceTask id="ServiceTask_2" name="Send Email to Customer">
+    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${customerBusinessLogic.sendEmailToCustomer(execution)}" name="Send Email to Customer">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
@@ -32,7 +32,7 @@
   </bpmn2:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_2">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="CustomerRegStart">
         <dc:Bounds height="36.0" width="36.0" x="132.0" y="126.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="22.0" width="133.0" x="84.0" y="167.0"/>
