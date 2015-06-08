@@ -8,7 +8,7 @@
     <bpmn2:messageFlow id="MessageFlow_8" name="" sourceRef="GTA" targetRef="IntermediateCatchEvent_3"/>
     <bpmn2:messageFlow id="MessageFlow_1" name="" sourceRef="IntermediateThrowEvent_2" targetRef="GTA"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_1" isExecutable="false">
+  <bpmn2:process id="Process_1" isExecutable="true">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="Loan Officer">
         <bpmn2:flowNodeRef>ServiceTask_4</bpmn2:flowNodeRef>
