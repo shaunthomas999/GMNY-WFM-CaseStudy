@@ -1,4 +1,4 @@
-package org.camunda.bpm.getstarted.gmny;
+package org.camunda.bpm.getstarted.gmny.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

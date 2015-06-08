@@ -3,11 +3,16 @@ package org.camunda.bpm.getstarted.gmny;
 import org.camunda.bpm.engine.cdi.BusinessProcess;
  
 
+
+import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+
 import javax.enterprise.context.ConversationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+
 
 //import java.io.IOException;
 import java.io.Serializable;

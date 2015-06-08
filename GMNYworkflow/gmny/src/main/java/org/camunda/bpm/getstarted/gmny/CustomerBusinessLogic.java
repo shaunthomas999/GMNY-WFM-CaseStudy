@@ -2,12 +2,15 @@ package org.camunda.bpm.getstarted.gmny;
 
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
 
 import javax.ejb.Stateless;
 //import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+
 
 
 //import java.io.IOException;
