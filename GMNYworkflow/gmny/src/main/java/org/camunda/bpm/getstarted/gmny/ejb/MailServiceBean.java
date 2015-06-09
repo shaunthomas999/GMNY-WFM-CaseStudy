@@ -1,7 +1,11 @@
 package org.camunda.bpm.getstarted.gmny.ejb;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
@@ -10,6 +14,10 @@ import javax.ejb.Stateless;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.core.MediaType;
+
+
+
+
 
 
 import com.google.common.base.Charsets;
@@ -51,9 +59,39 @@ public class MailServiceBean {
 			defaultVars.put("footer", "Sie erhalten diese E-Mail, da Sie GMNY Kunde sind!");
 			defaultVars.put("buttonLink", "http://www.wemmer.ch");
 			defaultVars.put("buttonTitle", "Zum Portal");
-			System.out.println("Loading Mail-Template: C:/Users/Chris/Documents/GitHub/GMNY-WFM-CaseStudy/GMNYworkflow/gmny/src/main/webapp/mail/mail.html");
-			String message = Files.toString(new File("C:/Users/Chris/Documents/GitHub/GMNY-WFM-CaseStudy/GMNYworkflow/gmny/src/main/webapp/mail/mail.html"), Charsets.UTF_8);
-			vars.put("subject", subject);
+			//change to 
+			
+			
+			// get template from website
+			String message = "";
+			try {
+			URL source = new URL("http://www.wemmer.ch/GMNY/mailtemplate/mail.html");
+	        URLConnection connection = source.openConnection();
+	        BufferedReader in = new BufferedReader(
+	                                new InputStreamReader(
+	                                    connection.getInputStream()));
+
+	        StringBuilder response = new StringBuilder();
+	        String inputLine;
+
+	        while ((inputLine = in.readLine()) != null) 
+	            response.append(inputLine);
+	        
+	        in.close();
+	        
+	        message = response.toString();
+	        
+			}
+			catch(IOException ex) {
+				   // there was some connection problem, or the file did not exist on the server,
+				   ex.printStackTrace();
+				}
+			
+			//hardcoded offline path
+	        //System.out.println("Loading Mail-Template: C:/Users/Chris/Documents/GitHub/GMNY-WFM-CaseStudy/GMNYworkflow/gmny/src/main/webapp/mail/mail.html");
+			//String message = Files.toString(new File("C:/Users/Chris/Documents/GitHub/GMNY-WFM-CaseStudy/GMNYworkflow/gmny/src/main/webapp/mail/mail.html"), Charsets.UTF_8);
+			
+	        vars.put("subject", subject);
 			for (String key : vars.keySet()) {
 				message = message.replace("{{" + key + "}}", vars.get(key));
 			}

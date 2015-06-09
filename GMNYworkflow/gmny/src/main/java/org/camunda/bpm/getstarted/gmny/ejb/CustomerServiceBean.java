@@ -97,14 +97,15 @@ public class CustomerServiceBean implements CustomerService{
     
     
     // Send simple mail
-    
+    /*
     System.out.println(
 		MailServiceBean.send(
 				entityManager.find(CustomerEntity.class, customerId).getEmail(),
 				"Willkommen bei GMNY",
 				"Hey " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + ", your password is: " + entityManager.find(CustomerEntity.class, customerId).getPassword()
 	));
-	
+	*/
+    
     // Send fancy mail
     HashMap<String, String> vars = new HashMap<String, String>();
 	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + "!");
@@ -123,8 +124,7 @@ public class CustomerServiceBean implements CustomerService{
 		// Error when Sending the welcome mail
 		e.printStackTrace();
 	}
-  
-  
+	
   }
 	 
 	  /*
