@@ -30,16 +30,18 @@ public class MailServiceBean {
 	
 	public static ClientResponse send(String to, String subject, String message) {
 		Client client = Client.create();
-	    client.addFilter(new HTTPBasicAuthFilter("api", "key-f000f861107855a29b46864151cda9f4"));
-	    WebResource webResource = client.resource("https://api.mailgun.net/v2/sandbox68bcc7c647c2440baabf169591f887ab.mailgun.org/messages");
+	    client.addFilter(new HTTPBasicAuthFilter("api", "key-4ba0f5f986517cf7a300bb258a2b56d0"));
+	    WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox8f4533092e2e4774811b769a9bb25be0.mailgun.org/messages");
 	    MultivaluedMapImpl formData = new MultivaluedMapImpl();
-	    formData.add("from", "GMNY <postmaster@sandbox68bcc7c647c2440baabf169591f887ab.mailgun.org>");
+	    formData.add("from", "GMNY <postmaster@sandbox8f4533092e2e4774811b769a9bb25be0.mailgun.org>");
 	    formData.add("to", to);
 	    formData.add("subject", subject);
 	    formData.add("html", message);
 	    System.out.println("Sending mail to " + to);
 	    return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
 	}
+	
+	/*
 	
 	public static ClientResponse send(String to, String subject, HashMap<String, String> vars) throws IOException {
 	    try {
@@ -67,4 +69,6 @@ public class MailServiceBean {
 		}
 	    return null;
 	}
+	
+	*/
 }

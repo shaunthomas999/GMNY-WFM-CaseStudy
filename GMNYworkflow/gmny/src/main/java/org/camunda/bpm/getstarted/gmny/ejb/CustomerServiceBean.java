@@ -95,9 +95,15 @@ public class CustomerServiceBean implements CustomerService{
     Map<String, Object> variables = delegateExecution.getVariables();
     Long customerId = (Long) variables.get("customerId");
     
-    // placeholder
-    System.out.println("Sending email to: " + entityManager.find(CustomerEntity.class, customerId).getEmail() + "--- Hey " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + ", your password is: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
+    System.out.println(
+		MailServiceBean.send(
+				entityManager.find(CustomerEntity.class, customerId).getEmail(),
+				"Willkommen bei GMNY",
+				"Hey " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + ", your password is: " + entityManager.find(CustomerEntity.class, customerId).getPassword()
+	));
     
+    
+    /*
     HashMap<String, String> vars = new HashMap<String, String>();
 	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + "!");
 	vars.put("text", "Wir freuen uns, Sie als Kunden begr&#252;&#223;en zu d&#252;rfen. Erkunden Sie doch gerade unser Onlinebankingportal! Ihre Zugangsdaten lauten: <br> Kundennummer: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
@@ -107,7 +113,7 @@ public class CustomerServiceBean implements CustomerService{
 		System.out.println(
 			MailServiceBean.send(
 					entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() +" <" + entityManager.find(CustomerEntity.class, customerId).getEmail() + ">",
-				"Willkommen bei CrowdStrom",
+				"Willkommen bei GMNY",
 				vars
 			)
 		);
@@ -115,7 +121,7 @@ public class CustomerServiceBean implements CustomerService{
 		// Error when Sending the welcome mail
 		e.printStackTrace();
 	}
-  
+  */
   
   }
 	 
