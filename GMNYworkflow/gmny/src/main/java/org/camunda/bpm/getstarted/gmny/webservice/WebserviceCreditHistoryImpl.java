@@ -12,9 +12,6 @@ import javax.ejb.EJB;
 import javax.servlet.http.HttpServletRequest;
 
 /*
-import net.tanesha.recaptcha.ReCaptchaImpl;
-import net.tanesha.recaptcha.ReCaptchaResponse;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeToken;
