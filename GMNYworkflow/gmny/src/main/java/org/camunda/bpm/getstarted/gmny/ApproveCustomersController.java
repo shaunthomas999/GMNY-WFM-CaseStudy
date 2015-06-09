@@ -4,6 +4,7 @@ import org.camunda.bpm.engine.cdi.BusinessProcess;
  
 
 
+import org.camunda.bpm.getstarted.gmny.ejb.CustomerServiceBean;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
 
 import javax.enterprise.context.ConversationScoped;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
 
 
 
@@ -33,7 +35,7 @@ public class ApproveCustomersController implements Serializable {
  
   // Inject the CustomerBusinessLogic to update the persisted customer
   @Inject
-  private CustomerBusinessLogic customerBusinessLogic;
+  private CustomerServiceBean customerBusinessLogic;
  
   // Caches the CustomerEntity during the conversation
   private CustomerEntity customerEntity;
