@@ -11,9 +11,9 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
+import java.io.IOException;
 import java.util.Date;
-//import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
  
 @Stateless
@@ -86,6 +86,8 @@ public class CustomerServiceBean implements CustomerService{
   	delegateExecution.setVariable("firstname", entityManager.find(CustomerEntity.class, customerId).getFirstname());
   	delegateExecution.setVariable("lastname", entityManager.find(CustomerEntity.class, customerId).getLastname());
   	delegateExecution.setVariable("email", entityManager.find(CustomerEntity.class, customerId).getEmail());
+  	delegateExecution.setVariable("phoneNumber", entityManager.find(CustomerEntity.class, customerId).getPhoneNumber());
+  	delegateExecution.setVariable("registrationDate", entityManager.find(CustomerEntity.class, customerId).getRegistrationDate());
   }
   
   public void sendEmailToCustomer(DelegateExecution delegateExecution) {
@@ -95,7 +97,27 @@ public class CustomerServiceBean implements CustomerService{
     
     // placeholder
     System.out.println("Sending email to: " + entityManager.find(CustomerEntity.class, customerId).getEmail() + "--- Hey " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + ", your password is: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
-    }
+    
+    HashMap<String, String> vars = new HashMap<String, String>();
+	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + "!");
+	vars.put("text", "Wir freuen uns, Sie als Kunden begr&#252;&#223;en zu d&#252;rfen. Erkunden Sie doch gerade unser Onlinebankingportal! Ihre Zugangsdaten lauten: <br> Kundennummer: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
+	vars.put("buttonTitle", "Go to Online-Banking!");
+	vars.put("buttonLink", "http://portal.crowdstrom.de/#/aktivieren/");
+	try {
+		System.out.println(
+			MailServiceBean.send(
+					entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() +" <" + entityManager.find(CustomerEntity.class, customerId).getEmail() + ">",
+				"Willkommen bei CrowdStrom",
+				vars
+			)
+		);
+	} catch (IOException e) {
+		// Error when Sending the welcome mail
+		e.printStackTrace();
+	}
+  
+  
+  }
 	 
 	  /*
 	    Merge updated customer entity and complete task form in one transaction. This ensures
