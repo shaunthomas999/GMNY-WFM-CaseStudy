@@ -95,33 +95,35 @@ public class CustomerServiceBean implements CustomerService{
     Map<String, Object> variables = delegateExecution.getVariables();
     Long customerId = (Long) variables.get("customerId");
     
+    
+    // Send simple mail
+    
     System.out.println(
 		MailServiceBean.send(
 				entityManager.find(CustomerEntity.class, customerId).getEmail(),
 				"Willkommen bei GMNY",
 				"Hey " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + ", your password is: " + entityManager.find(CustomerEntity.class, customerId).getPassword()
 	));
-    
-    
-    /*
+	
+    // Send fancy mail
     HashMap<String, String> vars = new HashMap<String, String>();
 	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + "!");
 	vars.put("text", "Wir freuen uns, Sie als Kunden begr&#252;&#223;en zu d&#252;rfen. Erkunden Sie doch gerade unser Onlinebankingportal! Ihre Zugangsdaten lauten: <br> Kundennummer: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
 	vars.put("buttonTitle", "Go to Online-Banking!");
-	vars.put("buttonLink", "http://portal.crowdstrom.de/#/aktivieren/");
+	vars.put("buttonLink", "http://www.wemmer.ch");
 	try {
 		System.out.println(
 			MailServiceBean.send(
-					entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() +" <" + entityManager.find(CustomerEntity.class, customerId).getEmail() + ">",
-				"Willkommen bei GMNY",
-				vars
+					entityManager.find(CustomerEntity.class, customerId).getEmail(),
+					"Willkommen bei GMNY",
+					vars
 			)
 		);
 	} catch (IOException e) {
 		// Error when Sending the welcome mail
 		e.printStackTrace();
 	}
-  */
+  
   
   }
 	 

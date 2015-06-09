@@ -41,10 +41,9 @@ public class MailServiceBean {
 	    return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
 	}
 	
-	/*
+	
 	
 	public static ClientResponse send(String to, String subject, HashMap<String, String> vars) throws IOException {
-	    try {
 			//configService = (ConfigService) new InitialContext().lookup("java:global/backend/ConfigServiceBean");
 			HashMap<String, String> defaultVars = new HashMap<String, String>();
 			defaultVars.put("greeting", "Hallo!");
@@ -54,8 +53,8 @@ public class MailServiceBean {
 			defaultVars.put("footer", "Sie erhalten diese E-Mail, da Sie GMNY Kunde sind!");
 			defaultVars.put("buttonLink", "http://www.wemmer.ch");
 			defaultVars.put("buttonTitle", "Zum Portal");
-			System.out.println("Loading Mail-Template: /gmny/src/main/webapp/mail/mail.html");
-			String message = Files.toString(new File("/gmny/src/main/webapp/mail/mail.html"), Charsets.UTF_8);
+			System.out.println("Loading Mail-Template: C:/Users/Chris/Documents/GitHub/GMNY-WFM-CaseStudy/GMNYworkflow/gmny/src/main/webapp/mail/mail.html");
+			String message = Files.toString(new File("C:/Users/Chris/Documents/GitHub/GMNY-WFM-CaseStudy/GMNYworkflow/gmny/src/main/webapp/mail/mail.html"), Charsets.UTF_8);
 			vars.put("subject", subject);
 			for (String key : vars.keySet()) {
 				message = message.replace("{{" + key + "}}", vars.get(key));
@@ -64,11 +63,5 @@ public class MailServiceBean {
 				message = message.replace("{{" + key + "}}", defaultVars.get(key));
 			}
 			return send(to, subject, message);
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	    return null;
 	}
-	
-	*/
 }
