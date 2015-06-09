@@ -41,8 +41,6 @@ public class MailServiceBean {
 	    return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
 	}
 	
-	
-	
 	public static ClientResponse send(String to, String subject, HashMap<String, String> vars) throws IOException {
 			//configService = (ConfigService) new InitialContext().lookup("java:global/backend/ConfigServiceBean");
 			HashMap<String, String> defaultVars = new HashMap<String, String>();
