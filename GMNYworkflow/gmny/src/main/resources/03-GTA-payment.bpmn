@@ -1,57 +1,181 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_PZ0FIAsJEeWr1tVJliCYPw" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_PZ0FIAsJEeWr1tVJliCYPw" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:collaboration id="_Collaboration_4">
-    <bpmn2:participant id="_Participant_4" name="GMNY" processRef="Process_1"/>
+    <bpmn2:participant id="_Participant_4" name="GMNY" processRef="Process_3"/>
     <bpmn2:participant id="Participant_1" name="GTA"/>
-    <bpmn2:messageFlow id="MessageFlow_1" name="" sourceRef="Participant_1" targetRef="StartEvent_1"/>
+    <bpmn2:messageFlow id="MessageFlow_1" name="" sourceRef="Participant_1" targetRef="GTAPaymentStart"/>
     <bpmn2:messageFlow id="MessageFlow_2" name="" sourceRef="UserTask_2" targetRef="Participant_1"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_1" isExecutable="false">
-    <bpmn2:startEvent id="StartEvent_1" name="Invoice received">
+  <bpmn2:process id="Process_3" name="payGTA" isExecutable="true">
+    <bpmn2:startEvent id="GTAPaymentStart" camunda:initiator="GTA" name="Invoice received">
       <bpmn2:documentation><![CDATA[-Receive invoice as mail from GTA
-- Start the process manually by going to say payment page in the application]]></bpmn2:documentation>
+]]></bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ordernumber" label="Order Number" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="iban" label="IBAN" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+              <camunda:constraint name="minlength" config="15"/>
+              <camunda:constraint name="maxlength" config="34"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="bic" label="BIC" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+              <camunda:constraint name="minlength" config="8"/>
+              <camunda:constraint name="maxlength" config="11"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="amount" label="Amount" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="duedate" label="Due Date" type="date">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn2:extensionElements>
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_1"/>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="UserTask_1" name="Check for errors in invoice">
-      <bpmn2:documentation><![CDATA[-Compare the invoice description and amount against the one stored in the system i.e. check for errors in invoice
--In UI there should be a manual provision to choose correct or incorrect(may be a radio button)]]></bpmn2:documentation>
+    <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="clerk" name="Check for errors in invoice">
+      <bpmn2:documentation>Compare the invoice description and amount against the one stored in the system, i.e. check for errors in the invoice.</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ordernumber" label="Order Number" type="long">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="iban" label="IBAN" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="bic" label="BIC" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="amount" label="Amount" type="long">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="duedate" label="Due Date" type="date">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="correct" label="Is the invoice correct?" type="boolean"/>
+        </camunda:formData>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="GTAPaymentStart" targetRef="UserTask_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:userTask id="UserTask_2" name="Resolve Discrepancy with GTA">
-      <bpmn2:documentation>-Send email to GTA about discrepancy in invoice</bpmn2:documentation>
+    <bpmn2:userTask id="UserTask_2" camunda:candidateGroups="clerk" name="Resolve Discrepancy with GTA">
+      <bpmn2:documentation>Send an email to GTA about the discrepancy in the invoice and change the data accordingly.</bpmn2:documentation>
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ordernumber" label="Order Number" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="iban" label="IBAN" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+              <camunda:constraint name="minlength" config="15"/>
+              <camunda:constraint name="maxlength" config="34"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="bic" label="BIC" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+              <camunda:constraint name="minlength" config="8"/>
+              <camunda:constraint name="maxlength" config="11"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="amount" label="Amount" type="long">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="duedate" label="Due Date" type="date">
+            <camunda:validation>
+              <camunda:constraint name="required"/>
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
     </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" name="Error" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="Error" sourceRef="ExclusiveGateway_1" targetRef="UserTask_2">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${not correct}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
     <bpmn2:endEvent id="EndEvent_1" name="Payment made">
-      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
     </bpmn2:endEvent>
-    <bpmn2:manualTask id="ManualTask_1" name="Initiate payment">
-      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
-    </bpmn2:manualTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_6" name="Correct" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_2"/>
-    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ManualTask_1" targetRef="EndEvent_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" name="Correct" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_2">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${correct}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
       <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="ExclusiveGateway_2" targetRef="ManualTask_1"/>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="UserTask_2" targetRef="ExclusiveGateway_2"/>
+    <bpmn2:userTask id="UserTask_3" camunda:candidateGroups="clerk" camunda:dueDate="${duedate}" name="Initiate payment">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ordernumber" label="Order Number" type="long">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="iban" label="IBAN" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="bic" label="BIC" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="amount" label="Amount" type="long">
+            <camunda:validation>
+              <camunda:constraint name="readonly"/>
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="ExclusiveGateway_2" targetRef="UserTask_3"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="UserTask_3" targetRef="EndEvent_1"/>
   </bpmn2:process>
+  <bpmn2:message id="Message_1" name="invoice"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_4">
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_5" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_5" bpmnElement="GTAPaymentStart">
         <dc:Bounds height="36.0" width="36.0" x="216.0" y="257.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="22.0" width="96.0" x="186.0" y="299.0"/>
@@ -123,9 +247,6 @@
           <dc:Bounds height="6.0" width="6.0" x="635.0" y="170.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="_BPMNShape_ManualTask_2" bpmnElement="ManualTask_1">
-        <dc:Bounds height="80.0" width="100.0" x="875.0" y="297.0"/>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_6" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ExclusiveGateway_2" targetElement="_BPMNShape_ExclusiveGateway_3">
         <di:waypoint xsi:type="dc:Point" x="517.0" y="299.0"/>
         <di:waypoint xsi:type="dc:Point" x="517.0" y="338.0"/>
@@ -135,28 +256,12 @@
           <dc:Bounds height="22.0" width="48.0" x="506.0" y="338.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_7" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_ManualTask_2" targetElement="_BPMNShape_EndEvent_2">
-        <di:waypoint xsi:type="dc:Point" x="975.0" y="337.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1037.0" y="337.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1010.0" y="337.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_3" bpmnElement="ExclusiveGateway_2" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="768.0" y="313.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="793.0" y="368.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_4" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_ManualTask_2">
-        <di:waypoint xsi:type="dc:Point" x="818.0" y="338.0"/>
-        <di:waypoint xsi:type="dc:Point" x="853.0" y="338.0"/>
-        <di:waypoint xsi:type="dc:Point" x="853.0" y="337.0"/>
-        <di:waypoint xsi:type="dc:Point" x="875.0" y="337.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="850.0" y="337.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_UserTask_4" targetElement="_BPMNShape_ExclusiveGateway_3">
         <di:waypoint xsi:type="dc:Point" x="688.0" y="223.0"/>
         <di:waypoint xsi:type="dc:Point" x="728.0" y="223.0"/>
@@ -164,6 +269,25 @@
         <di:waypoint xsi:type="dc:Point" x="793.0" y="313.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="6.0" width="6.0" x="783.0" y="223.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_5" bpmnElement="UserTask_3">
+        <dc:Bounds height="80.0" width="100.0" x="876.0" y="297.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="SequenceFlow_8" sourceElement="_BPMNShape_ExclusiveGateway_3" targetElement="_BPMNShape_UserTask_5">
+        <di:waypoint xsi:type="dc:Point" x="818.0" y="338.0"/>
+        <di:waypoint xsi:type="dc:Point" x="847.0" y="338.0"/>
+        <di:waypoint xsi:type="dc:Point" x="847.0" y="337.0"/>
+        <di:waypoint xsi:type="dc:Point" x="876.0" y="337.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="844.0" y="338.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="SequenceFlow_9" sourceElement="_BPMNShape_UserTask_5" targetElement="_BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="976.0" y="337.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1037.0" y="337.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1004.0" y="337.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
