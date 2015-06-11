@@ -76,10 +76,12 @@ public class CustomerServiceBean implements CustomerService{
     return entityManager.find(CustomerEntity.class, customerId);
   }
   
-  public void loadCustomer(DelegateExecution delegateExecution) {
+  public void loadCustomer(DelegateExecution delegateExecution) {    
   	// Get customerId from process memory
-    Map<String, Object> variables = delegateExecution.getVariables();
+	System.out.println("var names: " + delegateExecution.getVariableNames());
+    Map<String, Object> variables = delegateExecution.getVariables(); 
     Long customerId = (Long) variables.get("customerId");
+    System.out.println("CustomerId from execution: " + customerId);
   
     // Load customer entity from database and save it in process memory
   	System.out.println("Loading customer into process memory: " + entityManager.find(CustomerEntity.class, customerId));
@@ -94,7 +96,7 @@ public class CustomerServiceBean implements CustomerService{
   	// Get customerId from process memory
     Map<String, Object> variables = delegateExecution.getVariables();
     Long customerId = (Long) variables.get("customerId");
-    
+    System.out.println("CustomerId from execution: " + customerId);
     
     // Send simple mail
     /*

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_WeGPUBAvEeWe4a7UYO7U6g" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:collaboration id="_Collaboration_5">
-    <bpmn2:participant id="_Participant_5" name="loan-approval-v2" processRef="loan-approval-v2"/>
+    <bpmn2:participant id="_Participant_5" name="GMNY" processRef="loan-approval-v2"/>
     <bpmn2:participant id="Participant_1" name="GTA"/>
+    <bpmn2:messageFlow id="MessageFlow_1" name="" sourceRef="ServiceTask_6" targetRef="Participant_1"/>
+    <bpmn2:messageFlow id="MessageFlow_2" name="" sourceRef="Participant_1" targetRef="IntermediateCatchEvent_1"/>
+    <bpmn2:messageFlow id="MessageFlow_3" name="" sourceRef="ServiceTask_5" targetRef="Participant_1"/>
+    <bpmn2:messageFlow id="MessageFlow_4" name="" sourceRef="Participant_1" targetRef="IntermediateCatchEvent_2"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="loan-approval-v2" isExecutable="true">
+  <bpmn2:process id="loan-approval-v2" name="Loan approval (v2)" isExecutable="true">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="Loan Officer">
         <bpmn2:flowNodeRef>ExclusiveGateway_3</bpmn2:flowNodeRef>
@@ -36,10 +40,85 @@
         <bpmn2:flowNodeRef>UserTask_2</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_3">
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_2">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_3">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${false}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="UserTask_1" camunda:formKey="embedded:app:forms/02-evaluate-loan-application.html" name="Evaluate Loan Application">
+      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_3"/>
+    <bpmn2:serviceTask id="ServiceTask_4" camunda:expression="${true}" name="Automatic Risk Assessment">
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="ServiceTask_4" targetRef="UserTask_1"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_32</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ExclusiveGateway_2" targetRef="ServiceTask_4"/>
+    <bpmn2:serviceTask id="ServiceTask_3" camunda:expression="${true}" name="Persist Credit History">
+      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="ServiceTask_3" targetRef="ExclusiveGateway_2"/>
+    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_1">
+      <bpmn2:incoming>SequenceFlow_33</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="IntermediateCatchEvent_1" targetRef="ServiceTask_3"/>
+    <bpmn2:serviceTask id="ServiceTask_6" camunda:expression="${true}" name="Request Credit History">
+      <bpmn2:incoming>SequenceFlow_31</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_33</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_33" name="" sourceRef="ServiceTask_6" targetRef="IntermediateCatchEvent_1"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_7">
+      <bpmn2:incoming>SequenceFlow_30</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_32</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_31" name="" sourceRef="ExclusiveGateway_7" targetRef="ServiceTask_6">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${false}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_32" name="" sourceRef="ExclusiveGateway_7" targetRef="ExclusiveGateway_2">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${true}" name="Look for recent Credit History">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_30</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_30" name="" sourceRef="ServiceTask_2" targetRef="ExclusiveGateway_7"/>
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${customerServiceBean.loadCustomer(execution)}" name="Get Customer Data">
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ServiceTask_1" targetRef="ExclusiveGateway_1"/>
+    <bpmn2:startEvent id="StartEvent_1" camunda:formKey="embedded:app:forms/02-loan-application-received.html" name="Loan Application&#xD;&#xA;received">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_34</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ExclusiveGateway_1" targetRef="ServiceTask_2"/>
     <bpmn2:userTask id="UserTask_6" name="Prepare updated Application">
       <bpmn2:incoming>SequenceFlow_24</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_34</bpmn2:outgoing>
     </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_34" name="" sourceRef="UserTask_6" targetRef="ExclusiveGateway_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_6">
       <bpmn2:incoming>SequenceFlow_23</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_28</bpmn2:incoming>
@@ -120,97 +199,22 @@
       <bpmn2:outgoing>SequenceFlow_29</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_29" name="" sourceRef="UserTask_2" targetRef="EndEvent_2"/>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_3">
-      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
-      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_13" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_2">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="ExclusiveGateway_3" targetRef="UserTask_3">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${false}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="UserTask_1" name="Evaluate Loan Application">
-      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_3"/>
-    <bpmn2:serviceTask id="ServiceTask_4" camunda:expression="${true}" name="Automatic Risk Assessment">
-      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="ServiceTask_4" targetRef="UserTask_1"/>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
-      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
-      <bpmn2:incoming>SequenceFlow_32</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="ExclusiveGateway_2" targetRef="ServiceTask_4"/>
-    <bpmn2:serviceTask id="ServiceTask_3" camunda:expression="${true}" name="Persist Credit History">
-      <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="ServiceTask_3" targetRef="ExclusiveGateway_2"/>
-    <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_1">
-      <bpmn2:incoming>SequenceFlow_33</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
-    </bpmn2:intermediateCatchEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="IntermediateCatchEvent_1" targetRef="ServiceTask_3"/>
-    <bpmn2:serviceTask id="ServiceTask_6" camunda:expression="${true}" name="Request Credit History">
-      <bpmn2:incoming>SequenceFlow_31</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_33</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_7">
-      <bpmn2:incoming>SequenceFlow_30</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_31</bpmn2:outgoing>
-      <bpmn2:outgoing>SequenceFlow_32</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_31" name="" sourceRef="ExclusiveGateway_7" targetRef="ServiceTask_6">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${false}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_32" name="" sourceRef="ExclusiveGateway_7" targetRef="ExclusiveGateway_2">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="SequenceFlow_33" name="" sourceRef="ServiceTask_6" targetRef="IntermediateCatchEvent_1"/>
-    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${true}" name="Look for recent Credit History">
-      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_30</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_30" name="" sourceRef="ServiceTask_2" targetRef="ExclusiveGateway_7"/>
-    <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${true}" name="Get Customer Data">
-      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ServiceTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:startEvent id="StartEvent_1" camunda:formKey="embedded:app:forms/02-loan-application-received.html" name="Loan Application&#xD;&#xA;received">
-      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
-    </bpmn2:startEvent>
-    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="ServiceTask_1"/>
-    <bpmn2:exclusiveGateway id="ExclusiveGateway_1">
-      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
-      <bpmn2:incoming>SequenceFlow_34</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ExclusiveGateway_1" targetRef="ServiceTask_2"/>
-    <bpmn2:sequenceFlow id="SequenceFlow_34" name="" sourceRef="UserTask_6" targetRef="ExclusiveGateway_1"/>
   </bpmn2:process>
   <bpmn2:message id="Message_1" name="CreditHistoryResponse"/>
   <bpmn2:message id="Message_2" name="CleanupResponse"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="_Collaboration_5">
       <bpmndi:BPMNShape id="_BPMNShape_Participant_8" bpmnElement="_Participant_5" isHorizontal="true">
-        <dc:Bounds height="493.0" width="2881.0" x="24.0" y="96.0"/>
+        <dc:Bounds height="493.0" width="2873.0" x="32.0" y="96.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Participant_9" bpmnElement="Participant_1" isHorizontal="true">
-        <dc:Bounds height="61.0" width="1217.0" x="32.0" y="12.0"/>
+        <dc:Bounds height="61.0" width="2872.0" x="32.0" y="12.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Lane_8" bpmnElement="Lane_1" isHorizontal="true">
-        <dc:Bounds height="215.0" width="2851.0" x="54.0" y="96.0"/>
+        <dc:Bounds height="215.0" width="2843.0" x="62.0" y="96.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Lane_10" bpmnElement="Lane_3" isHorizontal="true">
-        <dc:Bounds height="279.0" width="2851.0" x="54.0" y="310.0"/>
+        <dc:Bounds height="279.0" width="2843.0" x="62.0" y="310.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_6" bpmnElement="StartEvent_1">
         <dc:Bounds height="36.0" width="36.0" x="120.0" y="172.0"/>
@@ -525,6 +529,9 @@
         <di:waypoint xsi:type="dc:Point" x="655.0" y="189.0"/>
         <di:waypoint xsi:type="dc:Point" x="655.0" y="190.0"/>
         <di:waypoint xsi:type="dc:Point" x="672.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="652.0" y="190.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_32" bpmnElement="SequenceFlow_32" sourceElement="_BPMNShape_ExclusiveGateway_28" targetElement="_BPMNShape_ExclusiveGateway_23">
         <di:waypoint xsi:type="dc:Point" x="613.0" y="214.0"/>
@@ -540,14 +547,53 @@
         <di:waypoint xsi:type="dc:Point" x="788.0" y="190.0"/>
         <di:waypoint xsi:type="dc:Point" x="788.0" y="193.0"/>
         <di:waypoint xsi:type="dc:Point" x="804.0" y="193.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="785.0" y="192.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_34" bpmnElement="SequenceFlow_34" sourceElement="_BPMNShape_UserTask_15" targetElement="_BPMNShape_ExclusiveGateway_22">
         <di:waypoint xsi:type="dc:Point" x="2788.0" y="411.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2786.0" y="556.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2788.0" y="556.0"/>
         <di:waypoint xsi:type="dc:Point" x="384.0" y="556.0"/>
         <di:waypoint xsi:type="dc:Point" x="385.0" y="214.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1673.0" y="556.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="1675.0" y="556.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_1" bpmnElement="MessageFlow_1" sourceElement="_BPMNShape_ServiceTask_105" targetElement="_BPMNShape_Participant_9">
+        <di:waypoint xsi:type="dc:Point" x="722.0" y="150.0"/>
+        <di:waypoint xsi:type="dc:Point" x="722.0" y="112.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="112.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="72.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1093.0" y="112.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_2" bpmnElement="MessageFlow_2" sourceElement="_BPMNShape_Participant_9" targetElement="_BPMNShape_IntermediateCatchEvent_11">
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="72.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="124.0"/>
+        <di:waypoint xsi:type="dc:Point" x="822.0" y="124.0"/>
+        <di:waypoint xsi:type="dc:Point" x="822.0" y="175.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1143.0" y="124.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_3" bpmnElement="MessageFlow_3" sourceElement="_BPMNShape_ServiceTask_104" targetElement="_BPMNShape_Participant_9">
+        <di:waypoint xsi:type="dc:Point" x="1970.0" y="331.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1970.0" y="149.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="149.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="72.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1769.0" y="149.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_4" bpmnElement="MessageFlow_4" sourceElement="_BPMNShape_Participant_9" targetElement="_BPMNShape_IntermediateCatchEvent_12">
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="72.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="137.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2084.0" y="137.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2084.0" y="353.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1849.0" y="137.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
