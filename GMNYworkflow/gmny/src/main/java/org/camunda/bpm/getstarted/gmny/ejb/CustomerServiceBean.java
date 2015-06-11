@@ -70,6 +70,61 @@ public class CustomerServiceBean implements CustomerService{
     
   }
   
+  public void generateTestData(){
+	// Create new customer instance
+    CustomerEntity customerEntity1 = new CustomerEntity();
+ 
+    // Set customer attributes
+    customerEntity1.setFirstname("Max");
+    customerEntity1.setLastname("Muster");
+    customerEntity1.setEmail("c_wemm02@uni-muenster.de");
+    customerEntity1.setPhoneNumber("+49 163 8475636");
+    customerEntity1.setStreet("Moellmannsweg");
+    customerEntity1.setStreetNumber("28");
+    customerEntity1.setZipCode("48161");
+    customerEntity1.setCity("Muenster");
+    
+    // generate password
+    System.out.println("Generating random password");
+    customerEntity1.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
+    
+    // set creation date
+    Date today1 = new Date();
+    customerEntity1.setRegistrationDate(today1);
+    
+    //Persist customer instance and flush. After the flush the id of the customer instance is set.
+    entityManager.persist(customerEntity1);
+    entityManager.flush();
+    
+    System.out.println("Customer saved with ID: " + customerEntity1.getId());
+    
+    CustomerEntity customerEntity2 = new CustomerEntity();
+    
+    // Set customer attributes
+    customerEntity2.setFirstname("Hans");
+    customerEntity2.setLastname("Meier");
+    customerEntity2.setEmail("c_wemm02@uni-muenster.de");
+    customerEntity2.setPhoneNumber("+49 163 1231234");
+    customerEntity2.setStreet("Leonardocampus");
+    customerEntity2.setStreetNumber("1");
+    customerEntity2.setZipCode("48162");
+    customerEntity2.setCity("Muenster");
+    
+    // generate password
+    System.out.println("Generating random password");
+    customerEntity2.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
+    
+    // set creation date
+    Date today2 = new Date();
+    customerEntity2.setRegistrationDate(today2);
+    
+    //Persist customer instance and flush. After the flush the id of the customer instance is set.
+    entityManager.persist(customerEntity2);
+    entityManager.flush();
+    
+    System.out.println("Customer saved with ID: " + customerEntity2.getId());
+  }
+  
   public CustomerEntity getCustomer(Long customerId) {
     // Load customer entity from database
   	System.out.println("Customer found: " + entityManager.find(CustomerEntity.class, customerId));

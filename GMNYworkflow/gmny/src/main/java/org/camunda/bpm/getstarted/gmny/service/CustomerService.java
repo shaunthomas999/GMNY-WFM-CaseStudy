@@ -9,6 +9,8 @@ public interface CustomerService {
 	
 	public CustomerEntity getCustomer(Long customerId);
 	
+	public void generateTestData();
+	
 	public void loadCustomer(DelegateExecution delegateExecution);
 	
 	public void sendEmailToCustomer(DelegateExecution delegateExecution);
