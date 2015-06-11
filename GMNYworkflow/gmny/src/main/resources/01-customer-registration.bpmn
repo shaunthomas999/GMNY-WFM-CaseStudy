@@ -12,16 +12,16 @@
         <bpmn2:flowNodeRef>EndEvent_3</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
-    <bpmn2:startEvent id="CustomerRegStart" camunda:formKey="embedded:app:forms/customer_registration.html" name="Collect customer data">
+    <bpmn2:startEvent id="CustomerRegStart" camunda:formKey="embedded:app:forms/01-collect-customer-data.html" name="Collect customer data">
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="CustomerRegStart" targetRef="ServiceTask_1"/>
-    <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${customerBusinessLogic.persistCustomer(execution)}" name="Persist Customer">
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${customerServiceBean.persistCustomer(execution)}" name="Persist Customer">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="ServiceTask_1" targetRef="ServiceTask_2"/>
-    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${customerBusinessLogic.sendEmailToCustomer(execution)}" name="Send Email to Customer">
+    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${customerServiceBean.sendEmailToCustomer(execution)}" name="Send Email to Customer">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
