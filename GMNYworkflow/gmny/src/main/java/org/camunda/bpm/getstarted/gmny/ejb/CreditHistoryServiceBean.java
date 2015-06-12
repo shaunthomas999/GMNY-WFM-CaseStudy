@@ -2,9 +2,8 @@ package org.camunda.bpm.getstarted.gmny.ejb;
 
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
 import org.camunda.bpm.getstarted.gmny.service.CreditHistoryService;
-import org.camunda.bpm.getstarted.gmny.service.CustomerService;
 
 import javax.ejb.Stateless;
 //import javax.inject.Inject;
@@ -26,44 +25,29 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	private EntityManager entityManager;
 	
 	public void persistCreditHistory(DelegateExecution delegateExecution) {
-	    // Create new customer instance
-	    CustomerEntity customerEntity = new CustomerEntity();
+	    // Create new credit history instance
+		CreditHistoryEntity creditHistory = new CreditHistoryEntity();
 	 
 	    // Get all process variables
 	    Map<String, Object> variables = delegateExecution.getVariables();
 	 
-	    // Set customer attributes from form
-	    customerEntity.setFirstname((String) variables.get("firstname"));
-	    customerEntity.setLastname((String) variables.get("lastname"));
-	    customerEntity.setEmail((String) variables.get("email"));
-	    customerEntity.setPhoneNumber((String) variables.get("phoneNumber"));
-	    customerEntity.setStreet((String) variables.get("street"));
-	    customerEntity.setStreetNumber((String) variables.get("streetNumber"));
-	    customerEntity.setZipCode((String) variables.get("zipCode"));
-	    customerEntity.setCity((String) variables.get("city"));
-	    
-	    System.out.println("Saving customer: " + variables.get("firstname") + ", " + variables.get("lastname") + ", " + variables.get("email"));
-	    
-	    // generate password
-	    System.out.println("Generating random password");
-	    customerEntity.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
-	    
+	    // Set credit history attributes from form
+	    creditHistory.setCustomerId((Long) variables.get("customerId"));
+	    creditHistory.setRating((String) variables.get("rating"));
+	    creditHistory.setRequestId((Long) variables.get("requestId"));
+	      	    
 	    // set creation date
 	    Date today = new Date();
-	    customerEntity.setRegistrationDate(today);
+	    creditHistory.setReceptionDate(today);
 	    
 	    /*
-	      Persist customer instance and flush. After the flush the
-	      id of the customer instance is set.
+	      Persist credit history instance and flush. After the flush the
+	      id of the credit history instance is set.
 	    */
-	    entityManager.persist(customerEntity);
+	    entityManager.persist(creditHistory);
 	    entityManager.flush();
 	 
-	    // Add newly created customer id as process variable
-	    delegateExecution.setVariable("customerId", customerEntity.getId());
-	    System.out.println("Customer saved with ID: " + customerEntity.getId());
-	    
-	    System.out.println("Data in database: firstname:" + entityManager.find(CustomerEntity.class, customerEntity.getId()).getFirstname());
+	    System.out.println("Saving credit history (Id, Rating): " + creditHistory.getId() + ", " + variables.get("rating"));
 	    
 	  }
 
@@ -71,5 +55,4 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		// TODO Auto-generated method stub
 		
 	}
-
 }

@@ -4,7 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Version;
+
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 public class CreditHistoryEntity implements Serializable {
@@ -18,8 +20,10 @@ public class CreditHistoryEntity implements Serializable {
   @Version
   protected long version;
  
-  protected CustomerEntity customer;
+  protected Long customerId;
   protected String rating;
+  protected long requestId;
+  protected Date receptionDate;
   
   public Long getId() {
     return id;
@@ -37,14 +41,6 @@ public class CreditHistoryEntity implements Serializable {
     this.version = version;
   	}
   
-  public CustomerEntity getCustomer(){
-	  return customer;
-  }
-  
-  public void setCustomer(CustomerEntity customer){
-	  this.customer = customer;
-  }
-  
   public String getRating(){
 	  return rating;
   }
@@ -52,6 +48,29 @@ public class CreditHistoryEntity implements Serializable {
   public void setRating(String rating){
 	  this.rating = rating;
   }
+
+	public Long getCustomerId() {
+		return customerId;
+	}
+	
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
+	public long getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(long requestId) {
+		this.requestId = requestId;
+	}
+
+	public Date getReceptionDate() {
+		return receptionDate;
+	}
+
+	public void setReceptionDate(Date receptionDate) {
+		this.receptionDate = receptionDate;
+	}
   
- 
 }
