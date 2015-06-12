@@ -161,7 +161,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_20" name="" sourceRef="UserTask_4" targetRef="IntermediateCatchEvent_3"/>
     <bpmn2:intermediateCatchEvent id="IntermediateCatchEvent_2" camunda:async="true">
       <bpmn2:extensionElements>
-        <camunda:executionListener event="end" expression="${true}"/>
+        <camunda:executionListener event="start" expression="${CreditHistoryResponse=true; CleanupResponse=true}"/>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_16</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_17</bpmn2:outgoing>
