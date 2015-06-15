@@ -3,7 +3,7 @@
   <bpmn2:collaboration id="_Collaboration_2">
     <bpmn2:participant id="_Participant_2" name="GMNY" processRef="Process_1"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_1" name="registerCustomer" isExecutable="true">
+  <bpmn2:process id="Process_1" name="1 - Register Customer" isExecutable="true">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="Lane_1" name="Bank Clerk">
         <bpmn2:flowNodeRef>CustomerRegStart</bpmn2:flowNodeRef>

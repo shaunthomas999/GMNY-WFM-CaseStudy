@@ -130,7 +130,7 @@ public class CustomerServiceBean implements CustomerService{
   	System.out.println("Customer found: " + entityManager.find(CustomerEntity.class, customerId));
     return entityManager.find(CustomerEntity.class, customerId);
   }
-  
+    
   public void loadCustomer(DelegateExecution delegateExecution) {    
   	// Get customerId from process memory
 	System.out.println("var names: " + delegateExecution.getVariableNames());
@@ -166,11 +166,8 @@ public class CustomerServiceBean implements CustomerService{
     // Send fancy mail
     HashMap<String, String> vars = new HashMap<String, String>();
 	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + "!");
-    vars.put("text", "We are happy to welcome you as a customer of GMNY. You are now able to access our Online-Banking system! Your login crediantials are the following: <br> Kundennummer: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
+    vars.put("text", "We are happy to welcome you as a customer of GMNY. You are now able to access our Online-Banking system! Your login crediantials are as follows: <br> Customer-ID: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
     vars.put("buttonTitle", "Go to Online-Banking!");
-
-	//vars.put("text", "Wir freuen uns, Sie als Kunden begr&#252;&#223;en zu d&#252;rfen. Erkunden Sie doch gerade unser Onlinebankingportal! Ihre Zugangsdaten lauten: <br> Kundennummer: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
-	//vars.put("buttonTitle", "Go to Online-Banking!");
 	vars.put("buttonLink", "http://www.wemmer.ch");
 	try {
 		System.out.println(

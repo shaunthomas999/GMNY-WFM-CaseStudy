@@ -10,6 +10,20 @@
     <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" required/>
   </div>
   
+  <!-- Read only credit history data -->
+  <div class="form-group">
+    <label for="scoring">Scoring (1-15)</label>
+    <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring" readonly/>
+  </div>
+  <div class="form-group">
+    <label for="badDepts">Bad Depts</label>
+    <input class="form-control" cam-variable-type="Long" cam-variable-name="badDepts" name="badDepts" readonly/>
+  </div>
+  <div class="form-group">
+    <label for="consumerCredits">Consumer Credits</label>
+    <input class="form-control" cam-variable-type="Long" cam-variable-name="consumerCredits" name="consumerCredits" readonly/>
+  </div>
+  
   <!-- Read only application data -->
   <div class="form-group">
     <label for="customerID">Customer ID</label>

@@ -16,7 +16,7 @@
     <bpmn2:messageFlow id="message-flow-request-cleanup-service-to-GTA" sourceRef="service-task-request-cleanup-service" targetRef="pool-GTA"/>
     <bpmn2:messageFlow id="message-flow-GTA-to-cleanup-recommendation" sourceRef="pool-GTA" targetRef="message-catch-event-cleanup-recommendation"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="loan-approval-v2" name="Loan approval (v2)" isExecutable="true">
+  <bpmn2:process id="loan-approval-v2" name="2 - Loan Approval" isExecutable="true">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="lane-loan-officer" name="Loan Officer">
         <bpmn2:documentation>The loan officer is the executive role that decides whether an applicants loan request is granted, or not. She forms her decision based onthe application parameters, the recent credit rating and a risk evaluation.</bpmn2:documentation>
@@ -80,7 +80,7 @@
       <bpmn2:outgoing>flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment" sourceRef="merge-xor-recent-credit-history-available" targetRef="service-task-automatic-risk-assessment"/>
-    <bpmn2:serviceTask id="service-task-persist-credit-history" camunda:expression="${true}" camunda:async="true" name="Persist Credit History">
+    <bpmn2:serviceTask id="service-task-persist-credit-history" camunda:expression="${creditHistoryServiceBean.persistCreditHistory(execution)}" camunda:async="true" name="Persist Credit History">
       <bpmn2:documentation>This service task safes the received credit rating from GTA in the customer database.</bpmn2:documentation>
       <bpmn2:incoming>flow-received-credit-history-to-persist-credit-history</bpmn2:incoming>
       <bpmn2:outgoing>flow-persist-credit-history-to-merge-xor-recent-credit-history-available</bpmn2:outgoing>
@@ -90,10 +90,10 @@
       <bpmn2:documentation>This message event symbolizes the exchange between GMNY and GTA regarding the credit rating of the customer.</bpmn2:documentation>
       <bpmn2:incoming>flow-request-credit-history-to-received-credit-history</bpmn2:incoming>
       <bpmn2:outgoing>flow-received-credit-history-to-persist-credit-history</bpmn2:outgoing>
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="MessageCreditHistoryResponse"/>
     </bpmn2:intermediateCatchEvent>
     <bpmn2:sequenceFlow id="flow-received-credit-history-to-persist-credit-history" sourceRef="message-catch-event-received-credit-history" targetRef="service-task-persist-credit-history"/>
-    <bpmn2:serviceTask id="service-task-request-credit-history" camunda:expression="${true}" camunda:async="true" name="Request Credit History">
+    <bpmn2:serviceTask id="service-task-request-credit-history" camunda:expression="${creditHistoryServiceBean.requestCreditHistory(execution)}" camunda:async="true" name="Request Credit History">
       <bpmn2:documentation>This service task handles the REST-API exchange with GTA regarding the credit rating of the customer.</bpmn2:documentation>
       <bpmn2:incoming>flow-recent-credit-history-available-to-request-credit-history</bpmn2:incoming>
       <bpmn2:outgoing>flow-request-credit-history-to-received-credit-history</bpmn2:outgoing>
@@ -106,12 +106,12 @@
       <bpmn2:outgoing>flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="flow-recent-credit-history-available-to-request-credit-history" name="No" sourceRef="xor-recent-credit-history-available" targetRef="service-task-request-credit-history">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${false}</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${creditHistoryAvailable == false}</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available" name="Yes" sourceRef="xor-recent-credit-history-available" targetRef="merge-xor-recent-credit-history-available">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${creditHistoryAvailable == true}</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:serviceTask id="service-task-look-for-recent-credit-history" camunda:expression="${true}" camunda:async="true" name="Look for recent Credit History">
+    <bpmn2:serviceTask id="service-task-look-for-recent-credit-history" camunda:expression="${creditHistoryServiceBean.loadCreditHistory(execution)}" camunda:async="true" name="Look for recent Credit History">
       <bpmn2:documentation>This service task queries the customer database for recent credit rating that can be used as basis for the evaluation of the loan application.</bpmn2:documentation>
       <bpmn2:incoming>flow-merge-xor-updated-application-to-look-for-recent-credit-history</bpmn2:incoming>
       <bpmn2:outgoing>flow-look-for-recent-credit-history-to-recent-credit-history-available</bpmn2:outgoing>
@@ -210,7 +210,7 @@
       <bpmn2:documentation>This catch event represents the receiving end of the communication with GTA regarding the credit cleanup service.</bpmn2:documentation>
       <bpmn2:incoming>flow-request-cleanup-service-to-cleanup-recommendation</bpmn2:incoming>
       <bpmn2:outgoing>flow-cleanup-recommendation-to-consult-customer</bpmn2:outgoing>
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_2" messageRef="Message_2"/>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_2" messageRef="MessageCleanupResponse"/>
     </bpmn2:intermediateCatchEvent>
     <bpmn2:sequenceFlow id="flow-cleanup-recommendation-to-consult-customer" sourceRef="message-catch-event-cleanup-recommendation" targetRef="user-task-consult-customer">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
@@ -232,8 +232,8 @@
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "re-apply"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
-  <bpmn2:message id="Message_1" name="CreditHistoryResponse"/>
-  <bpmn2:message id="Message_2" name="CleanupResponse"/>
+  <bpmn2:message id="MessageCreditHistoryResponse" name="CreditHistoryResponse"/>
+  <bpmn2:message id="MessageCleanupResponse" name="CleanupResponse"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="loan-approval-process">
       <bpmndi:BPMNShape id="_BPMNShape_Participant_8" bpmnElement="pool-GMNY" isHorizontal="true">
@@ -251,7 +251,7 @@
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_6" bpmnElement="start-event-loan-application-received">
         <dc:Bounds height="36.0" width="36.0" x="118.0" y="236.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="52.0" width="165.0" x="72.0" y="189.0"/>
+          <dc:Bounds height="38.0" width="112.0" x="84.0" y="278.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_100" bpmnElement="service-task-get-customer-data">
@@ -544,7 +544,7 @@
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_28" bpmnElement="xor-recent-credit-history-available" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="586.0" y="228.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="52.0" width="162.0" x="516.0" y="167.0"/>
+          <dc:Bounds height="38.0" width="109.0" x="558.0" y="181.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_30" bpmnElement="flow-look-for-recent-credit-history-to-recent-credit-history-available" sourceElement="_BPMNShape_ServiceTask_101" targetElement="_BPMNShape_ExclusiveGateway_28">
@@ -598,16 +598,16 @@
         <di:waypoint xsi:type="dc:Point" x="1468.0" y="162.0"/>
         <di:waypoint xsi:type="dc:Point" x="1468.0" y="108.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1075.0" y="226.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1078.0" y="226.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_2" bpmnElement="message-flow-GTA-to-received-credit-history" sourceElement="_BPMNShape_Participant_9" targetElement="_BPMNShape_IntermediateCatchEvent_11">
         <di:waypoint xsi:type="dc:Point" x="1468.0" y="108.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1468.0" y="124.0"/>
-        <di:waypoint xsi:type="dc:Point" x="820.0" y="124.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1468.0" y="176.0"/>
+        <di:waypoint xsi:type="dc:Point" x="820.0" y="176.0"/>
         <di:waypoint xsi:type="dc:Point" x="820.0" y="239.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="1105.0" y="188.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1160.0" y="240.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_3" bpmnElement="message-flow-request-cleanup-service-to-GTA" sourceElement="_BPMNShape_ServiceTask_104" targetElement="_BPMNShape_Participant_9">

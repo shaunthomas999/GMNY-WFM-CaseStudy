@@ -6,7 +6,7 @@
     <bpmn2:messageFlow id="MessageFlow_1" name="" sourceRef="Participant_1" targetRef="GTAPaymentStart"/>
     <bpmn2:messageFlow id="MessageFlow_2" name="" sourceRef="UserTask_2" targetRef="Participant_1"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="Process_3" name="payGTA" isExecutable="true">
+  <bpmn2:process id="Process_3" name="3 - GTA Payment" isExecutable="true">
     <bpmn2:startEvent id="GTAPaymentStart" camunda:initiator="GTA" name="Invoice received">
       <bpmn2:documentation><![CDATA[-Receive invoice as mail from GTA
 ]]></bpmn2:documentation>

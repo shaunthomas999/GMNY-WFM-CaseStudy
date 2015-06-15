@@ -15,11 +15,6 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.ws.rs.core.MediaType;
 
-
-
-
-
-
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.sun.jersey.api.client.Client;
@@ -36,6 +31,7 @@ public class MailServiceBean {
 		return str.replaceAll("(\r\n|\n)", "<br />");
 	}
 	
+	//simple mail sending method
 	public static ClientResponse send(String to, String subject, String message) {
 		Client client = Client.create();
 	    client.addFilter(new HTTPBasicAuthFilter("api", "key-4ba0f5f986517cf7a300bb258a2b56d0"));
@@ -49,6 +45,7 @@ public class MailServiceBean {
 	    return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
 	}
 	
+	//advanced mail sending method
 	public static ClientResponse send(String to, String subject, HashMap<String, String> vars) throws IOException {
 			//configService = (ConfigService) new InitialContext().lookup("java:global/backend/ConfigServiceBean");
 			HashMap<String, String> defaultVars = new HashMap<String, String>();
@@ -59,8 +56,6 @@ public class MailServiceBean {
 			defaultVars.put("footer", "You are receiving this e-mail, since you are a customer of GMNY!");
 			defaultVars.put("buttonLink", "http://www.wemmer.ch");
 			defaultVars.put("buttonTitle", "Go to Online-Banking!");
-			//change to 
-			
 			
 			// get template from website
 			String message = "";
