@@ -94,7 +94,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_32" name="" sourceRef="ExclusiveGateway_7" targetRef="ExclusiveGateway_2">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${true}" name="Look for recent Credit History">
+    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${creditHistoryServiceBean.requestCreditHistory(execution)}" name="Look for recent Credit History">
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_30</bpmn2:outgoing>
     </bpmn2:serviceTask>

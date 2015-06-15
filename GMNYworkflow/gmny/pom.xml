@@ -57,7 +57,7 @@
       </exclusions>
     </dependency>
     
-    <!-- Jersey stuff for mail -->
+    <!-- Jersey stuff for api -->
     <dependency>
 	  <groupId>com.sun.jersey</groupId>
 	  <artifactId>jersey-core</artifactId>
@@ -72,6 +72,11 @@
 	  <groupId>com.sun.jersey.contribs</groupId>
 	  <artifactId>jersey-multipart</artifactId>
 	  <version>1.19</version>
+	</dependency>
+	<dependency>
+	    <groupId>com.sun.jersey</groupId>
+	    <artifactId>jersey-json</artifactId>
+	    <version>1.18.1</version>
 	</dependency>
 	
 	<!-- guava -->
