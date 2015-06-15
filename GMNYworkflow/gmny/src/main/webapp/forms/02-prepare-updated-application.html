@@ -1,13 +1,18 @@
-<form name="evaluate-loan-application">
+<form name="prepare-updated-application">
   
   <div class="form-group">
-    <label for="applicationStatus">Status</label>
-    <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required> <option>declined</option> <option>accepted</option> </select>
+    <label for="applicationStatus">Application status</label>
+    <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required> <option>reopened</option> </select>
   </div>
   
   <div class="form-group">
     <label for="applicationStatusComment">Status comment</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" required/>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" />
+  </div>
+  
+  <div class="form-group">
+    <label for="amount">Loan Amount</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" />
   </div>
   
   <!-- Read only application data -->
@@ -15,10 +20,7 @@
     <label for="customerID">Customer ID</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="customerId" name="customerId" readonly/>
   </div>
-  <div class="form-group">
-    <label for="amount">Loan Amount</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" readonly/>
-  </div>
+  
   
   <!-- Read only customer data from database -->
   <div class="form-group">
