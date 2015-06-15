@@ -130,7 +130,7 @@ public class CustomerServiceBean implements CustomerService{
   	System.out.println("Customer found: " + entityManager.find(CustomerEntity.class, customerId));
     return entityManager.find(CustomerEntity.class, customerId);
   }
-  
+    
   public void loadCustomer(DelegateExecution delegateExecution) {    
   	// Get customerId from process memory
 	System.out.println("var names: " + delegateExecution.getVariableNames());

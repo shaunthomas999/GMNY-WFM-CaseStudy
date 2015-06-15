@@ -70,11 +70,17 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	
 	public void requestCreditHistory(DelegateExecution delegateExecution) {
 		
+		System.out.println("***id:***");
+		System.out.println(delegateExecution.getId());
+		System.out.println("***process def:***");
+		System.out.println(delegateExecution.getProcessDefinitionId());
+		
 		try {
 			// Get all process variables
 		    Map<String, Object> variables = delegateExecution.getVariables();
 		      
 		    String message = "{\"variables\": {"
+		    		+ "\"processId\" : {\"value\" : \"" + delegateExecution.getId() + "\", \"type\": \"String\"},"
 		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
 		    		+ "\"lastname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"}"
 		    		+ "} }";
@@ -82,7 +88,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			Client client = Client.create();
 		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/APIsimulation/start");
 		    
-		    System.out.println("API call to GTA");
+		    System.out.println("***** Credit History Request to GTA *****");
+		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
 		    
 		    // check response status code
