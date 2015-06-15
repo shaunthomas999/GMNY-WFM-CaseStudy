@@ -24,6 +24,7 @@ public class GtaSimulationServiceBean {
 		    
 		    String message = "{\"messageName\" : \"CreditHistoryResponse\","
 		    		+"\"correlationKeys\" : {"
+		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("processId") + "\", \"type\": \"String\"},"
 		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
 		    		+ "\"lastname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"}"
 		    		+"},"
@@ -35,18 +36,8 @@ public class GtaSimulationServiceBean {
 		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/message");
 		    
 		    System.out.println("***** GTA answers to GMNY*****");
-		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
+		    System.out.println(webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message));
 		    
-		    // check response status code
-	        if (response.getStatus() != 200) {
-	            throw new RuntimeException("Failed : HTTP error code : "
-	                    + response.getStatus());
-	        }
-	
-	        // display response
-	        String output = response.getEntity(String.class);
-	        System.out.println("Output from Server .... ");
-	        System.out.println(output + "\n");
 		} catch (Exception e) {
         e.printStackTrace();
         }
