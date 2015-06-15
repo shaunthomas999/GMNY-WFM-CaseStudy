@@ -3,6 +3,7 @@ package org.camunda.bpm.getstarted.gmny.ejb;
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
+import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
 import org.camunda.bpm.getstarted.gmny.service.CreditHistoryService;
 
 import com.sun.jersey.api.client.Client;
@@ -65,6 +66,33 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	 
 	    System.out.println("Saving credit history (Id, Scoring): " + creditHistory.getId() + ", " + variables.get("scoring"));
 	    
+	  }
+	
+	
+	//not yet needed
+	  public CreditHistoryEntity getCreditHistory(Long creditHistoryId) {
+		    // Load creditHistory entity from database
+		    return entityManager.find(CreditHistoryEntity.class, creditHistoryId);
+		  }
+	
+	public void performRiskAssessment(DelegateExecution delegateExecution) {
+		// Get relevant variables from process memory
+		Map<String, Object> variables = delegateExecution.getVariables();
+		Long scoring = (Long) variables.get("scoring");
+		Long badDepts = (Long) variables.get("badDepts");
+		Long consumerCredits = (Long) variables.get("consumerCredits");
+		
+		// apply business rules
+		boolean flag = false;
+		flag = (scoring >= 8 && badDepts == 0 && consumerCredits <= 2) ? true : false;
+		
+		// convert to a clear recommendation
+		String recommendation = "LOAN APPROVAL NOT RECOMMENDED";
+		recommendation = (flag == true) ? "LOAN APPROVAL RECOMMENDED" : "LOAN APPROVAL NOT RECOMMENDED";
+		
+		//set the process variable
+		delegateExecution.setVariable("recommendation", recommendation);
+		
 	  }
 
 	public void loadCreditHistory(DelegateExecution delegateExecution) {

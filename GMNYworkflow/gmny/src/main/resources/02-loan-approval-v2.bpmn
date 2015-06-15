@@ -68,7 +68,7 @@
       <bpmn2:outgoing>flow-evaluate-loan-application-to-loan-granted</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="flow-evaluate-loan-application-to-loan-granted" sourceRef="user-task-evaluate-loan-application" targetRef="xor-loan-granted"/>
-    <bpmn2:serviceTask id="service-task-automatic-risk-assessment" camunda:expression="${true}" camunda:async="true" name="Automatic Risk Assessment">
+    <bpmn2:serviceTask id="service-task-automatic-risk-assessment" camunda:expression="${creditHistoryServiceBean.performRiskAssessment(execution)}" camunda:async="true" name="Automatic Risk Assessment">
       <bpmn2:documentation>This service task performs an algorithmic risk assessment based on the credit rating for the customer. The result is a recommendation for the decision regarding the loan application</bpmn2:documentation>
       <bpmn2:incoming>flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment</bpmn2:incoming>
       <bpmn2:outgoing>flow-automatic-risk-assessment-to-evaluate-loan-application</bpmn2:outgoing>
