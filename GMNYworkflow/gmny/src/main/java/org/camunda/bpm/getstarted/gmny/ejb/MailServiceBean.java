@@ -49,13 +49,13 @@ public class MailServiceBean {
 	public static ClientResponse send(String to, String subject, HashMap<String, String> vars) throws IOException {
 			//configService = (ConfigService) new InitialContext().lookup("java:global/backend/ConfigServiceBean");
 			HashMap<String, String> defaultVars = new HashMap<String, String>();
-			defaultVars.put("greeting", "Hallo!");
+			defaultVars.put("greeting", "Hello!");
 			defaultVars.put("text", "testtext");
 			defaultVars.put("homepage", "http://www.wemmer.ch");
 			defaultVars.put("share", URLEncoder.encode("GMNY http://www.wemmer.ch", "UTF-8"));
-			defaultVars.put("footer", "Sie erhalten diese E-Mail, da Sie GMNY Kunde sind!");
+			defaultVars.put("footer", "You are receiving this e-mail, since you are a customer of GMNY!");
 			defaultVars.put("buttonLink", "http://www.wemmer.ch");
-			defaultVars.put("buttonTitle", "Zum Portal");
+			defaultVars.put("buttonTitle", "Go to Online-Banking!");
 			
 			// get template from website
 			String message = "";

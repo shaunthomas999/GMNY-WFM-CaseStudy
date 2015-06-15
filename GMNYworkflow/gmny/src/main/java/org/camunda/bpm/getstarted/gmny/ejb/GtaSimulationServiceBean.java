@@ -24,12 +24,14 @@ public class GtaSimulationServiceBean {
 		    
 		    String message = "{\"messageName\" : \"CreditHistoryResponse\","
 		    		+"\"correlationKeys\" : {"
-		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("processId") + "\", \"type\": \"String\"},"
+		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
 		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
 		    		+ "\"lastname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"}"
 		    		+"},"
 		    		+"\"processVariables\" : {"
-		    		+ "\"rating\" : {\"value\" : \"" + variables.get("rating") + "\", \"type\": \"String\"}"
+		    		+ "\"scoring\" : {\"value\" : \"" + variables.get("scoring") + "\", \"type\": \"Long\"},"
+		    		+ "\"badDepts\" : {\"value\" : \"" + variables.get("badDepts") + "\", \"type\": \"Long\"},"
+		    		+ "\"consumerCredits\" : {\"value\" : \"" + variables.get("consumerCredits") + "\", \"type\": \"Long\"}"
 		    		+"} }";
 	        
 			Client client = Client.create();

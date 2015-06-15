@@ -7,7 +7,6 @@
     <bpmn2:userTask id="UserTask_1" name="Enter credit rating">
       <bpmn2:extensionElements>
         <camunda:formData>
-          <camunda:formField id="rating" label="Rating" type="string"/>
           <camunda:formField id="firstname" label="First name" type="string">
             <camunda:properties>
               <camunda:property id="readonly" value="true"/>
@@ -18,11 +17,14 @@
               <camunda:property id="readonly" value="true"/>
             </camunda:properties>
           </camunda:formField>
-          <camunda:formField id="processId" label="processId" type="string">
+          <camunda:formField id="requestId" label="requestId" type="string">
             <camunda:properties>
               <camunda:property id="readonly" value="true"/>
             </camunda:properties>
           </camunda:formField>
+          <camunda:formField id="scoring" label="Scoring (1-15)" type="long"/>
+          <camunda:formField id="badDepts" label="Bad Depts" type="long"/>
+          <camunda:formField id="consumerCredits" label="Consumer Credits" type="long"/>
         </camunda:formData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>

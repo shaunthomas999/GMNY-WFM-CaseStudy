@@ -21,9 +21,12 @@ public class CreditHistoryEntity implements Serializable {
   protected long version;
  
   protected Long customerId;
-  protected String rating;
-  protected long requestId;
+  protected String requestId;
   protected Date receptionDate;
+  
+  private Long scoring;
+  private Long badDepts;
+  private Long consumerCredits;
   
   public Long getId() {
     return id;
@@ -41,13 +44,6 @@ public class CreditHistoryEntity implements Serializable {
     this.version = version;
   	}
   
-  public String getRating(){
-	  return rating;
-  }
-  
-  public void setRating(String rating){
-	  this.rating = rating;
-  }
 
 	public Long getCustomerId() {
 		return customerId;
@@ -57,11 +53,11 @@ public class CreditHistoryEntity implements Serializable {
 		this.customerId = customerId;
 	}
 
-	public long getRequestId() {
+	public String getRequestId() {
 		return requestId;
 	}
 
-	public void setRequestId(long requestId) {
+	public void setRequestId(String requestId) {
 		this.requestId = requestId;
 	}
 
@@ -71,6 +67,30 @@ public class CreditHistoryEntity implements Serializable {
 
 	public void setReceptionDate(Date receptionDate) {
 		this.receptionDate = receptionDate;
+	}
+
+	public Long getScoring() {
+		return scoring;
+	}
+
+	public void setScoring(Long scoring) {
+		this.scoring = scoring;
+	}
+
+	public Long getBadDepts() {
+		return badDepts;
+	}
+
+	public void setBadDepts(Long badDepts) {
+		this.badDepts = badDepts;
+	}
+
+	public Long getConsumerCredits() {
+		return consumerCredits;
+	}
+
+	public void setConsumerCredits(Long consumerCredits) {
+		this.consumerCredits = consumerCredits;
 	}
   
 }

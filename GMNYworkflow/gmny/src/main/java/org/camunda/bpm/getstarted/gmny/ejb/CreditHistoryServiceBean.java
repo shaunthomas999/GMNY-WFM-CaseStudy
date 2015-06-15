@@ -45,8 +45,12 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	 
 	    // Set credit history attributes from form
 	    creditHistory.setCustomerId((Long) variables.get("customerId"));
-	    creditHistory.setRating((String) variables.get("rating"));
-	    creditHistory.setRequestId((Long) variables.get("requestId"));
+	    creditHistory.setRequestId((String) variables.get("requestId"));
+	    
+	    creditHistory.setScoring((Long) variables.get("scoring"));
+	    creditHistory.setBadDepts((Long) variables.get("badDepts"));
+	    creditHistory.setConsumerCredits((Long) variables.get("consumerCredits"));
+
 	      	    
 	    // set creation date
 	    Date today = new Date();
@@ -59,32 +63,32 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    entityManager.persist(creditHistory);
 	    entityManager.flush();
 	 
-	    System.out.println("Saving credit history (Id, Rating): " + creditHistory.getId() + ", " + variables.get("rating"));
+	    System.out.println("Saving credit history (Id, Scoring): " + creditHistory.getId() + ", " + variables.get("scoring"));
 	    
 	  }
 
 	public void loadCreditHistory(DelegateExecution delegateExecution) {
-		// TODO Auto-generated method stub
+		 // Get all process variables
+		//placeholder
+	    delegateExecution.setVariable("creditHistoryAvailable", false);
 		
 	}
 	
 	public void requestCreditHistory(DelegateExecution delegateExecution) {
 		
-		System.out.println("***id:***");
-		System.out.println(delegateExecution.getId());
-		System.out.println("***process def:***");
-		System.out.println(delegateExecution.getProcessDefinitionId());
-		
 		try {
+			//Create and safe Id
+		    delegateExecution.setVariable("requestId", delegateExecution.getId());
+		    
 			// Get all process variables
 		    Map<String, Object> variables = delegateExecution.getVariables();
-		      
+		    
 		    String message = "{\"variables\": {"
-		    		+ "\"processId\" : {\"value\" : \"" + delegateExecution.getId() + "\", \"type\": \"String\"},"
+		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
 		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
 		    		+ "\"lastname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"}"
 		    		+ "} }";
-	        
+		    
 			Client client = Client.create();
 		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/APIsimulation/start");
 		    
