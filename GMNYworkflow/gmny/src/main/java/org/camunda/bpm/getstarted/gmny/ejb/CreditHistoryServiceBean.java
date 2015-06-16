@@ -38,6 +38,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	private EntityManager entityManager;
 	
 	public void persistCreditHistory(DelegateExecution delegateExecution) {
+		
+		System.out.println("*** Persist credit history ***");
+		
 	    // Create new credit history instance
 		CreditHistoryEntity creditHistory = new CreditHistoryEntity();
 	 
@@ -51,8 +54,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    creditHistory.setScoring((Long) variables.get("scoring"));
 	    creditHistory.setBadDepts((Long) variables.get("badDepts"));
 	    creditHistory.setConsumerCredits((Long) variables.get("consumerCredits"));
-
-	      	    
+	    
 	    // set creation date
 	    Date today = new Date();
 	    creditHistory.setReceptionDate(today);
@@ -63,9 +65,20 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    */
 	    entityManager.persist(creditHistory);
 	    entityManager.flush();
-	 
-	    System.out.println("Saving credit history (Id, Scoring): " + creditHistory.getId() + ", " + variables.get("scoring"));
 	    
+	    System.out.println("Saving credit history (Id, scoring, date): " + creditHistory.getId() + ", " + variables.get("scoring") + ", " + today);
+	    
+	    // load customer entity
+	    CustomerEntity customerEntity = entityManager.find(CustomerEntity.class, variables.get("customerId"));
+	 
+	    // Set customer attributes
+	    customerEntity.setCreditHistoryId(creditHistory.getId());;
+	    entityManager.merge(customerEntity);
+	    System.out.println("TEST TEST TEST:");
+	    System.out.println("FIRSTNAME: " + entityManager.find(CustomerEntity.class, variables.get("customerId")).getFirstname());
+	    System.out.println("CREDIT HISTORY ID: " + entityManager.find(CustomerEntity.class, variables.get("customerId")).getCreditHistoryId());
+	    
+	    System.out.println(" ");
 	  }
 	
 	
@@ -76,6 +89,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		  }
 	
 	public void performRiskAssessment(DelegateExecution delegateExecution) {
+		
+		System.out.println("*** Performing risk assessment ***");
+		
 		// Get relevant variables from process memory
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Long scoring = (Long) variables.get("scoring");
@@ -93,16 +109,51 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		//set the process variable
 		delegateExecution.setVariable("recommendation", recommendation);
 		
+		System.out.println("Outcome - recommendation: " + recommendation);
+		System.out.println("");
+		
 	  }
 
 	public void loadCreditHistory(DelegateExecution delegateExecution) {
-		 // Get all process variables
-		//placeholder
-	    delegateExecution.setVariable("creditHistoryAvailable", false);
 		
+		System.out.println("*** Look for recent credit history ***");
+		
+		// Get customerId from process memory
+	    Map<String, Object> variables = delegateExecution.getVariables(); 
+	    Long customerId = (Long) variables.get("customerId");
+	    Long creditHistoryId = (Long) entityManager.find(CustomerEntity.class, customerId).getCreditHistoryId();
+	    
+	    if (creditHistoryId != null) {
+	    	System.out.println("credit history found: " + creditHistoryId);
+	    	
+	    	Date receptionDate = (Date) entityManager.find(CreditHistoryEntity.class, creditHistoryId).getReceptionDate();
+	    	Date today = new Date();
+	    	
+	    	int diffInDays = (int)( (today.getTime() - receptionDate.getTime()) / (1000 * 60 * 60 * 24) );
+	    	
+	    	if(diffInDays > 20){
+	    		System.out.println("Credit history is out of date. Date of reception: " + receptionDate + " -> age: " + diffInDays);
+	    		delegateExecution.setVariable("creditHistoryAvailable", false);
+	    	}
+	    	else{
+	    		System.out.println("Credit history is younger than 20 days. Date of reception: " + receptionDate + " -> age: " + diffInDays);
+	    		delegateExecution.setVariable("scoring", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getScoring());
+	    	  	delegateExecution.setVariable("badDepts", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getBadDepts());
+	    	  	delegateExecution.setVariable("consumerCredits", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getConsumerCredits());
+	    		delegateExecution.setVariable("creditHistoryAvailable", true);
+	    		System.out.println("Credit history loaded from database");
+	    	}
+	    }
+	    else {
+	    	System.out.println("No credit history available: " + creditHistoryId);
+	    	delegateExecution.setVariable("creditHistoryAvailable", false);
+	    }
+	    System.out.println(" ");
 	}
 	
 	public void requestCreditHistory(DelegateExecution delegateExecution) {
+		
+		System.out.println("*** Request credit history from GTA ***");
 		
 		try {
 			//Create and safe Id
@@ -120,20 +171,21 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			Client client = Client.create();
 		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/APIsimulation/start");
 		    
-		    System.out.println("***** Credit History Request to GTA *****");
 		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
 		    
 		    // check response status code
 	        if (response.getStatus() != 200) {
-	            throw new RuntimeException("Failed : HTTP error code : "
-	                    + response.getStatus());
+	            throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
 	        }
 	
 	        // display response
-	        String output = response.getEntity(String.class);
-	        System.out.println("Output from Server .... ");
-	        System.out.println(output + "\n");
+	        //String output = response.getEntity(String.class);
+	        //System.out.println(output + "\n");
+	        
+	        System.out.println(response);
+	        System.out.println(" ");
+	        
 		} catch (Exception e) {
         e.printStackTrace();
         }

@@ -2,6 +2,7 @@ package org.camunda.bpm.getstarted.gmny.ejb;
 
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
 import org.camunda.bpm.getstarted.gmny.service.CustomerService;
 
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +47,7 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity.setZipCode((String) variables.get("zipCode"));
     customerEntity.setCity((String) variables.get("city"));
     
+    System.out.println("*** Persist customer ***");
     System.out.println("Saving customer: " + variables.get("firstname") + ", " + variables.get("lastname") + ", " + variables.get("email"));
     
     // generate password
@@ -65,12 +68,13 @@ public class CustomerServiceBean implements CustomerService{
     // Add newly created customer id as process variable
     delegateExecution.setVariable("customerId", customerEntity.getId());
     System.out.println("Customer saved with ID: " + customerEntity.getId());
-    
-    System.out.println("Data in database: firstname:" + entityManager.find(CustomerEntity.class, customerEntity.getId()).getFirstname());
-    
+    System.out.println(" ");
+
   }
   
   public void generateTestData(){
+	  
+	// First customer
 	// Create new customer instance
     CustomerEntity customerEntity1 = new CustomerEntity();
  
@@ -97,6 +101,32 @@ public class CustomerServiceBean implements CustomerService{
     entityManager.flush();
     
     System.out.println("Customer saved with ID: " + customerEntity1.getId());
+    
+	// Create new credit history instance
+	CreditHistoryEntity creditHistory = new CreditHistoryEntity();
+    
+	// Set credit history attributes from form
+    creditHistory.setCustomerId((Long) customerEntity1.getId());
+    creditHistory.setRequestId((String) "dummy");
+    
+    creditHistory.setScoring(new Long("10"));
+    creditHistory.setBadDepts(new Long("1"));
+    creditHistory.setConsumerCredits(new Long("2"));
+    // set creation date
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    try{
+    	Date date = sdf.parse("01/02/2015");
+    	creditHistory.setReceptionDate(date);
+    }catch (Exception e) {	
+	}
+    entityManager.persist(creditHistory);
+    entityManager.flush();
+    System.out.println("Saving credit history (Id, scoring, date): " + creditHistory.getId() + ", " + creditHistory.getScoring() + ", " + creditHistory.getReceptionDate());
+    
+    customerEntity1.setCreditHistoryId(creditHistory.getId());;
+    entityManager.merge(customerEntity1);
+    
+    // Second customer
     
     CustomerEntity customerEntity2 = new CustomerEntity();
     
@@ -132,8 +162,9 @@ public class CustomerServiceBean implements CustomerService{
   }
     
   public void loadCustomer(DelegateExecution delegateExecution) {    
+	System.out.println("*** Load customer from database ***");
+	
   	// Get customerId from process memory
-	System.out.println("var names: " + delegateExecution.getVariableNames());
     Map<String, Object> variables = delegateExecution.getVariables(); 
     Long customerId = (Long) variables.get("customerId");
     System.out.println("CustomerId from execution: " + customerId);
@@ -145,13 +176,17 @@ public class CustomerServiceBean implements CustomerService{
   	delegateExecution.setVariable("email", entityManager.find(CustomerEntity.class, customerId).getEmail());
   	delegateExecution.setVariable("phoneNumber", entityManager.find(CustomerEntity.class, customerId).getPhoneNumber());
   	delegateExecution.setVariable("registrationDate", entityManager.find(CustomerEntity.class, customerId).getRegistrationDate());
+  	System.out.println("Customer" + entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + " loaded.");
+  	System.out.println(" ");
   }
   
   public void sendEmailToCustomer(DelegateExecution delegateExecution) {
+	  
+	  System.out.println("*** Sending email to customer ***");
+	  
   	// Get customerId from process memory
     Map<String, Object> variables = delegateExecution.getVariables();
     Long customerId = (Long) variables.get("customerId");
-    System.out.println("CustomerId from execution: " + customerId);
     
     // Send simple mail
     /*
@@ -182,24 +217,8 @@ public class CustomerServiceBean implements CustomerService{
 		e.printStackTrace();
 	}
 	
+	System.out.println(" ");
+	
   }
-	 
-	  /*
-	    Merge updated customer entity and complete task form in one transaction. This ensures
-	    that both changes will rollback if an error occurs during transaction.
-	   */
-  /*
-	  public void mergeCustomerAndCompleteTask(CustomerEntity customerEntity) {
-	    // Merge detached customer entity with current persisted state
-	    entityManager.merge(customerEntity);
-	    
-	    try {
-	      // Complete user task from
-	      taskForm.completeTask();
-	    } catch (IOException e) {
-	      // Rollback both transactions on error
-	      throw new RuntimeException("Cannot complete task", e);
-	    }
-	  }
- */
+  
 }
