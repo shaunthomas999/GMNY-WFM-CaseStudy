@@ -104,10 +104,40 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	  }
 
 	public void loadCreditHistory(DelegateExecution delegateExecution) {
-		 // Get all process variables
-		//placeholder
-	    delegateExecution.setVariable("creditHistoryAvailable", false);
 		
+		System.out.println("*** Look for recent credit history ***");
+		
+		// Get customerId from process memory
+	    Map<String, Object> variables = delegateExecution.getVariables(); 
+	    Long customerId = (Long) variables.get("customerId");
+	    Long creditHistoryId = (Long) entityManager.find(CustomerEntity.class, customerId).getCreditHistoryId();
+	    
+	    if (creditHistoryId != null) {
+	    	System.out.println("credit history found: " + creditHistoryId);
+	    	
+	    	Date receptionDate = (Date) entityManager.find(CreditHistoryEntity.class, creditHistoryId).getReceptionDate();
+	    	Date today = new Date();
+	    	
+	    	int diffInDays = (int)( (today.getTime() - receptionDate.getTime()) / (1000 * 60 * 60 * 24) );
+	    	
+	    	if(diffInDays > 20){
+	    		System.out.println("Credit history is out of date. Date of reception: " + receptionDate + " -> age: " + diffInDays);
+	    		delegateExecution.setVariable("creditHistoryAvailable", false);
+	    	}
+	    	else{
+	    		System.out.println("Credit history is younger than 20 days. Date of reception: " + receptionDate + " -> age: " + diffInDays);
+	    		delegateExecution.setVariable("scoring", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getScoring());
+	    	  	delegateExecution.setVariable("badDepts", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getBadDepts());
+	    	  	delegateExecution.setVariable("consumerCredits", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getConsumerCredits());
+	    		delegateExecution.setVariable("creditHistoryAvailable", true);
+	    		System.out.println("Credit history loaded from database");
+	    	}
+	    }
+	    else {
+	    	System.out.println("No credit history available: " + creditHistoryId);
+	    	delegateExecution.setVariable("creditHistoryAvailable", false);
+	    }
+	    System.out.println(" ");
 	}
 	
 	public void requestCreditHistory(DelegateExecution delegateExecution) {
@@ -143,7 +173,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	        //System.out.println(output + "\n");
 	        
 	        System.out.println(response);
-	        System.out.println("");
+	        System.out.println(" ");
 	        
 		} catch (Exception e) {
         e.printStackTrace();

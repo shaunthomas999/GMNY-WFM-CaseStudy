@@ -30,6 +30,7 @@ public class CustomerEntity implements Serializable {
   private String zipCode;
   private String city;
   private Date registrationDate;
+  private Long creditHistoryId;
   private enum type{
 	  business,
 	  person
@@ -129,6 +130,14 @@ public class CustomerEntity implements Serializable {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public Long getCreditHistoryId() {
+		return creditHistoryId;
+	}
+
+	public void setCreditHistoryId(Long creditHistoryId) {
+		this.creditHistoryId = creditHistoryId;
 	}
 
 
