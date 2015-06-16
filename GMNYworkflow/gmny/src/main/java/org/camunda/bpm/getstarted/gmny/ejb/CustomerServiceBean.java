@@ -115,7 +115,7 @@ public class CustomerServiceBean implements CustomerService{
     // set creation date
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     try{
-    	Date date = sdf.parse("01/02/2015");
+    	Date date = sdf.parse("06/06/2015");
     	creditHistory.setReceptionDate(date);
     }catch (Exception e) {	
 	}
