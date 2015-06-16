@@ -28,6 +28,8 @@ public class CreditHistoryEntity implements Serializable {
   private Long badDepts;
   private Long consumerCredits;
   
+  private Boolean recommendation;
+  
   public Long getId() {
     return id;
   }
@@ -91,6 +93,14 @@ public class CreditHistoryEntity implements Serializable {
 
 	public void setConsumerCredits(Long consumerCredits) {
 		this.consumerCredits = consumerCredits;
+	}
+
+	public Boolean getRecommendation() {
+		return recommendation;
+	}
+
+	public void setRecommendation(Boolean recommendation) {
+		this.recommendation = recommendation;
 	}
   
 }
