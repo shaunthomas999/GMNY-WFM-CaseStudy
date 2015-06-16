@@ -67,6 +67,17 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    entityManager.flush();
 	    
 	    System.out.println("Saving credit history (Id, scoring, date): " + creditHistory.getId() + ", " + variables.get("scoring") + ", " + today);
+	    
+	    // load customer entity
+	    CustomerEntity customerEntity = entityManager.find(CustomerEntity.class, variables.get("customerId"));
+	 
+	    // Set customer attributes
+	    customerEntity.setCreditHistoryId(creditHistory.getId());;
+	    entityManager.merge(customerEntity);
+	    System.out.println("TEST TEST TEST:");
+	    System.out.println("FIRSTNAME: " + entityManager.find(CustomerEntity.class, variables.get("customerId")).getFirstname());
+	    System.out.println("CREDIT HISTORY ID: " + entityManager.find(CustomerEntity.class, variables.get("customerId")).getCreditHistoryId());
+	    
 	    System.out.println(" ");
 	  }
 	

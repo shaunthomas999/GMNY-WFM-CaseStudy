@@ -2,6 +2,7 @@ package org.camunda.bpm.getstarted.gmny.ejb;
 
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
 import org.camunda.bpm.getstarted.gmny.service.CustomerService;
 
@@ -12,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -71,6 +73,8 @@ public class CustomerServiceBean implements CustomerService{
   }
   
   public void generateTestData(){
+	  
+	// First customer
 	// Create new customer instance
     CustomerEntity customerEntity1 = new CustomerEntity();
  
@@ -97,6 +101,32 @@ public class CustomerServiceBean implements CustomerService{
     entityManager.flush();
     
     System.out.println("Customer saved with ID: " + customerEntity1.getId());
+    
+	// Create new credit history instance
+	CreditHistoryEntity creditHistory = new CreditHistoryEntity();
+    
+	// Set credit history attributes from form
+    creditHistory.setCustomerId((Long) customerEntity1.getId());
+    creditHistory.setRequestId((String) "dummy");
+    
+    creditHistory.setScoring(new Long("10"));
+    creditHistory.setBadDepts(new Long("1"));
+    creditHistory.setConsumerCredits(new Long("2"));
+    // set creation date
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    try{
+    	Date date = sdf.parse("01/02/2015");
+    	creditHistory.setReceptionDate(date);
+    }catch (Exception e) {	
+	}
+    entityManager.persist(creditHistory);
+    entityManager.flush();
+    System.out.println("Saving credit history (Id, scoring, date): " + creditHistory.getId() + ", " + creditHistory.getScoring() + ", " + creditHistory.getReceptionDate());
+    
+    customerEntity1.setCreditHistoryId(creditHistory.getId());;
+    entityManager.merge(customerEntity1);
+    
+    // Second customer
     
     CustomerEntity customerEntity2 = new CustomerEntity();
     
