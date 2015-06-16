@@ -86,7 +86,7 @@
       <bpmn2:outgoing>flow-persist-credit-history-to-merge-xor-recent-credit-history-available</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="flow-persist-credit-history-to-merge-xor-recent-credit-history-available" sourceRef="service-task-persist-credit-history" targetRef="merge-xor-recent-credit-history-available"/>
-    <bpmn2:intermediateCatchEvent id="message-catch-event-received-credit-history" name="Received&#xD;&#xA; Credit History">
+    <bpmn2:intermediateCatchEvent id="message-catch-event-received-credit-history" name="Credit History&#xD;&#xA;received">
       <bpmn2:documentation>This message event symbolizes the exchange between GMNY and GTA regarding the credit rating of the customer.</bpmn2:documentation>
       <bpmn2:incoming>flow-request-credit-history-to-received-credit-history</bpmn2:incoming>
       <bpmn2:outgoing>flow-received-credit-history-to-persist-credit-history</bpmn2:outgoing>
@@ -99,7 +99,7 @@
       <bpmn2:outgoing>flow-request-credit-history-to-received-credit-history</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="flow-request-credit-history-to-received-credit-history" sourceRef="service-task-request-credit-history" targetRef="message-catch-event-received-credit-history"/>
-    <bpmn2:exclusiveGateway id="xor-recent-credit-history-available" name="Recent Credit&#xD;&#xA;History Available?">
+    <bpmn2:exclusiveGateway id="xor-recent-credit-history-available" name="Recent Credit&#xD;&#xA;History available?">
       <bpmn2:documentation>This XOR gateway provides the option to choose either: Yes, we have a recent credit rating for this customer, or No, we need a new credit rating for this customer</bpmn2:documentation>
       <bpmn2:incoming>flow-look-for-recent-credit-history-to-recent-credit-history-available</bpmn2:incoming>
       <bpmn2:outgoing>flow-recent-credit-history-available-to-request-credit-history</bpmn2:outgoing>
@@ -145,7 +145,7 @@
       <bpmn2:incoming>flow-induce-contract-conclusion-to-loan-contract-signed</bpmn2:incoming>
       <bpmn2:terminateEventDefinition id="TerminateEventDefinition_2"/>
     </bpmn2:endEvent>
-    <bpmn2:userTask id="user-task-induce-contract-conclusion" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Induce Contract Conclusion">
+    <bpmn2:userTask id="user-task-induce-contract-conclusion" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Conclude Contract">
       <bpmn2:documentation><![CDATA[PDF for customer as nice to have feature (Daniel) ... This user task encapsulates the work that has to be done in order to close the contract between GMNY and customer in case of a granted loan application.
 ]]></bpmn2:documentation>
       <bpmn2:incoming>flow-loan-granted-to-induce-contract-conclusion</bpmn2:incoming>
@@ -200,7 +200,7 @@
       <bpmn2:incoming>flow-option-selected-to-loan-application-canceled</bpmn2:incoming>
       <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
     </bpmn2:endEvent>
-    <bpmn2:userTask id="user-task-prepare-updated-application" camunda:formKey="embedded:app:forms/02-prepare-updated-application.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Prepare Updated Application">
+    <bpmn2:userTask id="user-task-prepare-updated-application" camunda:formKey="embedded:app:forms/02-prepare-updated-application.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Prepare&#xD;&#xA;updated Application">
       <bpmn2:documentation>This user task visualizes how a bank clerk sets more suitable parameters for the client regarding his desire to still get a loan after his original request was rejected.</bpmn2:documentation>
       <bpmn2:incoming>flow-merge-xor-option-selected-to-prepare-updated-application</bpmn2:incoming>
       <bpmn2:outgoing>flow-prepare-updated-application-to-merge-xor-updated-application</bpmn2:outgoing>
@@ -228,7 +228,7 @@
     <bpmn2:sequenceFlow id="flow-option-selected-to-loan-application-canceled" name="Terminate" sourceRef="xor-option-selected" targetRef="end-event-loan-application-canceled">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "terminate"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="flow-option-selected-merge-xor-option-selected" name="Re-Apply (with Updated Parameters)" sourceRef="xor-option-selected" targetRef="merge-xor-option-selected">
+    <bpmn2:sequenceFlow id="flow-option-selected-merge-xor-option-selected" name="Reapply (with updated Parameters)" sourceRef="xor-option-selected" targetRef="merge-xor-option-selected">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "re-apply"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
   </bpmn2:process>
@@ -369,13 +369,13 @@
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_24" bpmnElement="xor-loan-granted" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="1450.0" y="231.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="29.0" width="138.0" x="1407.0" y="217.0"/>
+          <dc:Bounds height="22.0" width="91.0" x="1431.0" y="208.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_25" bpmnElement="xor-option-selected" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="1814.0" y="488.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="52.0" width="94.0" x="1743.0" y="528.0"/>
+          <dc:Bounds height="38.0" width="64.0" x="1752.0" y="474.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="flow-evaluate-loan-application-to-loan-granted" sourceElement="_BPMNShape_UserTask_10" targetElement="_BPMNShape_ExclusiveGateway_24">
@@ -528,7 +528,7 @@
         <di:waypoint xsi:type="dc:Point" x="2679.0" y="593.0"/>
         <di:waypoint xsi:type="dc:Point" x="2679.0" y="459.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="29.0" width="331.0" x="1864.0" y="564.0"/>
+          <dc:Bounds height="22.0" width="215.0" x="1872.0" y="564.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_29" bpmnElement="flow-induce-contract-conclusion-to-loan-contract-signed" sourceElement="_BPMNShape_UserTask_11" targetElement="_BPMNShape_EndEvent_18">
@@ -544,7 +544,7 @@
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_28" bpmnElement="xor-recent-credit-history-available" isMarkerVisible="true">
         <dc:Bounds height="50.0" width="50.0" x="586.0" y="228.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="109.0" x="558.0" y="181.0"/>
+          <dc:Bounds height="38.0" width="109.0" x="558.0" y="192.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_30" bpmnElement="flow-look-for-recent-credit-history-to-recent-credit-history-available" sourceElement="_BPMNShape_ServiceTask_101" targetElement="_BPMNShape_ExclusiveGateway_28">

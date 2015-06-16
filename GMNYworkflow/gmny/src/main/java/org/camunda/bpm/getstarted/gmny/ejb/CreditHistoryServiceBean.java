@@ -38,6 +38,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	private EntityManager entityManager;
 	
 	public void persistCreditHistory(DelegateExecution delegateExecution) {
+		
+		System.out.println("*** Persist credit history ***");
+		
 	    // Create new credit history instance
 		CreditHistoryEntity creditHistory = new CreditHistoryEntity();
 	 
@@ -51,8 +54,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    creditHistory.setScoring((Long) variables.get("scoring"));
 	    creditHistory.setBadDepts((Long) variables.get("badDepts"));
 	    creditHistory.setConsumerCredits((Long) variables.get("consumerCredits"));
-
-	      	    
+	    
 	    // set creation date
 	    Date today = new Date();
 	    creditHistory.setReceptionDate(today);
@@ -63,9 +65,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    */
 	    entityManager.persist(creditHistory);
 	    entityManager.flush();
-	 
-	    System.out.println("Saving credit history (Id, Scoring): " + creditHistory.getId() + ", " + variables.get("scoring"));
 	    
+	    System.out.println("Saving credit history (Id, scoring, date): " + creditHistory.getId() + ", " + variables.get("scoring") + ", " + today);
+	    System.out.println(" ");
 	  }
 	
 	
@@ -76,6 +78,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		  }
 	
 	public void performRiskAssessment(DelegateExecution delegateExecution) {
+		
+		System.out.println("*** Performing risk assessment ***");
+		
 		// Get relevant variables from process memory
 		Map<String, Object> variables = delegateExecution.getVariables();
 		Long scoring = (Long) variables.get("scoring");
@@ -93,6 +98,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		//set the process variable
 		delegateExecution.setVariable("recommendation", recommendation);
 		
+		System.out.println("Outcome - recommendation: " + recommendation);
+		System.out.println("");
+		
 	  }
 
 	public void loadCreditHistory(DelegateExecution delegateExecution) {
@@ -103,6 +111,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	}
 	
 	public void requestCreditHistory(DelegateExecution delegateExecution) {
+		
+		System.out.println("*** Request credit history from GTA ***");
 		
 		try {
 			//Create and safe Id
@@ -120,20 +130,21 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			Client client = Client.create();
 		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/APIsimulation/start");
 		    
-		    System.out.println("***** Credit History Request to GTA *****");
 		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
 		    
 		    // check response status code
 	        if (response.getStatus() != 200) {
-	            throw new RuntimeException("Failed : HTTP error code : "
-	                    + response.getStatus());
+	            throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
 	        }
 	
 	        // display response
-	        String output = response.getEntity(String.class);
-	        System.out.println("Output from Server .... ");
-	        System.out.println(output + "\n");
+	        //String output = response.getEntity(String.class);
+	        //System.out.println(output + "\n");
+	        
+	        System.out.println(response);
+	        System.out.println("");
+	        
 		} catch (Exception e) {
         e.printStackTrace();
         }
