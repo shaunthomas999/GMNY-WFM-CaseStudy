@@ -1,0 +1,47 @@
+<p>Script Here ... </p>
+<script cam-script type="text/javascript">
+    
+    if (document.getElementById('pizza')=="Salami") {
+        document.getElementById('private').style.visibility = 'visible';
+    } else {
+        document.getElementById('business').style.visibility = 'visible';
+    }
+
+    alert("Test! Does JS work?")
+    
+</script>
+
+<p>Readonly stuff ...</p>
+<form name="customer_registration">
+  <div class="form-group">
+ <div class="form-group">
+    <label for="customer">Customer</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="customer" name="customer" readonly/>
+  </div>
+  <div class="form-group">
+    <label for="address">address</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="address" name="address" readonly/>
+  </div>
+<p>Visible pizza field here --></p>
+  <div class="form-group" style="visibility:visible">
+    <label for="applicationStatus">pizza</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="pizza" name="pizza" readonly/>
+  </div>
+<p>Hidden pizza field here --></p>
+  <div class="form-group" style="visibility:hidden">
+    <label for="applicationStatus">invispizza</label>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="invispizza" name="invispizza" readonly/>
+  </div>
+
+<p>Selective stuff here --></p>
+<div id="private" style="visibility:hidden">
+<p>THIS IS A PRIVATE CUSTOMER! Private is selected when Pizza = Salami!</p>
+</div>
+
+<div id="business" style="visibility:hidden">
+<p>THIS IS A BUSINESS CUSTOMER! Business is selected when Pizz != Salami</p>
+</div>
+<p> <-- selective stuff should be before here ... </p>
+
+
+</form>
