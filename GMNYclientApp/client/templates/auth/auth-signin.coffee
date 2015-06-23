@@ -11,19 +11,20 @@ Template.signin.helpers
 
 Template.signin.events submit: (event, template) ->
     event.preventDefault()
-    email = template.$("[name=email]").val()
+    customerId = template.$("[name=customerId]").val()
     password = template.$("[name=password]").val()
     errors = {}
-    errors.email = "Email is required"  unless email
+    errors.customerId = "Customer ID is required"  unless customerId
     errors.password = "Password is required"  unless password
     Session.set ERRORS_KEY, errors
     return  if _.keys(errors).length
-    console.log "Authenticating user #{email}"
-    Meteor.call "authenticateUser", email, password, (error, result) ->
+    console.log "Authenticating user"
+    Meteor.call "authenticateUser", customerId, password, (error, result) ->
         if result is null
             return Session.set(ERRORS_KEY,
                 none: "Authentication failed"
             )
+        ###
         else
             Meteor.loginWithPassword email, password, (err) ->
                 if err
@@ -33,3 +34,4 @@ Template.signin.events submit: (event, template) ->
                 else
                     Session.set("currentuser", result)
                     Router.go "home"
+        ###

@@ -19,26 +19,37 @@ Template.join.events
     $('#privateCustomerRegForm').hide()
     $('#businessCustomerRegForm').show()
 
-  submit: (event, template) ->
+  "click #privateCustomerSubmit": (event) ->
     event.preventDefault()
-    email = template.$("[name=email]").val()
-    password = template.$("[name=password]").val()
-    confirm = template.$("[name=confirm]").val()
-    errors = {}
-    errors.email = "Email required"  unless email
-    errors.password = "Password required"  unless password
-    errors.confirm = "Please confirm your password"  if confirm isnt password
-    Session.set ERRORS_KEY, errors
-    return  if _.keys(errors).length
-    Accounts.createUser
-      email: email
-      password: password
-    , (error) ->
-      if error
-        return Session.set(ERRORS_KEY,
-          none: error.reason
-        )
-      Router.go "home"
-      return
+    privateCustomerObj = {}
+    privateCustomerObj.firstName = $('#priv_firstName').val()
+    privateCustomerObj.lastName = $('#priv_lastName').val()
+    privateCustomerObj.email = $('#priv_email').val()
+    privateCustomerObj.streetNameNum = $('#priv_streetNameNum').val()
+    privateCustomerObj.city = $('#priv_city').val()
+    privateCustomerObj.pincode = $('#priv_pincode').val()
+    privateCustomerObj.mobileNum = $('#priv_mobileNum').val()
+    privateCustomerObj.DOB = $('#priv_DOB').val()
 
-    return
+    Meteor.call "privateCustomerRegistration", privateCustomerObj, (error, result) ->
+      if error
+        Router.go('errorPage')
+      else
+        Router.go('joinResponse')
+
+  "click #businessCustomerSubmit": (event) ->
+    event.preventDefault()
+    businessCustomerObj = {}
+    businessCustomerObj.orgName = $('#bus_orgName').val()
+    businessCustomerObj.streetNameNum = $('#bus_streetNameNum').val()
+    businessCustomerObj.city = $('#bus_city').val()
+    businessCustomerObj.pincode = $('#bus_pincode').val()
+    businessCustomerObj.telNum = $('#bus_telNum').val()
+    businessCustomerObj.YOF = $('#bus_YOF').val()
+    businessCustomerObj.businessArea = $('#bus_businessArea').val()
+
+    Meteor.call "businessCustomerRegistration", businessCustomerObj, (error, result) ->
+      if error
+        Router.go('errorPage')
+      else
+        Router.go('joinResponse')

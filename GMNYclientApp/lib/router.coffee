@@ -36,3 +36,7 @@ Router.map ->
     path: "/"
     action: ->
       Router.go "appMain"
+  # - error-page
+  @route "errorPage"
+  # - join-response
+  @route "joinResponse"
