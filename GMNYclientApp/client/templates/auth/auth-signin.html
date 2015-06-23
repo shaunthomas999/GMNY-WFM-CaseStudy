@@ -1,0 +1,38 @@
+<template name="signin">
+  <div class="page auth">
+    <nav>
+      <div class="nav-group">
+        <a href="#" class="js-menu nav-item"><span class="ion-android-drawer main-logo"></span></a>
+      </div>
+    </nav>
+
+    <div class="content-scrollable">
+      <div class="wrapper-auth">
+        <h1 class="title-auth">Sign-in</h1>
+        <p class="subtitle-auth" >Enter your credentials to sign-in</p>
+
+        <form>
+          {{#if errorMessages}}
+            <div class="list-errors">
+              {{#each errorMessages}}
+                <div class="list-item">{{this}}</div>
+              {{/each}}
+            </div>
+          {{/if}}
+
+          <div class="input-symbol {{errorClass 'email'}}">
+            <input type="email" name="email" placeholder="Your Email" />
+          </div>
+
+          <div class="input-symbol {{errorClass 'password'}}">
+            <input type="password" name="password" placeholder="Password" />
+          </div>
+
+          <button type="submit" class="btn-primary">Sign in</button>
+        </form>
+      </div>
+
+      <a href="{{pathFor 'join'}}" class="link-auth-alt">Need an account? Join Now.</a>
+    </div>
+  </div>
+</template>

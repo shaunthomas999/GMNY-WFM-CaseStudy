@@ -1,14 +1,21 @@
 # Meteor packages used by this project, one per line.
-# Check this file (and the other files in this directory) into your repository.
 #
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
 meteor-platform
-autopublish
 insecure
-meteoric:ionic
-iron:router
-meteoric:ionic-sass
-meteoric:ionicons-sass
-fourseven:scss
+coffeescript
+mongo
+jquery
+less
+iron:router@0.9.4
+http
+rajit:bootstrap3-datepicker
+gildaspk:moment-datepicker
+underscore
+richsilv:cordova-notifications
+accounts-password
+momentjs:moment
+
+cfs:http-methods

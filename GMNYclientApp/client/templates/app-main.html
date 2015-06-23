@@ -1,0 +1,19 @@
+<template name="appMain">
+  <div class="page lists-show">
+    <nav class="js-title-nav">
+        <div class="navigation-bar">
+          <div class="nav-group">
+            <a href="#" class="js-menu nav-item"><span class="ion-android-drawer invert main-logo" title="Show menu"></span></a>
+          </div>
+          <div class="title-page">
+            <span class="title-wrapper">
+              <img class="main-logo" src="/img/gmny_schrift_white.png" alt="GMNY" height="30">
+            </span>
+          </div>
+        </div>
+    </nav>
+    <div class="content-scrollable list-items">
+      {{> yield region="content"}}
+    </div>
+  </div>
+</template>
