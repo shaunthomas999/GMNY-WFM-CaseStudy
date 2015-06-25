@@ -1,10 +1,11 @@
 package org.camunda.bpm.getstarted.gmny.ejb;
 
 //import org.camunda.bpm.engine.cdi.jsf.TaskForm;
-import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
-import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
-import org.camunda.bpm.getstarted.gmny.service.CustomerService;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.ejb.Stateless;
 //import javax.inject.Inject;
@@ -12,11 +13,10 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
+import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
+import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+import org.camunda.bpm.getstarted.gmny.service.CustomerService;
  
 @Stateless
 @Named
@@ -69,7 +69,7 @@ public class CustomerServiceBean implements CustomerService{
     delegateExecution.setVariable("customerId", customerEntity.getId());
     System.out.println("Customer saved with ID: " + customerEntity.getId());
     System.out.println(" ");
-
+    PdfServiceBean.createWelcome(customerEntity);
   }
   
   public void generateTestData(){
@@ -187,6 +187,9 @@ public class CustomerServiceBean implements CustomerService{
   	// Get customerId from process memory
     Map<String, Object> variables = delegateExecution.getVariables();
     Long customerId = (Long) variables.get("customerId");
+    String lastname = (String) variables.get("lastname");
+    
+    String identifier = customerId + "_" + lastname;
     
     // Send simple mail
     /*
@@ -209,7 +212,8 @@ public class CustomerServiceBean implements CustomerService{
 			MailServiceBean.send(
 					entityManager.find(CustomerEntity.class, customerId).getEmail(),
 					"Welcome to GMNY",
-					vars
+					vars,
+					identifier
 			)
 		);
 	} catch (IOException e) {

@@ -11,9 +11,16 @@ import java.util.HashMap;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.inject.Named;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.MediaType;
+
+import org.camunda.bpm.getstarted.gmny.ejb.CustomerServiceBean;
+import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+import org.camunda.bpm.engine.delegate.DelegateExecution;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
@@ -22,6 +29,8 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
+import com.sun.jersey.multipart.FormDataMultiPart;
+import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 
 @Stateless
@@ -32,21 +41,27 @@ public class MailServiceBean {
 	}
 	
 	//simple mail sending method
-	public static ClientResponse send(String to, String subject, String message) {
+	public static ClientResponse send(String to, String subject, String message, String identifier) {
+
+		
 		Client client = Client.create();
 	    client.addFilter(new HTTPBasicAuthFilter("api", "key-4ba0f5f986517cf7a300bb258a2b56d0"));
 	    WebResource webResource = client.resource("https://api.mailgun.net/v3/sandbox8f4533092e2e4774811b769a9bb25be0.mailgun.org/messages");
-	    MultivaluedMapImpl formData = new MultivaluedMapImpl();
-	    formData.add("from", "GMNY <postmaster@sandbox8f4533092e2e4774811b769a9bb25be0.mailgun.org>");
-	    formData.add("to", to);
-	    formData.add("subject", subject);
-	    formData.add("html", message);
+	    FormDataMultiPart formData = new FormDataMultiPart();
+	    formData.field("from", "GMNY <postmaster@sandbox8f4533092e2e4774811b769a9bb25be0.mailgun.org>");
+	    formData.field("to", to);
+	    formData.field("subject", subject);
+	    formData.field("html", message);
+	    
+	    File pdfFile = new File( identifier + ".pdf");
+	    formData.bodyPart(new FileDataBodyPart("attachment",pdfFile, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+	    
 	    System.out.println("Sending mail to " + to);
-	    return webResource.type(MediaType.APPLICATION_FORM_URLENCODED).post(ClientResponse.class, formData);
+	    return webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, formData);
 	}
 	
 	//advanced mail sending method
-	public static ClientResponse send(String to, String subject, HashMap<String, String> vars) throws IOException {
+	public static ClientResponse send(String to, String subject, HashMap<String, String> vars, String identifier) throws IOException {
 			//configService = (ConfigService) new InitialContext().lookup("java:global/backend/ConfigServiceBean");
 			HashMap<String, String> defaultVars = new HashMap<String, String>();
 			defaultVars.put("greeting", "Hello!");
@@ -93,6 +108,6 @@ public class MailServiceBean {
 			for (String key : defaultVars.keySet()) {
 				message = message.replace("{{" + key + "}}", defaultVars.get(key));
 			}
-			return send(to, subject, message);
+			return send(to, subject, message, identifier);
 	}
 }
