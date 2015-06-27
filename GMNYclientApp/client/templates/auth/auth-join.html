@@ -20,98 +20,86 @@
         {{/if}}
 
         <div class="button-bar">
-          <a id="privCustomerOption" class="button button-calm">
+          <a id="privCustomerOption" class="button button-positive">
             <i class="icon ion-person"></i>
             Private Customer
           </a>
-          <a id="busCustomerOption" class="button button-calm">
+          <a id="busCustomerOption" class="button button-positive">
             <i class="icon ion-briefcase"></i>
             Business Customer
           </a>
         </div>
 
-        <form id="privateCustomerRegForm">
+        <form id="customerRegForm">
           <div>
             <div class="list list-inset">
-              <label class="item item-input bar bar-dark">
+              <label class="item item-input bar bar-dark {{isPrivateCustomer}}">
                 Private Customer
               </label>
+              <label class="item item-input bar bar-dark {{isBusinessCustomer}}">
+                Business Customer
+              </label>
+
+              <label class="item item-input {{isBusinessCustomer}}">
+                <span class="input-label">Name of the organisation : </span>
+                <input id="orgName" type="text">
+              </label>
+              <label class="item item-input {{isBusinessCustomer}}">
+                <span class="input-label">Business area : </span>
+                <input id="businessArea" type="text">
+              </label>
+
+              <div class="item item-divider {{isBusinessCustomer}}">
+                Contact person's details
+              </div>
+
               <label class="item item-input">
                 <span class="input-label">First Name : </span>
-                <input id="priv_firstName" type="text">
+                <input id="firstName" type="text">
               </label>
               <label class="item item-input">
                 <span class="input-label">Last Name : </span>
-                <input id="priv_lastName" type="text">
+                <input id="lastName" type="text">
               </label>
               <label class="item item-input">
                 <span class="input-label">Email : </span>
-                <input id="priv_email" type="email">
+                <input id="email" type="email">
               </label>
               <label class="item item-input">
                 <span class="input-label">Street name and number : </span>
-                <input id="priv_streetNameNum" type="text">
+                <input id="street" type="text">
               </label>
               <label class="item item-input">
                 <span class="input-label">City : </span>
-                <input id="priv_city" type="text">
+                <input id="city" type="text">
               </label>
               <label class="item item-input">
                 <span class="input-label">Pincode : </span>
-                <input id="priv_pincode" type="text">
+                <input id="pincode" type="text">
               </label>
               <label class="item item-input">
-                <span class="input-label">Mobile number : </span>
-                <input id="priv_mobileNum" type="tel">
+                <span class="input-label">Contact number : </span>
+                <input id="contactNumber" type="tel">
               </label>
-              <label class="item item-input">
+
+              <label class="item item-input {{isPrivateCustomer}}">
                 <span class="input-label">Date of birth : </span>
-                <input id="priv_DOB" type="date">
+                <input id="dateOfBirth" type="date">
               </label>
+              <label class="item item-input item-select {{isPrivateCustomer}}">
+                <div class="input-label">
+                  Gender : 
+                </div>
+                <select id="gender">
+                  <option selected>Male</option>
+                  <option>Female</option>
+                </select>
+              </label>
+
             </div>
           </div>
 
-          <button id="privateCustomerSubmit" class="btn-primary">Register</button>
-        </form>
-
-        <form id="businessCustomerRegForm" style="display: none;">
-          <div>
-            <div class="list list-inset">
-              <label class="item item-input bar bar-dark">
-                Business Customer
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Name of the organisation : </span>
-                <input id="bus_orgName" type="text">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Street name and number : </span>
-                <input id="bus_streetNameNum" type="text">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">City : </span>
-                <input id="bus_city" type="text">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Pincode : </span>
-                <input id="bus_pincode" type="text">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Telephone number : </span>
-                <input id="bus_telNum" type="tel">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Year of formation : </span>
-                <input id="bus_YOF" type="text">
-              </label>
-              <label class="item item-input">
-                <span class="input-label">Business area : </span>
-                <input id="bus_businessArea" type="text">
-              </label>
-            </div>
-          </div>
-
-          <button id="businessCustomerSubmit" class="btn-primary">Register</button>
+          <button id="customerRegFormSubmit" class="btn-primary">Register</button>
         </form>
 
       </div>
