@@ -81,7 +81,7 @@ public class CustomerServiceBean implements CustomerService{
     // Set customer attributes
     customerEntity1.setFirstname("Max");
     customerEntity1.setLastname("Muster");
-    customerEntity1.setEmail("c_wemm02@uni-muenster.de");
+    customerEntity1.setEmail("max.muster@rautschka.com");
     customerEntity1.setPhoneNumber("+49 163 8475636");
     customerEntity1.setStreet("Moellmannsweg");
     customerEntity1.setStreetNumber("28");
@@ -133,7 +133,7 @@ public class CustomerServiceBean implements CustomerService{
     // Set customer attributes
     customerEntity2.setFirstname("Hans");
     customerEntity2.setLastname("Meier");
-    customerEntity2.setEmail("c_wemm02@uni-muenster.de");
+    customerEntity2.setEmail("meier@rautschka.com");
     customerEntity2.setPhoneNumber("+49 163 1231234");
     customerEntity2.setStreet("Leonardocampus");
     customerEntity2.setStreetNumber("1");
