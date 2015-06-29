@@ -1,38 +1,75 @@
+<script cam-script type="text/form-script" src="bootstrap-datepicker/js/bootstrap-datepicker.js">
+
+
+</script>
+
+
 <form name="customer_registration">
-  <div class="form-group">
-    <label for="firstname">Customer's first name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"/>
-  </div>
-  <div class="form-group">
-    <label for="lastname">Customer's last name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname"/>
-  </div>
-  <div class="form-group">
-    <label for="email">Email address</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email"/>
-  </div>
-  <div class="form-group">
-    <label for="phoneNumber">Phone number</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber"/>
-  </div>
-  <div class="form-group">
-    <label for="street">Street name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="street" name ="street"/>
-  </div>
-  <div class="form-group">
-    <label for="streetNumber">Street number</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber" name ="streetNumber"/>
-  </div>
-  <div class="form-group">
-    <label for="zipCode">Zip code</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name ="zipCode"/>
-  </div>
-  <div class="form-group">
-    <label for="city">City</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="city" name ="city"/>
-  </div>
-  <div class="form-group">
-    <label for="type">Type</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="type" name ="type"/>
-  </div>
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="type">Customer Type</label>
+		<select name="customerType" cam-variable-type="String" cam-variable-name="customerType" required> <option>person</option> <option>business</option> </select>
+	  </div>
+	</div>
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="type">Gender</label>
+		<select name="gender" cam-variable-type="String" cam-variable-name="gender" required> <option>female</option> <option>male</option> </select>
+	  </div>
+	</div>
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="firstname">Customer's first name</label>
+		<input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"/>
+	  </div>
+	  <div class="form-group col-md-6">
+		<label for="lastname">Customer's last name</label>
+		<input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname"/>
+	  </div>
+	</div>
+	
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="email">Date of Birth</label>
+		    <div class="input-group date">
+      			    <div class="input-append date" id="dp3" data-date="12-02-2012" data-date-format="dd-mm-yyyy">
+      <input class="span2" size="16" type="text" value="12-02-2012">
+      <span class="add-on"><i class="icon-th"></i></span>
+    </div>
+   			</div>
+	  </div>
+	</div>
+	
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="email">Email address</label>
+		<input type="email" class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email"/>
+	  </div>
+	</div>
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="phoneNumber">Phone number</label>
+		<input type="phone" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber"/>
+	  </div>
+	</div>
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="street">Street name</label>
+		<input class="form-control" cam-variable-type="String" cam-variable-name="street" name ="street"/>
+	  </div>
+	  <div class="form-group col-md-6">
+		<label for="streetNumber">Street number</label>
+		<input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber" name ="streetNumber"/>
+	  </div>
+	</div>
+	<div class="row"> 
+	  <div class="form-group col-md-6">
+		<label for="zipCode">Zip code</label>
+		<input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name ="zipCode"/>
+	  </div>
+	  <div class="form-group col-md-6">
+		<label for="city">City</label>
+		<input class="form-control" cam-variable-type="String" cam-variable-name="city" name ="city"/>
+	  </div>
+	</div>
 </form>

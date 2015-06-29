@@ -46,6 +46,11 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity.setStreetNumber((String) variables.get("streetNumber"));
     customerEntity.setZipCode((String) variables.get("zipCode"));
     customerEntity.setCity((String) variables.get("city"));
+    customerEntity.setGender((String) variables.get("gender"));
+    customerEntity.setDateOfBirth((Date) variables.get("dateOfBirth"));
+    customerEntity.setOrgName((String) variables.get("orgName"));
+    customerEntity.setBusinessArea((String) variables.get("businessArea"));
+    customerEntity.setCustomerType((String) variables.get("customerType"));
     
     System.out.println("*** Persist customer ***");
     System.out.println("Saving customer: " + variables.get("firstname") + ", " + variables.get("lastname") + ", " + variables.get("email"));
@@ -176,6 +181,12 @@ public class CustomerServiceBean implements CustomerService{
   	delegateExecution.setVariable("email", entityManager.find(CustomerEntity.class, customerId).getEmail());
   	delegateExecution.setVariable("phoneNumber", entityManager.find(CustomerEntity.class, customerId).getPhoneNumber());
   	delegateExecution.setVariable("registrationDate", entityManager.find(CustomerEntity.class, customerId).getRegistrationDate());
+  	delegateExecution.setVariable("dateOfBirth", entityManager.find(CustomerEntity.class, customerId).getDateOfBirth());
+  	delegateExecution.setVariable("gener", entityManager.find(CustomerEntity.class, customerId).getGender());
+  	delegateExecution.setVariable("orgName", entityManager.find(CustomerEntity.class, customerId).getOrgName());  	
+  	delegateExecution.setVariable("businessArea", entityManager.find(CustomerEntity.class, customerId).getBusinessArea());
+  	delegateExecution.setVariable("customerType", entityManager.find(CustomerEntity.class, customerId).getCustomerType());
+  	
   	System.out.println("Customer" + entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + " loaded.");
   	System.out.println(" ");
   }
