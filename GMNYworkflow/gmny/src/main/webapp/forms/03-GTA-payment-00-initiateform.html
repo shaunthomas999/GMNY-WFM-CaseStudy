@@ -1,5 +1,6 @@
 <form name="03-GTA-payment-00-initiateform">
 
+		
   <div class="form-group">
     <label for="ordernumberGTA">Order Number</label>
     	<input class="form-control" 
@@ -13,7 +14,9 @@
     	<input class="form-control" 
 		    cam-variable-type="String" 
 		    cam-variable-name="ibanGTA" 
-		    name ="ibanGTA"/>
+		    name ="ibanGTA"
+		    ng-minlength="15"
+		    ng-maxlength="34"/>
   </div>
   
   <div class="form-group">
@@ -21,7 +24,9 @@
     	<input class="form-control" 
 		    cam-variable-type="String" 
 		    cam-variable-name="bicGTA" 
-		    name ="bicGTA"/>
+		    name ="bicGTA"
+		    ng-minlength="9"
+		    ng-maxlength="11"/>
   </div>
   
     <div class="form-group">
