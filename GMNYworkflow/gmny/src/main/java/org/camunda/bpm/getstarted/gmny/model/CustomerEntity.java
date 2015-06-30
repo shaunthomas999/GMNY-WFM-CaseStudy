@@ -31,10 +31,15 @@ public class CustomerEntity implements Serializable {
   private String city;
   private Date registrationDate;
   private Long creditHistoryId;
-  private enum type{
-	  business,
-	  person
-  };
+  private Date dateOfBirth;
+  private String gender;
+  private String customerType;
+  
+  //business only
+  
+  private String orgName;
+  private String businessArea;
+  
  
   public Long getId() {
     return id;
@@ -138,6 +143,46 @@ public class CustomerEntity implements Serializable {
 
 	public void setCreditHistoryId(Long creditHistoryId) {
 		this.creditHistoryId = creditHistoryId;
+	}
+
+	public Date getDateOfBirth() {
+		return dateOfBirth;
+	}
+
+	public void setDateOfBirth(Date dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public String getBusinessArea() {
+		return businessArea;
+	}
+
+	public void setBusinessArea(String businessArea) {
+		this.businessArea = businessArea;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 
 
