@@ -38,6 +38,7 @@ public class CustomerServiceBean implements CustomerService{
     Map<String, Object> variables = delegateExecution.getVariables();
  
     // Set customer attributes from form
+    customerEntity.setOrgName((String) variables.get("orgName"));
     customerEntity.setFirstname((String) variables.get("firstname"));
     customerEntity.setLastname((String) variables.get("lastname"));
     customerEntity.setEmail((String) variables.get("email"));
@@ -46,9 +47,12 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity.setStreetNumber((String) variables.get("streetNumber"));
     customerEntity.setZipCode((String) variables.get("zipCode"));
     customerEntity.setCity((String) variables.get("city"));
+    customerEntity.setDateOfBirth((Date) variables.get("dateOfBirth"));
+    customerEntity.setGender((String) variables.get("gender"));
+    customerEntity.setCustomerType((String) variables.get("customerType"));
     
     System.out.println("*** Persist customer ***");
-    System.out.println("Saving customer: " + variables.get("firstname") + ", " + variables.get("lastname") + ", " + variables.get("email"));
+    System.out.println("Saving customer: " + variables.get("orgName") + ", " +  variables.get("firstname") + ", " + variables.get("lastname") + ", " + variables.get("email"));
     
     // generate password
     System.out.println("Generating random password");
@@ -79,6 +83,7 @@ public class CustomerServiceBean implements CustomerService{
     CustomerEntity customerEntity1 = new CustomerEntity();
  
     // Set customer attributes
+    customerEntity1.setOrgName("Otto GmbH");
     customerEntity1.setFirstname("Max");
     customerEntity1.setLastname("Muster");
     customerEntity1.setEmail("c_wemm02@uni-muenster.de");
@@ -87,6 +92,7 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity1.setStreetNumber("28");
     customerEntity1.setZipCode("48161");
     customerEntity1.setCity("Muenster");
+    customerEntity1.setCustomerType("business");
     
     // generate password
     System.out.println("Generating random password");
@@ -115,7 +121,7 @@ public class CustomerServiceBean implements CustomerService{
     // set creation date
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     try{
-    	Date date = sdf.parse("06/06/2015");
+    	Date date = sdf.parse("29/06/2015");
     	creditHistory.setReceptionDate(date);
     }catch (Exception e) {	
 	}
@@ -139,6 +145,7 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity2.setStreetNumber("1");
     customerEntity2.setZipCode("48162");
     customerEntity2.setCity("Muenster");
+    customerEntity2.setCustomerType("private");
     
     // generate password
     System.out.println("Generating random password");
@@ -171,11 +178,20 @@ public class CustomerServiceBean implements CustomerService{
   
     // Load customer entity from database and save it in process memory
   	System.out.println("Loading customer into process memory: " + entityManager.find(CustomerEntity.class, customerId));
+  	delegateExecution.setVariable("orgName", entityManager.find(CustomerEntity.class, customerId).getOrgName());
   	delegateExecution.setVariable("firstname", entityManager.find(CustomerEntity.class, customerId).getFirstname());
   	delegateExecution.setVariable("lastname", entityManager.find(CustomerEntity.class, customerId).getLastname());
   	delegateExecution.setVariable("email", entityManager.find(CustomerEntity.class, customerId).getEmail());
   	delegateExecution.setVariable("phoneNumber", entityManager.find(CustomerEntity.class, customerId).getPhoneNumber());
   	delegateExecution.setVariable("registrationDate", entityManager.find(CustomerEntity.class, customerId).getRegistrationDate());
+  	delegateExecution.setVariable("street", entityManager.find(CustomerEntity.class, customerId).getStreet());
+  	delegateExecution.setVariable("streetNumber", entityManager.find(CustomerEntity.class, customerId).getStreetNumber());
+  	delegateExecution.setVariable("zipCode", entityManager.find(CustomerEntity.class, customerId).getZipCode());
+  	delegateExecution.setVariable("city", entityManager.find(CustomerEntity.class, customerId).getCity());
+  	delegateExecution.setVariable("dateOfBirth", entityManager.find(CustomerEntity.class, customerId).getDateOfBirth());
+  	delegateExecution.setVariable("gender", entityManager.find(CustomerEntity.class, customerId).getGender());
+  	delegateExecution.setVariable("customerType", entityManager.find(CustomerEntity.class, customerId).getCustomerType());
+
   	System.out.println("Customer" + entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + " loaded.");
   	System.out.println(" ");
   }
