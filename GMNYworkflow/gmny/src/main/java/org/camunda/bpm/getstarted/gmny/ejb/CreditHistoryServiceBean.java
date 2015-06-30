@@ -164,12 +164,21 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		    
 		    String message = "{\"variables\": {"
 		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
-		    		+ "\"lastname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"}"
+		    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+		    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
+		    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
+		    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
+		    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
+		    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
+		    		+ "\"privatClient\" : {\"value\" : \"true\", \"type\": \"Boolean\"}"
 		    		+ "} }";
 		    
 			Client client = Client.create();
-		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/APIsimulation/start");
+			
+			//for testing
+		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/HistoryAPIsimulation/start");
+		    
+		    //real GTA path
 		    
 		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
@@ -190,5 +199,54 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
         e.printStackTrace();
         }
 	}
+
+public void requestCreditHistoryCleanup(DelegateExecution delegateExecution) {
+		
+		System.out.println("*** Request credit history cleanup from GTA ***");
+		
+		try {
+			//Create and safe Id
+		    delegateExecution.setVariable("requestId", delegateExecution.getId());
+		    
+			// Get all process variables
+		    Map<String, Object> variables = delegateExecution.getVariables();
+		    
+		    String message = "{\"variables\": {"
+		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
+		    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+		    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
+		    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
+		    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
+		    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
+		    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
+		    		+ "\"privatClient\" : {\"value\" : \"true\", \"type\": \"Boolean\"}"
+		    		+ "} }";
+		    
+			Client client = Client.create();
+			
+			//for testing
+		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/CleanupAPIsimulation/start");
+		    
+		    //real GTA path
+		    
+		    System.out.println(message);
+		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
+		    
+		    // check response status code
+	        if (response.getStatus() != 200) {
+	            throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
+	        }
 	
+	        // display response
+	        //String output = response.getEntity(String.class);
+	        //System.out.println(output + "\n");
+	        
+	        System.out.println(response);
+	        System.out.println(" ");
+	        
+		} catch (Exception e) {
+        e.printStackTrace();
+        }
+	}
+
 }
