@@ -151,7 +151,7 @@ public class CustomerServiceBean implements CustomerService{
     //Persist customer instance and flush. After the flush the id of the customer instance is set.
     entityManager.persist(customerEntity2);
     entityManager.flush();
-    
+    PdfServiceBean.createWelcome(customerEntity2);
     System.out.println("Customer saved with ID: " + customerEntity2.getId());
   }
   
