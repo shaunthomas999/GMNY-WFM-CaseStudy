@@ -18,20 +18,23 @@ Template.signin.events submit: (event, template) ->
     errors.password = "Password is required"  unless password
     Session.set ERRORS_KEY, errors
     return  if _.keys(errors).length
-    console.log "Authenticating user"
+    console.log "Authenticating user : " + customerId
+    customerType = ""
     Meteor.call "authenticateUser", customerId, password, (error, result) ->
         if result is null
             return Session.set(ERRORS_KEY,
                 none: "Authentication failed"
             )
-        ###
         else
-            Meteor.loginWithPassword email, password, (err) ->
+            customerType = result
+            Meteor.loginWithPassword customerId, password, (err) ->
                 if err
                     return Session.set(ERRORS_KEY,
                         none: "Authentication failed"
                     )
                 else
-                    Session.set("currentuser", result)
+                    customerObj = {}
+                    customerObj.customerId = customerId
+                    customerObj.customerType = customerType
+                    Session.set("currentuser", customerObj)
                     Router.go "home"
-        ###
