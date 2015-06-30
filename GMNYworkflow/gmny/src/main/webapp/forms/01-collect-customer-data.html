@@ -3,32 +3,44 @@
   <!-- JS - Show Hide Fields Depending on Customer Type -->
   <p> Form Section 0 - Script for Selector Customer Type</p>
   <script cam-script type="text/javascript">
-  function selector(){
-  if (document.getElementById('customerType')=="Private") {
-      document.getElementById('private').style.visibility = 'visible';
-      document.getElementById('business').style.visibility = 'hidden';
-    } else {
-      document.getElementById('business').style.visibility = 'visible';
-      document.getElementById('private').style.visibility = 'hidden';
+    $(document).ready(function () {
+      $("#private").hide();
+      $("#business").hide();
+      $("#businessAndPrivate").hide();
+      //this will call our toggleFields function every time the selection value of our underAge field changes
+      $("#customerType").change(function () {
+        toggleFields();
+      });
+
+    });
+    //this toggles the visibility of our parent permission fields depending on the current selected value of the underAge field
+    function toggleFields() {
+      $("#businessAndPrivate").show();
+      if ($("#customerType").val() == 1) {
+        $("#private").show();
+        $("#business").hide();
+      }
+      else {
+        $("#private").hide();
+        $("#business").show();
+      }
     }
-    alert("function runs");
-  }
-   
   </script>
 
   <!-- Input Field Selection - Customer Type - Determines Show/Hide of Other Fields -->
   <p> Form Section 1 - Customer Type - Selector what is shown </p>
   <div class="form-group">
     <label for="customerType">Customer Type<br></label>
-    <select cam-variable-name="customerType" cam-variable-type="String" onchange="javascript:selector();">
-      <option>Private</option>
-      <option>Business</option>
+    <select cam-variable-name="customerType" cam-variable-type="String" id="customerType">
+      <option value="0" selected style="display:none;">Please select</option>
+      <option value="1">Private</option>
+      <option value="2">Business</option>
     </select>
   </div>
 
   <!-- Input Fieldset Textfields - Organization inkl. Address - React to Customer Type -->
   <p> Form Section 2 - Business Fields - Show if selector is business </p>
-  <div id="business" style="visibility:visible" class="form-group">
+  <div id="business" class="form-group">
     <!--Name of Organization-->
     <label for="nameOfOrg">Name of Organization</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="nameOfOrg" name="nameOfOrg"/>
@@ -88,7 +100,7 @@
 
   <!-- Input Fieldset Textfields - Private Customer - React to Selector -->
   <p> Form Section 4 - Private Fields - Show if selector is private </p>
-  <div id="private" style="visibility:visible" class="form-group">
+  <div id="private" class="form-group">
     <!--Street Name-->
     <label for="privateStreet">Street name</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="privateStreet" name ="privateStreet"/>
