@@ -48,7 +48,7 @@
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:userTask>
-    <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${gtaSimulationServiceBean.respondeCreditHistory(execution)}" name="Send response">
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${gtaSimulationServiceBean.respondeCleanup(execution)}" name="Send response">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:serviceTask>

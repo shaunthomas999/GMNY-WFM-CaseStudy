@@ -115,7 +115,7 @@ public class CustomerServiceBean implements CustomerService{
     // set creation date
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     try{
-    	Date date = sdf.parse("06/06/2015");
+    	Date date = sdf.parse("29/06/2015");
     	creditHistory.setReceptionDate(date);
     }catch (Exception e) {	
 	}
@@ -176,6 +176,10 @@ public class CustomerServiceBean implements CustomerService{
   	delegateExecution.setVariable("email", entityManager.find(CustomerEntity.class, customerId).getEmail());
   	delegateExecution.setVariable("phoneNumber", entityManager.find(CustomerEntity.class, customerId).getPhoneNumber());
   	delegateExecution.setVariable("registrationDate", entityManager.find(CustomerEntity.class, customerId).getRegistrationDate());
+  	delegateExecution.setVariable("street", entityManager.find(CustomerEntity.class, customerId).getStreet());
+  	delegateExecution.setVariable("streetNumber", entityManager.find(CustomerEntity.class, customerId).getStreetNumber());
+  	delegateExecution.setVariable("zipCode", entityManager.find(CustomerEntity.class, customerId).getZipCode());
+  	delegateExecution.setVariable("city", entityManager.find(CustomerEntity.class, customerId).getCity());
   	System.out.println("Customer" + entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + " loaded.");
   	System.out.println(" ");
   }

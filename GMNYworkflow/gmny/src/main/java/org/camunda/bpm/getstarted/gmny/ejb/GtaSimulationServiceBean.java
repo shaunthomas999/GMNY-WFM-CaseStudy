@@ -23,32 +23,31 @@ public class GtaSimulationServiceBean {
 		    Map<String, Object> variables = delegateExecution.getVariables();
 		    
 		    String message = "";
-		    
-		    if(variables.get("privateClient")== "true"){
+		    	    
+		    if((Boolean) variables.get("privateClient")){
+		    	
 		    	message = "{\"messageName\" : \"CreditHistoryResponse\","
 			    		+"\"correlationKeys\" : {"
-			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-			    		+ "\"firstname\" : {\"value\" : \"" + variables.get("name") + "\", \"type\": \"String\"},"
-			    		+ "\"lastname\" : {\"value\" : \"" + variables.get("surname") + "\", \"type\": \"String\"}"
+			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"}"
 			    		+"},"
 			    		+"\"processVariables\" : {"
 			    		+ "\"scoring\" : {\"value\" : \"" + variables.get("scoring") + "\", \"type\": \"Long\"},"
 			    		+ "\"badDepts\" : {\"value\" : \"" + variables.get("badDepts") + "\", \"type\": \"Long\"},"
 			    		+ "\"consumerCredits\" : {\"value\" : \"" + variables.get("consumerCredits") + "\", \"type\": \"Long\"}"
 			    		+"} }";
+		    	System.out.println("** Sending for private customer, "+ message +" **");
 		    }
 		    else{
 		    	message = "{\"messageName\" : \"CreditHistoryResponse\","
 			    		+"\"correlationKeys\" : {"
-			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-			    		+ "\"firstname\" : {\"value\" : \"" + variables.get("name") + "\", \"type\": \"String\"},"
-			    		+ "\"lastname\" : {\"value\" : \"" + variables.get("surname") + "\", \"type\": \"String\"}"
+			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"}"
 			    		+"},"
 			    		+"\"processVariables\" : {"
 			    		+ "\"rating\" : {\"value\" : \"" + variables.get("rating") + "\", \"type\": \"String\"},"
 			    		+ "\"badDeptsInPastTwoYears\" : {\"value\" : \"" + variables.get("badDeptsInPastTwoYears") + "\", \"type\": \"Long\"},"
 			    		+ "\"deptRatioWithNewCreditAmount\" : {\"value\" : \"" + variables.get("deptRatioWithNewCreditAmount") + "\", \"type\": \"Long\"}"
 			    		+"} }";
+		    	System.out.println("** Sending for business customer, "+ message +" **");
 		    }
 		    		    
 			Client client = Client.create();
@@ -70,9 +69,7 @@ public class GtaSimulationServiceBean {
 		    
 		    String message = "{\"messageName\" : \"CleanupResponse\","
 		    		+"\"correlationKeys\" : {"
-		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-		    		+ "\"firstname\" : {\"value\" : \"" + variables.get("name") + "\", \"type\": \"String\"},"
-		    		+ "\"lastname\" : {\"value\" : \"" + variables.get("surname") + "\", \"type\": \"String\"}"
+		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"}"
 		    		+"},"
 		    		+"\"processVariables\" : {"
 		    		+ "\"cleanupRecommendation\" : {\"value\" : \"" + variables.get("cleanupRecommendation") + "\", \"type\": \"String\"}"

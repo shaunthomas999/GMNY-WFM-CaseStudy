@@ -55,6 +55,10 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    creditHistory.setBadDepts((Long) variables.get("badDepts"));
 	    creditHistory.setConsumerCredits((Long) variables.get("consumerCredits"));
 	    
+	    creditHistory.setRating((String) variables.get("rating"));
+	    creditHistory.setBadDeptsInPastTwoYears((Long) variables.get("badDeptsInPastTwoYears"));
+	    creditHistory.setDeptRatioWithNewCreditAmount((Long) variables.get("deptRatioWithNewCreditAmount"));
+	    
 	    // set creation date
 	    Date today = new Date();
 	    creditHistory.setReceptionDate(today);
@@ -74,9 +78,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    // Set customer attributes
 	    customerEntity.setCreditHistoryId(creditHistory.getId());;
 	    entityManager.merge(customerEntity);
-	    System.out.println("TEST TEST TEST:");
-	    System.out.println("FIRSTNAME: " + entityManager.find(CustomerEntity.class, variables.get("customerId")).getFirstname());
-	    System.out.println("CREDIT HISTORY ID: " + entityManager.find(CustomerEntity.class, variables.get("customerId")).getCreditHistoryId());
+	    
+	    System.out.println("Credit History ID: " + entityManager.find(CustomerEntity.class, variables.get("customerId")).getCreditHistoryId());
 	    
 	    System.out.println(" ");
 	  }
@@ -137,9 +140,15 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    	}
 	    	else{
 	    		System.out.println("Credit history is younger than 20 days. Date of reception: " + receptionDate + " -> age: " + diffInDays);
+	    		
 	    		delegateExecution.setVariable("scoring", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getScoring());
 	    	  	delegateExecution.setVariable("badDepts", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getBadDepts());
 	    	  	delegateExecution.setVariable("consumerCredits", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getConsumerCredits());
+	    	  	
+	    	  	delegateExecution.setVariable("rating", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getRating());
+	    	  	delegateExecution.setVariable("badDeptsInPastTwoYears", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getBadDeptsInPastTwoYears());
+	    	  	delegateExecution.setVariable("deptRatioWithNewCreditAmount", entityManager.find(CreditHistoryEntity.class, creditHistoryId).getDeptRatioWithNewCreditAmount());
+	    	  	 	  	
 	    		delegateExecution.setVariable("creditHistoryAvailable", true);
 	    		System.out.println("Credit history loaded from database");
 	    	}
@@ -162,16 +171,35 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			// Get all process variables
 		    Map<String, Object> variables = delegateExecution.getVariables();
 		    
-		    String message = "{\"variables\": {"
-		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-		    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
-		    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
-		    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
-		    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
-		    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
-		    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
-		    		+ "\"privatClient\" : {\"value\" : \"true\", \"type\": \"Boolean\"}"
-		    		+ "} }";
+		    String message = "";
+		    
+		    boolean privateClient = (variables.get("customerType")=="private");
+		    
+		    if(privateClient){
+		    	message = "{\"variables\": {"
+			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
+			    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
+			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
+			    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
+			    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
+			    		+ "\"privateClient\" : {\"value\" : \"" + privateClient + "\", \"type\": \"Boolean\"}"
+			    		+ "} }";
+		    }
+		    else{
+		    	message = "{\"variables\": {"
+			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"name\" : {\"value\" : \"" + variables.get("orgName") + "\", \"type\": \"String\"},"
+			    		+ "\"surname\" : {\"value\" : \"\", \"type\": \"String\"},"
+			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
+			    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
+			    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
+			    		+ "\"privateClient\" : {\"value\" : \"" + privateClient + "\", \"type\": \"Boolean\"}"
+			    		+ "} }";
+		    }
+		    
 		    
 			Client client = Client.create();
 			
@@ -211,16 +239,34 @@ public void requestCreditHistoryCleanup(DelegateExecution delegateExecution) {
 			// Get all process variables
 		    Map<String, Object> variables = delegateExecution.getVariables();
 		    
-		    String message = "{\"variables\": {"
-		    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-		    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
-		    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
-		    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
-		    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
-		    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
-		    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
-		    		+ "\"privatClient\" : {\"value\" : \"true\", \"type\": \"Boolean\"}"
-		    		+ "} }";
+		    String message = "";
+		    
+		    boolean privateClient = (variables.get("customerType")=="private");
+		    
+		    if(privateClient){
+		    	message = "{\"variables\": {"
+			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
+			    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
+			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
+			    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
+			    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
+			    		+ "\"privateClient\" : {\"value\" : \"" + privateClient + "\", \"type\": \"Boolean\"}"
+			    		+ "} }";
+		    }
+		    else{
+		    	message = "{\"variables\": {"
+			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"name\" : {\"value\" : \"" + variables.get("orgName") + "\", \"type\": \"String\"},"
+			    		+ "\"surname\" : {\"value\" : \"\", \"type\": \"String\"},"
+			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
+			    		+ "\"zip\" : {\"value\" : \"" + variables.get("zipCode") + "\", \"type\": \"String\"},"
+			    		+ "\"city\" : {\"value\" : \"" + variables.get("city") + "\", \"type\": \"String\"},"
+			    		+ "\"privateClient\" : {\"value\" : \"" + privateClient + "\", \"type\": \"Boolean\"}"
+			    		+ "} }";
+		    }
 		    
 			Client client = Client.create();
 			
