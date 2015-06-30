@@ -1,0 +1,67 @@
+<form name="03-GTA-payment-03-displayform">
+
+  <div class="form-group">
+    <label for="ordernumber">Order Number</label>
+    	<input class="form-control" 
+		    cam-variable-type="Long" 
+		    cam-variable-name="ordernumber" 
+		    name="ordernumber"
+		    readonly/>
+  </div>
+  
+  <div class="form-group">
+    <label for="iban">IBAN</label>
+    	<input class="form-control" 
+		    cam-variable-type="String" 
+		    cam-variable-name="iban" 
+		    name ="iban"
+		    readonly/>
+  </div>
+  
+  <div class="form-group">
+    <label for="bicGTA">BIC</label>
+    	<input class="form-control" 
+		    cam-variable-type="String" 
+		    cam-variable-name="bicGTA" 
+		    name ="bicGTA"
+		    readonly/>
+  </div>
+  
+    <div class="form-group">
+    <label for="amountGTA">Amount</label>
+    	<input class="form-control" 
+		    cam-variable-type="Long" 
+		    cam-variable-name="amountGTA" 
+		    name="amountGTA"
+		    readonly/>
+	</div>
+    
+		<script cam-script type="text/form-script">
+		  $scope.open = function($event) {
+		    $event.preventDefault();
+		    $event.stopPropagation();
+		
+		    $scope.dateFieldOpened = true;
+		  };
+		</script>
+		
+	<p class="input-group">
+		<label for="duedateGTA">Due Date</label>
+		  <input type="text"
+		       cam-variable-name="duedateGTA"
+		       cam-variable-type="Date"
+		       class="form-control"
+		       datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
+		       is-open="dateFieldOpened"
+		       readonly="true"/>
+		
+		  <span class="input-group-btn">
+		    <button type="button"
+		            class="btn btn-default"
+		            ng-click="open($event)">
+		      <i class="glyphicon glyphicon-calendar"></i>
+		    </button>
+		  </span>
+	</p>
+	
+</form>
