@@ -11,7 +11,9 @@
       document.getElementById('business').style.visibility = 'visible';
       document.getElementById('private').style.visibility = 'hidden';
     }
+    alert("function runs");
   }
+   
   </script>
 
   <!-- Input Field Selection - Customer Type - Determines Show/Hide of Other Fields -->
@@ -26,7 +28,7 @@
 
   <!-- Input Fieldset Textfields - Organization inkl. Address - React to Customer Type -->
   <p> Form Section 2 - Business Fields - Show if selector is business </p>
-  <div id="business" style="visibility:hidden" class="form-group">
+  <div id="business" style="visibility:visible" class="form-group">
     <!--Name of Organization-->
     <label for="nameOfOrg">Name of Organization</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="nameOfOrg" name="nameOfOrg"/>
@@ -51,7 +53,7 @@
         <input class="form-control" cam-variable-type="String" cam-variable-name="businessZipCode" name="businessZipCode"/>
       </div>
       <!--Organization City-->
-      <div class="form-group col-md-8>">
+      <div class="form-group col-md-8">
         <label for="businessCity">Organization City</label>
         <input class="form-control" cam-variable-type="String" cam-variable-name="businessCity" name="businessCity"/>
       </div>
@@ -86,7 +88,7 @@
 
   <!-- Input Fieldset Textfields - Private Customer - React to Selector -->
   <p> Form Section 4 - Private Fields - Show if selector is private </p>
-  <div id="private" style="visibility:hidden" class="form-group">
+  <div id="private" style="visibility:visible" class="form-group">
     <!--Street Name-->
     <label for="privateStreet">Street name</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="privateStreet" name ="privateStreet"/>
@@ -101,7 +103,7 @@
     <input class="form-control" cam-variable-type="String" cam-variable-name="privateCity" name ="privateCity"/>
   </div>
 <!--EXPERIMENTATION AREA-->
-<p>datepicker example</p>
+<p>Datepicker Example</p>
 <script cam-script type="text/form-script">
   $scope.open = function($event) {
     $event.preventDefault();
