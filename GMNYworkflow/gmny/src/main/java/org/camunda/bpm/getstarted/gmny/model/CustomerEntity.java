@@ -172,6 +172,10 @@ public class CustomerEntity implements Serializable {
 		this.gender = gender;
 	}
 
-
- 
+	@Override
+	public String toString() {
+		return new StringBuffer(" First Name : ").append(this.firstname)
+				.append(" Last Name : ").append(this.lastname)
+				.append(this.id).toString();
+	}
 }
