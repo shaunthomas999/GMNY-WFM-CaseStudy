@@ -1,5 +1,5 @@
 start:
-	meteor -p 8081
+	meteor -p 4000
 
 debug:
-	NODE_OPTIONS='--debug' meteor -p 8081
+	NODE_OPTIONS='--debug' meteor -p 4000
