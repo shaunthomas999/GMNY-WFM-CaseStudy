@@ -12,14 +12,14 @@ import javax.ws.rs.Consumes;
 
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
 
-@Path("")
+@Path("api")
 public class HelloWorld {
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 
     @GET
-    @Path("/helloworld")
+    @Path("helloworld")
     public Response getHelloWorld() {
 
         String value = "Hello World - YEAH";
