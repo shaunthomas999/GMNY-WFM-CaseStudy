@@ -21,6 +21,8 @@ import com.itextpdf.text.Utilities;
 import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.pdf.parser.Line;
 
@@ -31,7 +33,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -202,18 +203,76 @@ public class PdfServiceBean {
 	        hp4.setAlignment(Element.ALIGN_CENTER);
 	        document.add(hp4);
 	        
+	        canvas.setLineWidth(1.0f);
+	        canvas.moveTo(Utilities.millimetersToPoints(20), Utilities.millimetersToPoints(180));
+	        canvas.lineTo(Utilities.millimetersToPoints(190), Utilities.millimetersToPoints(180));
+	        canvas.stroke();
+	        
+	        document.add(Chunk.NEWLINE);
+	        document.add(Chunk.NEWLINE);
+	        
+	        Paragraph hp5 = new Paragraph("TERMS AND CONDITIONS", fontTextBold);
+	        hp5.setAlignment(Element.ALIGN_CENTER);
+	        document.add(hp5);
+	        
+	        canvas.moveTo(Utilities.millimetersToPoints(20), Utilities.millimetersToPoints(174));
+	        canvas.lineTo(Utilities.millimetersToPoints(190), Utilities.millimetersToPoints(174));
+	        canvas.stroke();
+	        
+	        document.add(Chunk.NEWLINE);
+	       
+	        document.add(new Phrase("The Lender hereby promises that the borrowed amount is to be paid within ", fontText));
+	        document.add(new Phrase("14 business days", fontTextBold));
+	        document.add(new Phrase(" after the signed agreement has been received.", fontText));
+	        
+	        document.add(Chunk.NEWLINE);
+	        
+	        document.add(new Phrase("The Borrower hereby promises to clear the loan amounting to ", fontText));
+	        document.add(new Phrase("EUR " + "5000" + ",-", fontTextBold));
+	        document.add(new Phrase(" including interests and other charges. Both parties intend to be legally bound to the following repayment schedule:", fontText));
+	        
+	        document.add(Chunk.NEWLINE);
+	        document.add(Chunk.NEWLINE);
+	        
+	        document.add(new Phrase("The Borrower agrees to repay the amount of ", fontText));
+	        document.add(new Phrase("EUR " + "5000" + ",-", fontTextBold));
+	        document.add(new Phrase(" in equal monthly installments of ", fontText));
+	        document.add(new Phrase("EUR " + "357" + "," + "15", fontTextBold));
+	        document.add(new Phrase(" due on the last week of each month. ", fontText));
+	        document.add(new Phrase("The chosen product ", fontText));
+	        document.add(new Phrase("DEBT CONSOLIDATION LOAN", fontTextBold));
+	        document.add(new Phrase(" commits the borrower to start with loan redemption ", fontText));
+	        document.add(new Phrase("THREE" + " MONTHS", fontTextBold));
+	        document.add(new Phrase(" after signing this agreement. ", fontText));
+	        document.add(new Phrase(" The Borrower and the Lender agree on an ", fontText));
+	        document.add(new Phrase("annual interest rate of " + "3,76" + " %", fontTextBold));
+	        document.add(new Phrase(". The ", fontText));
+	        document.add(new Phrase("DEBT CONSOLIDATION LOAN", fontTextBold));
+	        document.add(new Phrase(" is a fixed-rate mortgage.", fontText));
+	        
+	        document.add(Chunk.NEWLINE);
+	        document.add(Chunk.NEWLINE);
+	        
+	        PdfPTable table = new PdfPTable(3); // 3 columns.
+
+            PdfPCell cell1 = new PdfPCell(new Paragraph("Cell 1"));
+            PdfPCell cell2 = new PdfPCell(new Paragraph("Cell 2"));
+            PdfPCell cell3 = new PdfPCell(new Paragraph("Cell 3"));
+
+            table.addCell(cell1);
+            table.addCell(cell2);
+            table.addCell(cell3);
+
+            document.add(table);
             document.close();
-            System.out.println("PDF PDF PDF");
 
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
