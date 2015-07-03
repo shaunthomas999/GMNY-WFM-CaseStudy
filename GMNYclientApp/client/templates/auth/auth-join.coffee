@@ -39,10 +39,11 @@ Template.join.events
     customerObj.firstName = $('#firstName').val()
     customerObj.lastName = $('#lastName').val()
     customerObj.email = $('#email').val()
-    customerObj.streetNameNum = $('#street').val()
+    customerObj.streetNum = $('#streetNum').val()
+    customerObj.streetName = $('#streetName').val()
     customerObj.city = $('#city').val()
     customerObj.pincode = $('#pincode').val()
-    customerObj.mobileNum = $('#contactNumber').val()
+    customerObj.contactNumber = $('#contactNumber').val()
 
     if Session.get("isCurrentCustomerPrivate")
       customerObj.customerType = "private"
