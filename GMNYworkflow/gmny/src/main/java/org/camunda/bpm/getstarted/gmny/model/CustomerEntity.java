@@ -30,7 +30,7 @@ public class CustomerEntity implements Serializable {
   private String zipCode;
   private String city;
   private Date dateOfBirth;
-  private char gender;
+  private String gender;
   private Date registrationDate;
   private Long creditHistoryId;
   
@@ -153,11 +153,11 @@ public class CustomerEntity implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

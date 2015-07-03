@@ -69,7 +69,7 @@ public class CustomerServiceBean implements CustomerService{
     delegateExecution.setVariable("customerId", customerEntity.getId());
     System.out.println("Customer saved with ID: " + customerEntity.getId());
     System.out.println(" ");
-    PdfServiceBean.createWelcome(customerEntity);
+    PdfServiceBean.createWelcome(customerEntity, null);
   }
   
   public void generateTestData(){
@@ -151,7 +151,7 @@ public class CustomerServiceBean implements CustomerService{
     //Persist customer instance and flush. After the flush the id of the customer instance is set.
     entityManager.persist(customerEntity2);
     entityManager.flush();
-    PdfServiceBean.createWelcome(customerEntity2);
+    //PdfServiceBean.createWelcome(customerEntity2);
     System.out.println("Customer saved with ID: " + customerEntity2.getId());
   }
   

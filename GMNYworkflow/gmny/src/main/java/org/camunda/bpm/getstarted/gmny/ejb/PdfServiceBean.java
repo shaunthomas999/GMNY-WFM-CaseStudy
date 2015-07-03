@@ -34,14 +34,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Locale;
+import java.lang.Math;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+import org.camunda.bpm.getstarted.gmny.model.LoanEntity;
+import org.camunda.bpm.getstarted.gmny.ejb.LoanServiceBean;
 
 @Stateless
 public class PdfServiceBean {
 	
-	public static void createWelcome(CustomerEntity customer) {
+	public static void createWelcome(CustomerEntity customer, LoanEntity loan) {
 
 		Document document = new Document(PageSize.A4, Utilities.millimetersToPoints(20), Utilities.millimetersToPoints(22), Utilities.millimetersToPoints(25), Utilities.millimetersToPoints(10));
 		Font fontAddressHeader = new Font(FontFamily.HELVETICA, 8, Font.UNDERLINE, new BaseColor(0, 0, 0));
@@ -72,7 +75,7 @@ public class PdfServiceBean {
 	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, senderAddress, Utilities.millimetersToPoints(20), Utilities.millimetersToPoints(247), 0);		
             
 	        Phrase receiverAddressGender = new Phrase();
-	        receiverAddressGender.add(new Chunk("Mr.", fontAddressBody));
+	        receiverAddressGender.add(new Chunk(customer.getGender(), fontAddressBody));
 	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, receiverAddressGender, Utilities.millimetersToPoints(22), Utilities.millimetersToPoints(240), 0);
 	        
 	        Phrase receiverAddressName = new Phrase();
@@ -142,12 +145,12 @@ public class PdfServiceBean {
 	        document.add(space);
 	        
 	        document.add(Chunk.NEWLINE);
-	        document.add(new Paragraph("PRIVATE LOAN AGREEMENT", fontHeadline));
+	        document.add(new Paragraph("PRIVATE LOAN AGREEMENT / " + loan.getFinancialProduct().getProductName().toUpperCase(), fontHeadline));
 	        document.add(Chunk.NEWLINE);
 	        document.add(Chunk.NEWLINE);
 	        document.add(new Paragraph("Your customer ID: " + customer.getId(), fontTextBold));
 	        document.add(Chunk.NEWLINE);
-	        document.add(new Paragraph("Dear Mr. " + customer.getLastname(), fontText));
+	        document.add(new Paragraph("Dear " + customer.getGender() +" " + customer.getLastname(), fontText));
 	        document.add(Chunk.NEWLINE);
 	        document.add(new Phrase("We are pleased to inform you that your loan request has been accepted. We are willing to make the loan according to the terms and conditions set out below. Please mail or fax us the signed agreement as soon as possible. If there are any questions left do not hesitate to contact us.", fontText));
 	        document.add(Chunk.NEWLINE);
@@ -228,42 +231,95 @@ public class PdfServiceBean {
 	        document.add(Chunk.NEWLINE);
 	        
 	        document.add(new Phrase("The Borrower hereby promises to clear the loan amounting to ", fontText));
-	        document.add(new Phrase("EUR " + "5000" + ",-", fontTextBold));
+	        document.add(new Phrase("EUR " + loan.getAmount() + ",-", fontTextBold));
 	        document.add(new Phrase(" including interests and other charges. Both parties intend to be legally bound to the following repayment schedule:", fontText));
 	        
 	        document.add(Chunk.NEWLINE);
 	        document.add(Chunk.NEWLINE);
 	        
+	        
+	        LoanServiceBean loanServiceBean = new LoanServiceBean();
+	
+	        
 	        document.add(new Phrase("The Borrower agrees to repay the amount of ", fontText));
-	        document.add(new Phrase("EUR " + "5000" + ",-", fontTextBold));
-	        document.add(new Phrase(" in equal monthly installments of ", fontText));
-	        document.add(new Phrase("EUR " + "357" + "," + "15", fontTextBold));
+	        document.add(new Phrase("EUR " + loan.getAmount() + ",-", fontTextBold));
+	        document.add(new Phrase(" in equal monthly installments (\"fixed-rate mortgage\") of ", fontText));
+	        document.add(new Phrase("EUR " + loanServiceBean.getAnnuity(loan) + ",-", fontTextBold));
 	        document.add(new Phrase(" due on the last week of each month. ", fontText));
 	        document.add(new Phrase("The chosen product ", fontText));
-	        document.add(new Phrase("DEBT CONSOLIDATION LOAN", fontTextBold));
+	        document.add(new Phrase(loan.getFinancialProduct().getProductName().toUpperCase(), fontTextBold));
 	        document.add(new Phrase(" commits the borrower to start with loan redemption ", fontText));
-	        document.add(new Phrase("THREE" + " MONTHS", fontTextBold));
+	        document.add(new Phrase("IN JANUARY OF THE UPCOMING YEAR", fontTextBold));
 	        document.add(new Phrase(" after signing this agreement. ", fontText));
 	        document.add(new Phrase(" The Borrower and the Lender agree on an ", fontText));
-	        document.add(new Phrase("annual interest rate of " + "3,76" + " %", fontTextBold));
-	        document.add(new Phrase(". The ", fontText));
-	        document.add(new Phrase("DEBT CONSOLIDATION LOAN", fontTextBold));
-	        document.add(new Phrase(" is a fixed-rate mortgage.", fontText));
+	        document.add(new Phrase("annual interest rate of " + loanServiceBean.getInterestRate(loan) + " %", fontTextBold));
+	        document.add(new Phrase(" for the whole amortisation term of ", fontText));
+	        document.add(new Phrase(loanServiceBean.getPeriodInMonths(loan) + " MONTHS", fontTextBold));
+	        document.add(new Phrase(".", fontText));
 	        
 	        document.add(Chunk.NEWLINE);
 	        document.add(Chunk.NEWLINE);
 	        
-	        PdfPTable table = new PdfPTable(3); // 3 columns.
+	        PdfPTable table = new PdfPTable(2);
 
-            PdfPCell cell1 = new PdfPCell(new Paragraph("Cell 1"));
-            PdfPCell cell2 = new PdfPCell(new Paragraph("Cell 2"));
-            PdfPCell cell3 = new PdfPCell(new Paragraph("Cell 3"));
+            PdfPCell cell1 = new PdfPCell(new Paragraph("AMOUNT:", fontTextBold));
+            PdfPCell cell2 = new PdfPCell(new Paragraph("EUR "+loan.getAmount() + ",-", fontTextBold));
 
             table.addCell(cell1);
             table.addCell(cell2);
+            
+            PdfPCell cell3 = new PdfPCell(new Paragraph("AMORTISATION TERM:", fontTextBold));
+            PdfPCell cell4 = new PdfPCell(new Paragraph(loanServiceBean.getPeriodInMonths(loan) + " MONTHS", fontTextBold));
+            
             table.addCell(cell3);
+            table.addCell(cell4);
+            
+            PdfPCell cell5 = new PdfPCell(new Paragraph("INTEREST RATE:", fontTextBold));
+            PdfPCell cell6 = new PdfPCell(new Paragraph(loanServiceBean.getInterestRate(loan) + " % per annum", fontTextBold));
+            
+            table.addCell(cell5);
+            table.addCell(cell6);
+            
+            PdfPCell cell7 = new PdfPCell(new Paragraph("MONTHLY INSTALLMENTS:", fontTextBold));
+            PdfPCell cell8 = new PdfPCell(new Paragraph("EUR " + loanServiceBean.getAnnuity(loan) + ",-", fontTextBold));
+            
+            table.addCell(cell7);
+            table.addCell(cell8);
+            
+            PdfPCell cell9 = new PdfPCell(new Paragraph("CHARGE:", fontTextBold));
+            PdfPCell cell10 = new PdfPCell(new Paragraph("NO CHARGE", fontTextBold));
+            
+            table.addCell(cell9);
+            table.addCell(cell10);
 
             document.add(table);
+            
+	        document.add(Chunk.NEWLINE);
+	        document.add(Chunk.NEWLINE);
+            
+	        document.add(new Phrase("If the Borrower is unable make any installment on time, the Borrower shall be in default. In that case the Lender can then demand the payment of the entire remaining unpaid balance of this loan.", fontText));
+            
+	        canvas.moveTo(Utilities.millimetersToPoints(40), Utilities.millimetersToPoints(35));
+	        canvas.lineTo(Utilities.millimetersToPoints(90), Utilities.millimetersToPoints(35));
+	        canvas.stroke();
+	        
+	        Phrase sign1 = new Phrase();
+	        sign1.add(new Chunk("- " + customer.getFirstname() + " " + customer.getLastname() + " (\"The Borrower\") -", fontAddressBody));
+	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, sign1, Utilities.millimetersToPoints(40), Utilities.millimetersToPoints(30), 0);
+	        
+	        canvas.moveTo(Utilities.millimetersToPoints(120), Utilities.millimetersToPoints(35));
+	        canvas.lineTo(Utilities.millimetersToPoints(170), Utilities.millimetersToPoints(35));
+	        canvas.stroke();
+	        
+	        Phrase sign2 = new Phrase();
+	        sign2.add(new Chunk("- GMNY direct AG (\"The Lender\") -", fontAddressBody));
+	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, sign2, Utilities.millimetersToPoints(117), Utilities.millimetersToPoints(30), 0);
+	        
+	        Phrase pageNumber = new Phrase();
+	        pageNumber.add(new Chunk("- Page 1/1 -", fontAddressBody));
+	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, pageNumber, Utilities.millimetersToPoints(95), Utilities.millimetersToPoints(8), 0);
+	        
+	      
             document.close();
 
         } catch (DocumentException e) {
