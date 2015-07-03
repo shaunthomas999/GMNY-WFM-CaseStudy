@@ -12,7 +12,7 @@
         <bpmn2:flowNodeRef>EndEvent_3</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
-    <bpmn2:startEvent id="CustomerRegStart" camunda:formKey="embedded:app:forms/01-collect-customer-data.html" name="Collect customer data">
+    <bpmn2:startEvent id="CustomerRegStart" camunda:formKey="embedded:app:forms/01-collect-customer-data.html" name="Collect customer&#xD;&#xA;data">
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="CustomerRegStart" targetRef="ServiceTask_1"/>
@@ -26,7 +26,7 @@
       <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ServiceTask_2" targetRef="EndEvent_3"/>
-    <bpmn2:endEvent id="EndEvent_3" name="Customer is registered">
+    <bpmn2:endEvent id="EndEvent_3" name="Customer is &#xD;&#xA;registered">
       <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
     </bpmn2:endEvent>
   </bpmn2:process>

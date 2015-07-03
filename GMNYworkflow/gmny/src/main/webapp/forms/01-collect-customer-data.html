@@ -1,119 +1,221 @@
 <form name="customer_registration">
+    <!--==scripts==-->
+    <!-- JS - Show Hide Fields Depending on Customer Type -->
+    <script cam-script type="text/javascript">
+        $(document).ready(function () {
+            $("#s1b").hide();
+            $("#s2bp").hide();
+            $("#s3bp").hide();
 
-  <!-- JS - Show Hide Fields Depending on Customer Type -->
-  <p> Form Section 0 - Script for Selector Customer Type</p>
-  <script cam-script type="text/javascript">
-    $(document).ready(function () {
-      $("#private").hide();
-      $("#business").hide();
-      $("#businessAndPrivate").hide();
-      //this will call our toggleFields function every time the selection value of our underAge field changes
-      $("#customerType").change(function () {
-        toggleFields();
-      });
+            $("#customerType").change(function () {
+                toggleFields();
+            });
+        });
+        function toggleFields() {
+            $("#s1b").show();
+            $("#s2bp").show();
+            $("#s3bp").show();
+            if ($("#customerType").val() == 1) {
+                //show for private relevant sections
+                $("#s2bp").show();
+                $("#s3bp").show();
+                //show for private relevant labels
+                $("#s2pl").show();
+                $("#s3pl").show();
+                //hide business stuff
+                $("#s1b").hide();
+                $("#s2bl").hide();
+                $("#s3bl").hide();
+            }
+            else if ($("#customerType").val() == 2) {
+                //show for business relevant sections
+                $("#s1b").show();
+                $("#s2bp").show();
+                $("#s3bp").show();
+                //show for business relevant labels
+                $("#s2bl").show();
+                $("#s3bl").show();
+                //hide private stuff
+                $("#s2pl").hide();
+                $("#s3pl").hide();
+            } else {
+                $("#s1b").hide();
+                $("#s2bp").hide();
+                $("#s3bp").hide();
+            }
+        }
+    </script>
 
-    });
-    //this toggles the visibility of our parent permission fields depending on the current selected value of the underAge field
-    function toggleFields() {
-      $("#businessAndPrivate").show();
-      if ($("#customerType").val() == 1) {
-        $("#private").show();
-        $("#business").hide();
-      }
-      else {
-        $("#private").hide();
-        $("#business").show();
-      }
-    }
-  </script>
+    <!-- JS - Datepicker for contact details/dateOfBirth-->
+    <script cam-script type="text/form-script">
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
 
-  <!-- Input Field Selection - Customer Type - Determines Show/Hide of Other Fields -->
-  <p> Form Section 1 - Customer Type - Selector what is shown </p>
-  <div class="form-group">
-    <label for="customerType">Customer Type<br></label>
-    <select cam-variable-name="customerType" cam-variable-type="String" id="customerType">
-      <option value="0" selected style="display:none;">Please select</option>
-      <option value="1">Private</option>
-      <option value="2">Business</option>
-    </select>
-  </div>
+      $scope.dateFieldOpened = true;
+    };
 
-  <!-- Input Fieldset Textfields - Organization inkl. Address - React to Customer Type -->
-  <p> Form Section 2 - Business Fields - Show if selector is business </p>
-  <div id="business" class="form-group">
-    <!--Name of Organization-->
-    <label for="nameOfOrg">Name of Organization</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="nameOfOrg" name="nameOfOrg"/>
-    <!--two in one row-->
-    <div class="row">
-      <!--Organization Street Name; takes 2/3 of row-->
-      <div class="form-group col-md-8">
-        <label for="businessStreet">Organization Steet Name</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="businessStreet" name="businessStreet"/>
-      </div>
-      <!--Organization Street Number; takes 1/3 of row-->
-      <div class="form-group col-md-4">
-        <label for="businessStreetNumber">Organization Steet Number</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="businessStreetNumber" name="businessStreetNumber"/>
-      </div>
+    </script>
+
+    <!--CSS for better select styling -->
+    <style type="text/css">
+        .styled-select {
+            /*width: 240px;
+            height: 34px;*/
+        }
+        .styled-select select {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1;
+            border: 1;
+            border-radius: 1;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+        .styled-select select:focus {
+            outline: none;
+        }
+    </style>
+
+    <!--CSS for section borders-->
+    <style type="text/css">
+        section {
+            display: block;
+            border-bottom: 1px
+            solid
+            darkgrey
+        }
+    </style>
+
+    <!--==the actual form== -->
+    <!-- Input Field Selection - Customer Type - Determines Show/Hide of Other Fields -->
+    <div id="s0bp">
+        <section>
+            <h3>Customer Type</h3>
+        </section>
+        <p>Please select the type of customer to be registered.<br></p>
+        <div class="row">
+            <div class="styled-select col-md-6">
+                <select cam-variable-name="customerType" cam-variable-type="String" id="customerType" required>
+                    <option value="0" selected style="display:none;">Please select</option>
+                    <option value="1">Private</option>
+                    <option value="2">Business</option>
+                </select>
+            </div>
+        </div>
     </div>
-    <!---two in one row-->
-    <div class="row">
-      <!--Organization Zip Code-->
-      <div class="form-group col-md-4">
-        <label for="businessZipCode">Organization ZIP Code</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="businessZipCode" name="businessZipCode"/>
-      </div>
-      <!--Organization City-->
-      <div class="form-group col-md-8">
-        <label for="businessCity">Organization City</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="businessCity" name="businessCity"/>
-      </div>
+
+    <!-- Input Textfield - Name of Organization - Is displayed for customer type business -->
+    <div id="s1b" class="form-group">
+        <section>
+         <h3>Name of Organization</h3>
+        </section>
+        <p>Please enter the legal name of the organization being registered as a customer.</p>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="nameOfOrg" name="nameOfOrg"/>
     </div>
-  </div>
 
-  <!-- Input Fiedset Textfields - Hybrid Fields - Show allways  -->
-  <p> Form Section 3 - Contact Details - Hybrid Fields that are always shown - change Section header </p>
-  <div id="businessAndPrivate" style="visibility:visible" class="form-group">
-    <!--Gender-->
-    <label for="gender">Gender<br></label>
-    <select cam-variable-name="gender" cam-variable-type="String">
-      <option>Mr.</option>
-      <option>Ms.</option>
-    </select>
-    <!--First Name-->
-    <label for="firstname">First name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"/>
-    <!--Last Name-->
-    <label for="lastname">Last name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname"/>
-    <!--Date of Birth-->
-    <label for="dateOfBirth">Date of Birth</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="dateOfBirth" name="dateOfBirth"/>
-    <!--Email Address-->
-    <label for="email">Email address</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email"/>
-    <!--Phone Number-->
-    <label for="phoneNumber">Phone number</label>
-    <input id="privatePhoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber"/>
-  </div>
+    <!-- Input Textfields - Contact Details - Hybrid Fields that are always shown; change label  -->
+    <div id="s2bp">
+        <!--section heading + change text depending on selector-->
+        <section>
+            <h3>Personal- and Contact Information</h3>
+        </section>
+        <p id="s2bl">Please fill in required personal and contact information of the contact person with the client organization.</p>
+        <p id="s2pl">Please fill in the customers personal and contact information.</p>
+        <!--first row with gender and date of birth (+gylphicon)-->
+        <div class="row">
+            <!--Gender-->
+            <div class="form-group styled-select col-md-6">
+                <p><b>Gender</b></p>
+                <select cam-variable-name="gender" cam-variable-type="String" name="gender">
+                    <option>Mr.</option>
+                    <option>Mrs.</option>
+                </select>
+            </div>
+            <!--Date of Birth-->
+            <div class="form-group col-md-5">
+                <p><b>Date of Birth</b></p>
+                <input type="text"
+                       cam-variable-name="dateOfBirth"
+                       cam-variable-type="Date"
+                       class="form-control"
+                       datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
+                       is-open="dateFieldOpened"
+                       name="dateOfBirth"/>
+            </div>
+            <div class="col-md-1">
+                <p><b><font color="white">btn</font></b></p>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- second row with first and last name-->
+        <div class="row">
+            <!--First Name-->
+            <div class="col-md-6">
+                <label for="firstname">First name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"/>
+            </div>
+            <!--Last Name-->
+            <div class="col-md-6">
+                <label for="lastname">Last name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname"/>
+            </div>
+        </div>
+        <!-- third row with email and phone-->
+        <div class="row">
+            <!--Email Address - single row-->
+            <div class="col-md-6">
+                <label for="email">Email address</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email"/>
+            </div>
+            <!--Phone Number - single row-->
+            <div class="col-md-6">
+                <label for="phoneNumber">Phone number</label>
+                <input id="phoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber"
+                   name="phoneNumber"/>
+            </div>
+        </div>
+    </div>
 
-  <!-- Input Fieldset Textfields - Private Customer - React to Selector -->
-  <p> Form Section 4 - Private Fields - Show if selector is private </p>
-  <div id="private" class="form-group">
-    <!--Street Name-->
-    <label for="privateStreet">Street name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="privateStreet" name ="privateStreet"/>
-    <!--Street Number-->
-    <label for="privateStreetNumber">Street number</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="privateStreetNumber" name ="privateStreetNumber"/>
-    <!--ZIP Code-->
-    <label for="zipCode">Zip code</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="privateZipCode" name ="zipCode"/>
-    <!--City-->
-    <label for="city">City</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="privateCity" name ="privateCity"/>
-  </div>
-<!--EXPERIMENTATION AREA-->
-
+    <!-- Input  Textfields - Private Customer - React to Selector -->
+    <div id="s3bp">
+        <!--section heading + change text depending on selector-->
+        <section>
+            <h3>Address</h3>
+        </section>
+        <p id="s3bl">Please fill in the business address of the organization.</p>
+        <p id="s3pl">Please fill in the customers private address.</p>
+        <!--two in one row / Street Name and Number-->
+        <div class="row">
+            <!-- Street Name; takes 2/3 of row-->
+            <div class="form-group col-md-8">
+                <label for="street">Steet Name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street"/>
+            </div>
+            <!-- Street Number; takes 1/3 of row-->
+            <div class="form-group col-md-4">
+                <label for="streetNumber">Steet Number</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
+                       name="streetNumber"/>
+            </div>
+        </div>
+        <!---two in one row / ZIP and City-->
+        <div class="row">
+            <!-- Zip Code 1/3-->
+            <div class="form-group col-md-4">
+                <label for="zipCode">ZIP Code</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name="zipCode"/>
+            </div>
+            <!-- City 2/3-->
+            <div class="form-group col-md-8">
+                <label for="city">City</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="city" name="city"/>
+            </div>
+        </div>
+    </div>
 </form>

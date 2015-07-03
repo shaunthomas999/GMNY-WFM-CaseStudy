@@ -1,4 +1,249 @@
 <form name="loan-application-received">
+
+
+  <!--==scripts==-->
+  <!-- JS - Show Hide Fields Depending on Customer Type -->
+  <script cam-script type="text/javascript">
+    $(document).ready(function () {
+      $("#s1b").hide();
+      $("#s2bp").hide();
+      $("#s3bp").hide();
+
+      $("#customerType").change(function () {
+        toggleFields();
+      });
+    });
+    function toggleFields() {
+      $("#s1b").show();
+      $("#s2bp").show();
+      $("#s3bp").show();
+      if ($("#customerType").val() == 1) {
+        //show for private relevant sections
+        $("#s2bp").show();
+        $("#s3bp").show();
+        //show for private relevant labels
+        $("#s2pl").show();
+        $("#s3pl").show();
+        //hide business stuff
+        $("#s1b").hide();
+        $("#s2bl").hide();
+        $("#s3bl").hide();
+      }
+      else if ($("#customerType").val() == 2) {
+        //show for business relevant sections
+        $("#s1b").show();
+        $("#s2bp").show();
+        $("#s3bp").show();
+        //show for business relevant labels
+        $("#s2bl").show();
+        $("#s3bl").show();
+        //hide private stuff
+        $("#s2pl").hide();
+        $("#s3pl").hide();
+      } else {
+        $("#s1b").hide();
+        $("#s2bp").hide();
+        $("#s3bp").hide();
+      }
+    }
+  </script>
+
+  <!-- JS - Datepicker for contact details/dateOfBirth-->
+  <script cam-script type="text/form-script">
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.dateFieldOpened = true;
+    };
+
+    </script>
+
+  <!--CSS for better select styling -->
+  <style type="text/css">
+    .styled-select {
+      /*width: 240px;
+      height: 34px;*/
+    }
+    .styled-select select {
+      width: 100%;
+      padding: 5px;
+      font-size: 14px;
+      line-height: 1;
+      border: 1;
+      border-radius: 1;
+      height: 34px;
+      -webkit-appearance: none;
+    }
+    .styled-select select:focus {
+      outline: none;
+    }
+  </style>
+
+  <!--CSS for section borders-->
+  <style type="text/css">
+    section {
+      display: block;
+      border-bottom: 1px
+      solid
+      darkgrey
+    }
+  </style>
+
+  <!--==the actual form== -->
+  <!-- Readonly - Customer Type and Customer ID - Determines Show/Hide of Other Fields -->
+  <div id="s0bp">
+    <section>
+      <h3>Basic Customer Information</h3>
+    </section>
+    <p>Shows the customer type as well as the customer ID of the applicant.<br></p>
+    <!--two in one row - custoemr ID and type -->
+    <div class="row">
+      <!--Customer Type; takes 1/2 of row-->
+      <div class="styled-select col-md-6">
+        <label for="customerType">Customer Type</label>
+        <select cam-variable-name="customerType" cam-variable-type="String" id="customerType" readonly/>
+      </div>
+      <!--Customer ID; takes 1/2 of row-->
+      <div class="form-group col-md-6">
+        <label for="customerID">Customer ID</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="customerId"
+               name="customerId" readonly/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Readonly - Name of Organization - Is displayed for customer type business -->
+  <div id="s1b" class="form-group">
+    <section>
+      <h3>Name of Organization</h3>
+    </section>
+    <p>Shows the name of the organization, which is a business customer.</p>
+    <input class="form-control" cam-variable-type="String" cam-variable-name="nameOfOrg" name="nameOfOrg" readonly/>
+  </div>
+
+  <!-- Readonly Textfields - Contact Details - Hybrid Fields that are always shown; change label  -->
+  <div id="s2bp">
+    <!--section heading + change text depending on selector-->
+    <section>
+      <h3>Personal- and Contact Information</h3>
+    </section>
+    <p id="s2bl">This fieldset shows the contact person with the organization.</p>
+    <p id="s2pl">This fieldset shows the private contact details.</p>
+    <!--first row with gender and date of birth (+gylphicon)-->
+    <div class="row">
+      <!--Gender-->
+      <div class="form-group styled-select col-md-6">
+        <p><b>Gender</b></p>
+        <select cam-variable-name="gender" cam-variable-type="String" name="gender" readonly/>
+      </div>
+      <!--Date of Birth-->
+      <div class="form-group col-md-6">
+        <p><b>Date of Birth</b></p>
+        <input type="text"
+               cam-variable-name="dateOfBirth"
+               cam-variable-type="Date"
+               class="form-control"
+               name="dateOfBirth"
+               readonly/>
+      </div>
+    </div>
+    <!-- second row with first and last name-->
+    <div class="row">
+      <!--First Name-->
+      <div class="col-md-6">
+        <label for="firstname">First name</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
+      </div>
+      <!--Last Name-->
+      <div class="col-md-6">
+        <label for="lastname">Last name</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname" readonly/>
+      </div>
+    </div>
+    <!-- third row with email and phone-->
+    <div class="row">
+      <!--Email Address - single row-->
+      <div class="col-md-6">
+        <label for="email">Email address</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email" readonly/>
+      </div>
+      <!--Phone Number - single row-->
+      <div class="col-md-6">
+        <label for="phoneNumber">Phone number</label>
+        <input id="phoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber"
+               name="phoneNumber" readonly/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Readonly  Textfields - Private Customer - React to Selector -->
+  <div id="s3bp">
+    <!--section heading + change text depending on selector-->
+    <section>
+      <h3>Address</h3>
+    </section>
+    <p id="s3bl">Shows the business address of the organization.</p>
+    <p id="s3pl">Shows the customer's private address.</p>
+    <!--two in one row / Street Name and Number-->
+    <div class="row">
+      <!--Organization Street Name; takes 2/3 of row-->
+      <div class="form-group col-md-8">
+        <label for="street">Steet Name</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street" readonly/>
+      </div>
+      <!--Organization Street Number; takes 1/3 of row-->
+      <div class="form-group col-md-4">
+        <label for="streetNumber">Steet Number</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
+               name="streetNumber" readonly/>
+      </div>
+    </div>
+    <!---two in one row / ZIP and City-->
+    <div class="row">
+      <!-- Zip Code 1/3-->
+      <div class="form-group col-md-4">
+        <label for="zipCode">ZIP Code</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name="zipCode" readonly/>
+      </div>
+      <!-- City 2/3-->
+      <div class="form-group col-md-8">
+        <label for="city">City</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="city" name="city" readonly/>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input  Textfields - Private Customer - React to Selector -->
+  <div id="s3bp">
+    <!--section heading + change text depending on selector-->
+    <section>
+      <h3>Address</h3>
+    </section>
+    <p id="s3bl">Shows the business address of the organization.</p>
+    <p id="s3pl">Shows the customer's private address.</p>
+    <!--two in one row / Street Name and Number-->
+    <div class="row">
+      <!-- Loan Amount; takes 1/2 of row-->
+      <div class="form-group col-md-6">
+        <label for="loanAmount">Steet Name</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="loanAmount" name="loanAmount"/>
+      </div>
+      <!--XXX Street Number; takes 1/2 of row-->
+      <div class="form-group col-md-6">
+        <label for="xxx">xxx</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="xxx"
+               name="xxx" readonly/>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+<!-- THE OLD FORM -->
+
+<!--
+<form name="loan-application-received">
   <div class="form-group">
     <label for="customerId">Customer ID</label>
     <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" required/>
@@ -7,5 +252,6 @@
     <label for="amount">Loan Amount</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" required/>
   </div>
-  
+
 </form>
+-->
