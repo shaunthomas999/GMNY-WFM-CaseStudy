@@ -176,6 +176,6 @@ public class CustomerEntity implements Serializable {
 	public String toString() {
 		return new StringBuffer(" First Name : ").append(this.firstname)
 				.append(" Last Name : ").append(this.lastname)
-				.append(this.id).toString();
+				.append(" CustomerId : ").append(this.id).toString();
 	}
 }

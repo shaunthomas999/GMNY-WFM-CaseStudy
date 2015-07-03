@@ -3,6 +3,11 @@ if Meteor.isServer
     customerRegistration: (customerObj) ->
       console.log 'Ready to send customer registration details : ' + JSON.stringify customerObj
 
+      if customerObj.dateOfBirth is ""
+        dateOfBirth = ""
+      else
+        dateOfBirth = customerObj.dateOfBirth+"T18:25:43.511Z"
+
       message = { "variables":
                   {
                     "orgName" : {"value" : customerObj.orgName, "type": "String"},
@@ -14,7 +19,7 @@ if Meteor.isServer
                     "streetNumber" : {"value" : customerObj.streetNum, "type": "String"},
                     "zipCode" : {"value" : customerObj.pincode, "type": "String"},
                     "city" : {"value" : customerObj.city, "type": "String"},
-                    "dateOfBirth" : {"value" : customerObj.dateOfBirth+"T18:25:43.511Z", "type": "Date"},
+                    "dateOfBirth" : {"value" : dateOfBirth, "type": "Date"},
                     "gender" : {"value" : customerObj.gender, "type": "String"},
                     "customerType" : {"value" : customerObj.customerType, "type": "String"}
                   }
@@ -25,7 +30,7 @@ if Meteor.isServer
                     "headers": {'Content-Type': 'application/json'}
                     }
 
-      console.log "Request body : " + requestBody
+      console.log "Request body : " + JSON.stringify requestBody
 
       HTTP.post 'http://localhost:8081/engine-rest/process-definition/key/customer-registration/start', requestBody, (err, result) ->
         if err

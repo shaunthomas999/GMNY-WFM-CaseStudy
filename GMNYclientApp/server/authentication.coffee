@@ -10,25 +10,38 @@ Accounts.validateLoginAttempt (attemptInfo) ->
 Meteor.methods
 
 	authenticateUser: (customerId, password) ->
-		authObj = {}
-		authObj.data = {}
-		authObj.data.customerId = customerId
-		authObj.data.password = password
-		console.log "Data to send to proxy : " + JSON.stringify authObj
+		#authObj = {}
+		#authObj.data = {}
+		#authObj.data.customerId = customerId
+		#authObj.data.password = password
+		console.log "Data to send to proxy : " + customerId + " - " + password
 		responseValue = null
 		try
-			result = HTTP.post 'http://localhost:4000/bpm/authenticateUser', authObj
-			authResult = JSON.parse(result.content)
+			checkPasswordURL = "http://localhost:8081/gmny/client/api/checkPassword/#{customerId}/#{password}"
+			console.log checkPasswordURL
+			result = HTTP.get checkPasswordURL
+			authResult = result.content
 			console.log "GMNYclientApp : authentication.coffee > " + "Result received : " + result.content
-			if authResult.outcome is "success"
+			
+			if authResult is "pass"
 				meteorUserCursor = Meteor.users.find({username: customerId})
 				if not meteorUserCursor.count()
 					Accounts.createUser({username: customerId, password: password})
 					console.log "GMNYclientApp : authentication.coffee > " +"Created new user #{customerId} in Meteor.users collection"
 				else
 					console.log "GMNYclientApp : authentication.coffee > " +"Customer already exists in our list"
-				console.log "GMNYclientApp : authentication.coffee > " +"Customer type : " + authResult.customerType
-				responseValue = authResult.customerType
+
+				# Get the customer details from BPM app
+				getCustomerURL = "http://localhost:8081/gmny/client/api/getCustomer/#{customerId}"
+				console.log getCustomerURL
+				result = HTTP.get getCustomerURL
+
+				customerObj = JSON.parse result.content
+
+				console.log "Customer object received : " + JSON.stringify customerObj
+				console.log "GMNYclientApp : authentication.coffee > " +"Customer type : " + customerObj.customerType
+
+				responseValue = customerObj
 			else
 				console.error "Cannot authenticate user"
 				responseValue = null
