@@ -17,7 +17,7 @@ Meteor.methods
 		console.log "Data to send to proxy : " + JSON.stringify authObj
 		responseValue = null
 		try
-			result = HTTP.post 'http://localhost:8081/bpm/authenticateUser', authObj
+			result = HTTP.post 'http://localhost:4000/bpm/authenticateUser', authObj
 			authResult = JSON.parse(result.content)
 			console.log "GMNYclientApp : authentication.coffee > " + "Result received : " + result.content
 			if authResult.outcome is "success"

@@ -11,14 +11,6 @@
         <h1 class="title-auth">Register.</h1>
         <p class="subtitle-auth" >Please fill in the details below</p>
 
-        {{#if errorMessages}}
-          <div class="list-errors">
-            {{#each errorMessages}}
-              <div class="list-item">{{this}}</div>
-            {{/each}}
-          </div>
-        {{/if}}
-
         <div class="button-bar">
           <a id="privCustomerOption" class="button button-positive">
             <i class="icon ion-person"></i>
@@ -30,16 +22,28 @@
           </a>
         </div>
 
+        <div class="list list-inset">
+          <label class="item item-input bar bar-dark {{isPrivateCustomer}}">
+            Private Customer
+          </label>
+          <label class="item item-input bar bar-dark {{isBusinessCustomer}}">
+            Business Customer
+          </label>
+        </div>
+
+        <div>
+        {{#if errorMessages}}
+          <div class="list-errors">
+            {{#each errorMessages}}
+              <div class="list-item">{{this}}</div>
+            {{/each}}
+          </div>
+        {{/if}}
+        </div>
+
         <form id="customerRegForm">
           <div>
             <div class="list list-inset">
-              <label class="item item-input bar bar-dark {{isPrivateCustomer}}">
-                Private Customer
-              </label>
-              <label class="item item-input bar bar-dark {{isBusinessCustomer}}">
-                Business Customer
-              </label>
-
               <!-- Start - Business customer's only -->
               <label class="item item-input {{isBusinessCustomer}}">
                 <span class="input-label">Name of the organisation : </span>
