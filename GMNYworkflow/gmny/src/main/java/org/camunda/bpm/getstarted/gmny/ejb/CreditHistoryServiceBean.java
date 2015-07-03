@@ -178,7 +178,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		    if(privateClient){
 		    	message = "{\"variables\": {"
 			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"Long\"},"
 			    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
 			    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
 			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
@@ -190,7 +190,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		    else{
 		    	message = "{\"variables\": {"
 			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"Long\"},"
 			    		+ "\"name\" : {\"value\" : \"" + variables.get("orgName") + "\", \"type\": \"String\"},"
 			    		+ "\"surname\" : {\"value\" : \"\", \"type\": \"String\"},"
 			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
@@ -207,6 +207,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/HistoryAPIsimulation/start");
 		    
 		    //real GTA path
+		    //WebResource webResource = client.resource("http://localhost:8080/GTA/rest/order/creditHistory");
 		    
 		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
@@ -246,7 +247,7 @@ public void requestCreditHistoryCleanup(DelegateExecution delegateExecution) {
 		    if(privateClient){
 		    	message = "{\"variables\": {"
 			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"Long\"},"
 			    		+ "\"name\" : {\"value\" : \"" + variables.get("firstname") + "\", \"type\": \"String\"},"
 			    		+ "\"surname\" : {\"value\" : \"" + variables.get("lastname") + "\", \"type\": \"String\"},"
 			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
@@ -258,7 +259,7 @@ public void requestCreditHistoryCleanup(DelegateExecution delegateExecution) {
 		    else{
 		    	message = "{\"variables\": {"
 			    		+ "\"requestId\" : {\"value\" : \"" + variables.get("requestId") + "\", \"type\": \"String\"},"
-			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"String\"},"
+			    		+ "\"customerId\" : {\"value\" : \"1\", \"type\": \"Long\"},"
 			    		+ "\"name\" : {\"value\" : \"" + variables.get("orgName") + "\", \"type\": \"String\"},"
 			    		+ "\"surname\" : {\"value\" : \"\", \"type\": \"String\"},"
 			    		+ "\"street\" : {\"value\" : \"" + variables.get("street") + " " + variables.get("streetNumber") + "\", \"type\": \"String\"},"
@@ -272,8 +273,9 @@ public void requestCreditHistoryCleanup(DelegateExecution delegateExecution) {
 			
 			//for testing
 		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/CleanupAPIsimulation/start");
-		    
+		    		    
 		    //real GTA path
+		    //WebResource webResource = client.resource("http://localhost:8080/GTA/rest/order/creditCleanup");
 		    
 		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
