@@ -41,7 +41,26 @@ if Meteor.isServer
 
     loanApplication: (loanObj) ->
       console.log 'Ready to send loan application ' + JSON.stringify loanObj
-      HTTP.post 'http://localhost:8081/applyLoan', loanObj, (err, result) ->
+
+      message = { "variables":
+                  {
+                    "amount" : {"value" : loanObj.amount, "type": "Long"},
+                    "period" : {"value" : loanObj.period, "type": "String"},
+                    "occupation" : {"value" : loanObj.occupation, "type": "String"},
+                    "annualSalary" : {"value" : loanObj.annualSalary, "type": "Integer"},
+                    "loanType" : {"value" : loanObj.loanType, "type": "String"}
+                  }
+                }
+
+      requestBody = {
+                    "data": message,
+                    "headers": {'Content-Type': 'application/json'}
+                    }
+
+      console.log "Request body : " + JSON.stringify requestBody
+      loanApplicationURL = 'http://localhost:8081/engine-rest/process-definition/key/loan-approval/start'
+      console.log loanApplicationURL
+      HTTP.post loanApplicationURL, requestBody, (err, result) ->
         if err
           console.error err
         console.log 'Response received from BPM app'
