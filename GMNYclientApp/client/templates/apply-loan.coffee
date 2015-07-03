@@ -1,12 +1,16 @@
 Template.applyLoan.helpers
   isPrivateCustomer: ->
     customerObj = Session.get("currentuser")
+    if customerObj.customerType is "private" then return true else return false
+
+  privateCustomerCssClass: ->
+    customerObj = Session.get("currentuser")
     if customerObj.customerType is "private"
       return ""
     else
       return "display-none"
 
-  isBusinessCustomer: ->
+  businessCustomerCssClass: ->
     customerObj = Session.get("currentuser")
     if customerObj.customerType is "business"
       return ""

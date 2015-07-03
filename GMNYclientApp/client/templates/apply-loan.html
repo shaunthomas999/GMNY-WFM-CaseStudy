@@ -3,7 +3,7 @@
     <div>
       <div class="list list-inset">
         <label class="item item-input bar bar-dark">
-          Loan Application
+          Loan Application for {{#if isPrivateCustomer}}Private{{else}}Business{{/if}} Customer
         </label>
 
         <label class="item item-input">
@@ -15,15 +15,15 @@
           <input id="period" type="text">
         </label>
         
-        <label class="item item-input {{isPrivateCustomer}}">
+        <label class="item item-input {{privateCustomerCssClass}}">
           <span class="input-label">Occupation : </span>
           <input id="occupation" type="text">
         </label>
-        <label class="item item-input {{isPrivateCustomer}}">
+        <label class="item item-input {{privateCustomerCssClass}}">
           <span class="input-label">Annual Salary : </span>
           <input id="annualSalary" type="text">
         </label>
-        <label class="item item-input item-select {{isPrivateCustomer}}">
+        <label class="item item-input item-select {{privateCustomerCssClass}}">
           <div class="input-label">
             Loan type : 
           </div>
@@ -36,7 +36,7 @@
           </select>
         </label>
 
-        <label class="item item-input item-select {{isBusinessCustomer}}">
+        <label class="item item-input item-select {{businessCustomerCssClass}}">
           <div class="input-label">
             Loan type : 
           </div>
