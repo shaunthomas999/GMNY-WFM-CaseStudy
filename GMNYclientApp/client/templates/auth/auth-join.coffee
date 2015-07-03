@@ -33,17 +33,6 @@ Template.join.events
   "click #customerRegFormSubmit": (event) ->
     event.preventDefault()
 
-    ###
-    password = $('#password').val()
-    confirmPassword = $('#confirmPassword').val()
-    errors = {}
-    errors.password = "Please enter password" unless password
-    errors.confirmPassword = "Please confirm your password" unless confirmPassword
-    errors.passwordMatch = "Password and confirm password should match" unless password is confirmPassword
-    Session.set ERRORS_KEY, errors
-    return  if _.keys(errors).length
-    ###
-
     errors = {}
     customerObj = {}
 
@@ -67,20 +56,6 @@ Template.join.events
       customerObj.gender = ""
       customerObj.orgName = $('#orgName').val()
       customerObj.businessArea = $('#businessArea').val()
-      
-    password = $('#password').val()
-    if not _.isEmpty password then customerObj.password = password else errors.password = "Please enter password"
-    Session.set ERRORS_KEY, errors
-    return if _.keys(errors).length
-
-    confirmPassword = $('#confirmPassword').val()
-    if confirmPassword then console.log "Password confirmed" else errors.confirmPassword = "Please confirm your password"
-    Session.set ERRORS_KEY, errors
-    return if _.keys(errors).length
-
-    if password is confirmPassword then console.log "Password matched" else errors.passwordMatch = "Password and confirm password should match"
-    Session.set ERRORS_KEY, errors
-    return if _.keys(errors).length
 
     Meteor.call "customerRegistration", customerObj, (error, result) ->
       if error
