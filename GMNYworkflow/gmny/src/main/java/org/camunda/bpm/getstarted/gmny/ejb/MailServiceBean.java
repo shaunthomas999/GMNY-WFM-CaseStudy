@@ -68,8 +68,8 @@ public class MailServiceBean {
 			HashMap<String, String> defaultVars = new HashMap<String, String>();
 			defaultVars.put("greeting", "Hello!");
 			defaultVars.put("text", "testtext");
-			defaultVars.put("homepage", "http://www.wemmer.ch");
-			defaultVars.put("share", URLEncoder.encode("GMNY http://www.wemmer.ch", "UTF-8"));
+			defaultVars.put("homepage", "http://localhost:3000/home");
+			defaultVars.put("share", URLEncoder.encode("GMNY http://localhost:3000/home", "UTF-8"));
 			defaultVars.put("footer", "You are receiving this e-mail, since you are a customer of GMNY!");
 			defaultVars.put("buttonLink", "http://www.wemmer.ch");
 			defaultVars.put("buttonTitle", "Go to Online-Banking!");

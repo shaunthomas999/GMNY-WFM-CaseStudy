@@ -227,7 +227,7 @@ public class CustomerServiceBean implements CustomerService{
 	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + "!");
     vars.put("text", "We are happy to welcome you as a customer of GMNY. You are now able to access our Online-Banking system! Your login crediantials are as follows: <br> Customer-ID: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
     vars.put("buttonTitle", "Go to Online-Banking!");
-	vars.put("buttonLink", "http://www.wemmer.ch");
+	vars.put("buttonLink", "http://localhost:3000/home");
 	try {
 		System.out.println(
 			MailServiceBean.send(
