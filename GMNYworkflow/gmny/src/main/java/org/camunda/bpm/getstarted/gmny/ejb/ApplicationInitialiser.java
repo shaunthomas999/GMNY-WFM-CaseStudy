@@ -61,7 +61,7 @@ public class ApplicationInitialiser {
 	    em.persist(constructionLoan);
 	    em.flush();
 	    
-	  	FinancialProductEntity gmnyAmbitiousBusinessLoan = createFinancialProduct("GMNY Ambitious Business", "business", "For those that want more", (long) 500000, (long) 8000000, 0.027f, 0.124f, (long) 3, (long) 25);    
+	  	FinancialProductEntity gmnyAmbitiousBusinessLoan = createFinancialProduct("GMNY Ambitious Business", "business", "The customized loan product for our ambitious business customers.", (long) 500000, (long) 8000000, 0.027f, 0.124f, (long) 3, (long) 25);    
 	    em.persist(gmnyAmbitiousBusinessLoan);
 	    em.flush();
 	    
