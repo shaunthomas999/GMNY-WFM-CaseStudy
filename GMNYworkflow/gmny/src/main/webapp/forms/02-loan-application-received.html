@@ -198,7 +198,7 @@
 
     </script>
 
-    <!--CSS for better select styling -->
+    <!--CSS for better select styling
     <style type="text/css">
         .styled-select {
             /*width: 240px;
@@ -217,9 +217,9 @@
         .styled-select select:focus {
             outline: none;
         }
-    </style>
+    </style> -->
 
-    <!--CSS for better select descriptions -->
+    <!--CSS for better select descriptions
     <style type="text/css">
         .styled-select-text {
             width: 100%;
@@ -231,7 +231,7 @@
             height: 34px;
             -webkit-appearance: none;
         }
-    </style>
+    </style> -->
 
     <!--CSS for section borders-->
     <style type="text/css">
@@ -255,20 +255,24 @@
             <!--Customer Type; takes 1/2 of row-->
             <div class="styled-select col-md-6">
                 <label for="customerType">Customer Type</label>
-                <select cam-variable-name="customerType" cam-variable-type="String" id="customerType" readonly/>
+                <select cam-variable-name="customerType" cam-variable-type="String" id="customerType">
+                    <option value="0" selected style="display:none;">Please select</option>
+                    <option value="1">Private</option>
+                    <option value="2">Business</option>
+                </select>
             </div>
             <!--Customer ID; takes 1/4 of row-->
             <div class="form-group col-md-3">
                 <label for="customerID">Customer ID</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="customerId"
-                       name="customerId" readonly/>
+                       name="customerId"/>
             </div>
-            <!--Registration Date; takes 1/4 of row-->
+            <!--Registration Date; takes 1/4 of row
             <div class="form-group col-md-3">
                 <label for="customerID">Registration Date</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="registrationDate"
                        name="registrationDate" readonly/>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -452,6 +456,7 @@
                     <option value="5">GMNY Ambitions Business</option>
                 </select>
             </div>
+            <!--
             <div class="styled-select-text">
                 <p id="s4bl1">1.	5-7.5% Interest<br>
                     2.	Funding for 1-5 months<br>
@@ -474,7 +479,7 @@
                     4.	Loans for commercial construction
                 </p>
                 <p id="s4bl5">The customized loan product for our ambitious business customers.</p>
-            </div>
+            </div> -->
         </div>
     </div>
 
