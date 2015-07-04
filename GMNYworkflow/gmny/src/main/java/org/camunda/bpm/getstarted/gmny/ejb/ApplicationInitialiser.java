@@ -88,7 +88,7 @@ public class ApplicationInitialiser {
 	    CustomerEntity jochenK = new CustomerEntity();
 	    
 	  	jochenK.setFirstname("Jochen");
-	  	jochenK.setLastname("Köhnke");
+	  	jochenK.setLastname("Koehnke");
 	  	jochenK.setGender("Mr.");
 	  	jochenK.setEmail("plakatterrorinmuenster@rautschka.com");
 	  	jochenK.setPhoneNumber("+49 251 77 0 99");
