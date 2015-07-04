@@ -71,7 +71,7 @@ public class PdfServiceBean {
 			
     		
 			Phrase senderAddress = new Phrase();
-			senderAddress.add(new Chunk("GMNY direct AG | Lothar-Matthäus-Platz 2 | 48149 Münster", fontAddressHeader));
+			senderAddress.add(new Chunk("GMNY direct AG | Lothar-Matthaeus-Platz 2 | 48149 Muenster", fontAddressHeader));
 	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, senderAddress, Utilities.millimetersToPoints(20), Utilities.millimetersToPoints(247), 0);		
             
 	        Phrase receiverAddressGender = new Phrase();
@@ -105,11 +105,11 @@ public class PdfServiceBean {
 	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, gmnyHead, Utilities.millimetersToPoints(145), Utilities.millimetersToPoints(224), 0);
 	        
 	        Phrase gmnyStreet = new Phrase();
-	        gmnyStreet.add(new Chunk("Lothar-Matthäus-Platz 2", fontGmnyAddress));
+	        gmnyStreet.add(new Chunk("Lothar-Matthaeus-Platz 2", fontGmnyAddress));
 	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, gmnyStreet, Utilities.millimetersToPoints(145), Utilities.millimetersToPoints(218), 0);
 	        
 	        Phrase gmnyCity = new Phrase();
-	        gmnyCity.add(new Chunk("48149 Münster", fontGmnyAddress));
+	        gmnyCity.add(new Chunk("48149 Muenster", fontGmnyAddress));
 	        ColumnText.showTextAligned(canvas, Element.ALIGN_LEFT, gmnyCity, Utilities.millimetersToPoints(145), Utilities.millimetersToPoints(213), 0);
 	        
 	        Phrase gmnyTel = new Phrase();
@@ -202,7 +202,7 @@ public class PdfServiceBean {
 	        document.add(hp3);
 	        document.add(Chunk.NEWLINE);
 	        
-	        Paragraph hp4 = new Paragraph("GMNY direct AG, Lothar-Matthäus-Platz 2, 48149 Münster   (\"The Lender\").", fontTextBold);
+	        Paragraph hp4 = new Paragraph("GMNY direct AG, Lothar-Matthaeus-Platz 2, 48149 Muenster   (\"The Lender\").", fontTextBold);
 	        hp4.setAlignment(Element.ALIGN_CENTER);
 	        document.add(hp4);
 	        
