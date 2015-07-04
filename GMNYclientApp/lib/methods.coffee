@@ -44,11 +44,13 @@ if Meteor.isServer
 
       message = { "variables":
                   {
+                    "customerId" : {"value" : loanObj.customerId, "type": "Long"},
                     "amount" : {"value" : loanObj.amount, "type": "Long"},
-                    "period" : {"value" : loanObj.period, "type": "String"},
+                    "period" : {"value" : loanObj.period, "type": "Integer"},
                     "occupation" : {"value" : loanObj.occupation, "type": "String"},
                     "annualSalary" : {"value" : loanObj.annualSalary, "type": "Integer"},
-                    "loanType" : {"value" : loanObj.loanType, "type": "String"}
+                    "loanType" : {"value" : loanObj.loanType, "type": "String"},
+                    "applicationType" : {"value" : "online", "type": "String"}
                   }
                 }
 
