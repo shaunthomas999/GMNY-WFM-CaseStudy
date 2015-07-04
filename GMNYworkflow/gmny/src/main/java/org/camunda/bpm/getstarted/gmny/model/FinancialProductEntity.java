@@ -12,12 +12,13 @@ public class FinancialProductEntity implements Serializable {
  
   private static final long serialVersionUID = 1L;
  
-  @Id
-  @GeneratedValue
-  protected Long id;
+
  
   @Version
   protected long version;
+  
+  @Id
+  private Long identifier;
  
   private String productType;
   private String productName;
@@ -86,6 +87,12 @@ public Long getMaxAmount() {
 }
 public void setMaxAmount(Long maxAmount) {
 	this.maxAmount = maxAmount;
+}
+public Long getIdentifier() {
+	return identifier;
+}
+public void setIdentifier(Long identifier) {
+	this.identifier = identifier;
 }
   
 }

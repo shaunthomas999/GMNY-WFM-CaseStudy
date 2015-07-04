@@ -4,6 +4,7 @@ package org.camunda.bpm.getstarted.gmny.ejb;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+import org.camunda.bpm.getstarted.gmny.model.FinancialProductEntity;
 import org.camunda.bpm.getstarted.gmny.service.CreditHistoryService;
 
 import com.sun.jersey.api.client.Client;
@@ -15,6 +16,7 @@ import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
 import com.sun.jersey.api.json.JSONConfiguration;
 import com.sun.jersey.core.util.MultivaluedMapImpl;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 //import javax.inject.Inject;
 import javax.inject.Named;
@@ -36,6 +38,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	// Inject the entity manager
 	@PersistenceContext
 	private EntityManager entityManager;
+	
+	@EJB
+	FinancialProductServiceBean financialProductServiceBean;
 	
 	public void persistCreditHistory(DelegateExecution delegateExecution) {
 		
@@ -113,9 +118,61 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		delegateExecution.setVariable("recommendation", recommendation);
 		
 		System.out.println("Outcome - recommendation: " + recommendation);
-		System.out.println("");
+		
+		//get the chosen financial product
+		Long productId = (Long) variables.get("privateLoanType");
+		FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
+		
+		Float interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
+		Float interestStep = interestSpread / 8.0f;
+		
+		Float individualInterestRate = product.getMaxInterestRate();
+		int scoringInt = (int) variables.get("scoring");
+		
+		switch (scoringInt) {
+			case 15: individualInterestRate = product.getMinInterestRate(); break;
+			case 14: individualInterestRate = product.getMinInterestRate() + interestStep; break;
+			case 13: individualInterestRate = product.getMinInterestRate() + (2.0f * interestStep); break;
+			case 12: individualInterestRate = product.getMinInterestRate() + (3.0f * interestStep); break;
+			case 11: individualInterestRate = product.getMinInterestRate() + (4.0f * interestStep); break;
+			case 10: individualInterestRate = product.getMinInterestRate() + (5.0f * interestStep); break;
+			case 9: individualInterestRate = product.getMinInterestRate() + (6.0f * interestStep); break;
+			case 8: individualInterestRate = product.getMinInterestRate() + (7.0f * interestStep); break;
+			default: individualInterestRate = product.getMaxInterestRate(); break;
+		}
+		
+		delegateExecution.setVariable("interestRate", individualInterestRate);
+		
+		Long amount = (Long) variables.get("amount");
+		Long period = (Long) variables.get("period");
+		
+		Long individualAmount;
+		Long individualPeriod;
+		
+		
+		
+		if (amount <= product.getMaxAmount() && amount >= product.getMinAmount()) {
+			individualAmount = amount;
+			delegateExecution.setVariable("amount", individualInterestRate);
+		} else {
+			individualAmount = (long) 0;
+			delegateExecution.setVariable("amount", "Amount is out of range!");
+		}
+		
+		if (period <= product.getMaxPeriod() && period >= product.getMinPeriod()) {
+			individualPeriod = amount;
+			delegateExecution.setVariable("period", individualInterestRate);
+		} else {
+			individualPeriod = (long) 0;
+			delegateExecution.setVariable("period", "Period is out of range!");
+		}
+		
+
+		
+		
 		
 	  }
+	
 
 	public void loadCreditHistory(DelegateExecution delegateExecution) {
 		
