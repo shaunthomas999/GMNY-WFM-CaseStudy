@@ -2,7 +2,7 @@
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_WeGPUBAvEeWe4a7UYO7U6g" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
   <bpmn2:collaboration id="loan-approval-process" name="Loan Approval Process">
     <bpmn2:documentation>The loan approval process handles the GMNY workflow from the point were an application for a loan is received, till the conclusion of the application. An application either leads to a loan contract, or an rejection. Furthermore, if rejected an applicant can either try to apply again with updated, - more suitable- parameters, or request a credit rating cleanup service, which will help him to improve is credit rating.</bpmn2:documentation>
-    <bpmn2:participant id="pool-GMNY" name="GMNY" processRef="loan-approval-v2">
+    <bpmn2:participant id="pool-GMNY" name="GMNY" processRef="loan-approval">
       <bpmn2:documentation>The pool GMNY is the central pool of this BPMN-model and represents our company. The pool is divided into the two lanes Loan Officer and Bank Clerk. These are the roles involved with the loan approval process.</bpmn2:documentation>
     </bpmn2:participant>
     <bpmn2:participant id="pool-GTA" name="GTA">
@@ -16,7 +16,7 @@
     <bpmn2:messageFlow id="message-flow-request-cleanup-service-to-GTA" sourceRef="service-task-request-cleanup-service" targetRef="pool-GTA"/>
     <bpmn2:messageFlow id="message-flow-GTA-to-cleanup-recommendation" sourceRef="pool-GTA" targetRef="message-catch-event-cleanup-recommendation"/>
   </bpmn2:collaboration>
-  <bpmn2:process id="loan-approval-v2" name="2 - Loan Approval" isExecutable="true">
+  <bpmn2:process id="loan-approval" name="2 - Loan Approval" isExecutable="true">
     <bpmn2:laneSet id="LaneSet_1" name="Lane Set 1">
       <bpmn2:lane id="lane-loan-officer" name="Loan Officer">
         <bpmn2:documentation>The loan officer is the executive role that decides whether an applicants loan request is granted, or not. She forms her decision based onthe application parameters, the recent credit rating and a risk evaluation.</bpmn2:documentation>
@@ -188,7 +188,7 @@
       </bpmn2:timerEventDefinition>
     </bpmn2:intermediateCatchEvent>
     <bpmn2:sequenceFlow id="flow-wait-three-months-to-offer-reapplication" sourceRef="timer-event-wait-three-months" targetRef="UserTask_5"/>
-    <bpmn2:serviceTask id="service-task-request-cleanup-service" camunda:expression="${true}" camunda:async="true" name="Request Cleanup Service">
+    <bpmn2:serviceTask id="service-task-request-cleanup-service" camunda:expression="${creditHistoryServiceBean.requestCreditHistoryCleanup(execution)}" camunda:async="true" name="Request Cleanup Service">
       <bpmn2:documentation>This service task executes the request regarding credit cleanup service. The service is provided by GTA as we have outsourced it to save costs. GTA is only allowed to perform this service for us as it is an important trademark of GMNY.</bpmn2:documentation>
       <bpmn2:incoming>flow-option-selected-to-request-cleanup-service</bpmn2:incoming>
       <bpmn2:outgoing>flow-request-cleanup-service-to-cleanup-recommendation</bpmn2:outgoing>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://activiti.org/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_8tSH8BM0EeWEvZ4m1p99Fg" exporter="camunda modeler" exporterVersion="2.7.0" targetNamespace="http://activiti.org/bpmn">
+  <bpmn2:process id="CleanupAPIsimulation" name="99 - [GTA Cleanup Simulation]" isExecutable="true">
+    <bpmn2:startEvent id="StartEvent_1" name="API start">
+      <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:userTask id="UserTask_1" name="Enter cleanup text">
+      <bpmn2:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="name" label="First name" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true"/>
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="surname" label="Last Name" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true"/>
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="requestId" label="requestId" type="string">
+            <camunda:properties>
+              <camunda:property id="readonly" value="true"/>
+            </camunda:properties>
+          </camunda:formField>
+          <camunda:formField id="cleanupRecommendation" label="Customer Cleanup Recommendation" type="string"/>
+          <camunda:formField id="street" label="Street" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="zip" label="Zip Code" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="city" label="City" type="string">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="privateClient" label="is private client?" type="boolean">
+            <camunda:validation>
+              <camunda:constraint name="readonly" config="true"/>
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn2:extensionElements>
+      <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:serviceTask id="ServiceTask_1" camunda:expression="${gtaSimulationServiceBean.respondeCleanup(execution)}" name="Send response">
+      <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:endEvent id="EndEvent_1" name="End">
+      <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="StartEvent_1" targetRef="UserTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ServiceTask_1"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="ServiceTask_1" targetRef="EndEvent_1"/>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="CleanupAPIsimulation">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="148.0" y="217.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_2" bpmnElement="ServiceTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="396.0" y="195.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_2" bpmnElement="UserTask_1">
+        <dc:Bounds height="80.0" width="100.0" x="252.0" y="195.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_EndEvent_2" bpmnElement="EndEvent_1">
+        <dc:Bounds height="36.0" width="36.0" x="569.0" y="217.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="587.0" y="258.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="SequenceFlow_1" sourceElement="_BPMNShape_StartEvent_2" targetElement="_BPMNShape_UserTask_2">
+        <di:waypoint xsi:type="dc:Point" x="184.0" y="235.0"/>
+        <di:waypoint xsi:type="dc:Point" x="252.0" y="235.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_2" sourceElement="_BPMNShape_UserTask_2" targetElement="_BPMNShape_ServiceTask_2">
+        <di:waypoint xsi:type="dc:Point" x="352.0" y="235.0"/>
+        <di:waypoint xsi:type="dc:Point" x="396.0" y="235.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_3" sourceElement="_BPMNShape_ServiceTask_2" targetElement="_BPMNShape_EndEvent_2">
+        <di:waypoint xsi:type="dc:Point" x="496.0" y="235.0"/>
+        <di:waypoint xsi:type="dc:Point" x="569.0" y="235.0"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

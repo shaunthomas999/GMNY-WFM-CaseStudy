@@ -28,6 +28,10 @@ public class CreditHistoryEntity implements Serializable {
   private Long badDepts;
   private Long consumerCredits;
   
+  private String rating;
+  private Long badDeptsInPastTwoYears;
+  private Long deptRatioWithNewCreditAmount;
+  
   private Boolean recommendation;
   
   public Long getId() {
@@ -101,6 +105,31 @@ public class CreditHistoryEntity implements Serializable {
 
 	public void setRecommendation(Boolean recommendation) {
 		this.recommendation = recommendation;
+	}
+
+	public Long getBadDeptsInPastTwoYears() {
+		return badDeptsInPastTwoYears;
+	}
+
+	public void setBadDeptsInPastTwoYears(Long badDeptsInPastTwoYears) {
+		this.badDeptsInPastTwoYears = badDeptsInPastTwoYears;
+	}
+
+	public Long getDeptRatioWithNewCreditAmount() {
+		return deptRatioWithNewCreditAmount;
+	}
+
+	public void setDeptRatioWithNewCreditAmount(
+			Long deptRatioWithNewCreditAmount) {
+		this.deptRatioWithNewCreditAmount = deptRatioWithNewCreditAmount;
+	}
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
 	}
   
 }

@@ -37,6 +37,27 @@ Router.map ->
     action: ->
       Router.go "appMain"
   # - error-page
-  @route "errorPage"
+  @route "errorPage",
+    action: ->
+      @render('errorPage', {to: 'content'})
+      @render('appMain')
   # - join-response
-  @route "joinResponse"
+  @route "joinResponse",
+    action: ->
+      @render('joinResponse', {to: 'content'})
+      @render('appMain')
+  # - apply loan
+  @route "applyLoan",
+    action: ->
+      @render('applyLoan', {to: 'content'})
+      @render('appMain')
+  # - apply-loan-response
+  @route "applyLoanResponse",
+    action: ->
+      @render('applyLoanResponse', {to: 'content'})
+      @render('appMain')
+  # - loan-status
+  @route "loanStatus",
+    action: ->
+      @render('loanStatus', {to: 'content'})
+      @render('appMain')

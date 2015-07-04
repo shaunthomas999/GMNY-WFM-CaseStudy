@@ -32,6 +32,8 @@ Template.join.events
 
   "click #customerRegFormSubmit": (event) ->
     event.preventDefault()
+
+    errors = {}
     customerObj = {}
 
     customerObj.firstName = $('#firstName').val()
