@@ -21,21 +21,50 @@ public class ApplicationInitialiser {
   @PostConstruct
   public void initialise() {
 	  
-	  	FinancialProductEntity carLoan = new FinancialProductEntity();
-	    
-	    carLoan.setProductName("Car Loan");
-	    carLoan.setProductType("private");
-	    carLoan.setProductDescription("Treat yourself to a new car!");
-	    carLoan.setMinAmount((long) 1000);
-	    carLoan.setMaxAmount((long) 120000);
-	    carLoan.setMinInterestRate(4.9f);
-	    carLoan.setMaxInterestRate(9.6f);
-	    carLoan.setMinPeriod((long) 1);
-	    carLoan.setMinPeriod((long) 6);
-	    
+	  //private
+	  
+	  	FinancialProductEntity carLoan = createFinancialProduct("Car Loan", "private", "Treate yourself to a new car!", (long) 1000, (long) 100000, 0.04f, 0.15f, (long) 1, (long) 4);    
 	    em.persist(carLoan);
 	    em.flush();
+	    
+	  	FinancialProductEntity debtConsolidationLoan = createFinancialProduct("Debt Consolidation Loan", "private", "Do a debt conversion and benefit from our favourable conditions.", (long) 10000, (long) 150000, 0.03f, 0.075f, (long) 2, (long) 8);    
+	    em.persist(debtConsolidationLoan);
+	    em.flush();
+	    
+	  	FinancialProductEntity homeImprovementLoan = createFinancialProduct("Home Improvement Loan", "private", "Renovate your home!", (long) 10000, (long) 150000, 0.03f, 0.108f, (long) 2, (long) 5);    
+	    em.persist(homeImprovementLoan);
+	    em.flush();
+	    
+	  	FinancialProductEntity holidayLoan = createFinancialProduct("Holiday Loan", "private", "Here comes the sun!", (long) 1000, (long) 8000, 0.046f, 0.10f, (long) 1, (long) 3);    
+	    em.persist(holidayLoan);
+	    em.flush();
+	    
+	  	FinancialProductEntity gmnyAmbitiousPrivateLoan = createFinancialProduct("GMNY Ambitious Private", "private", "Fulfil a special desire!", (long) 30000, (long) 300000, 0.024f, 0.075f, (long) 1, (long) 8);    
+	    em.persist(gmnyAmbitiousPrivateLoan);
+	    em.flush();
+	    
+	   // business
+	    
+	  	FinancialProductEntity startupLoan = createFinancialProduct("Startup Loan", "business", "Loans to small businesses from private sector", (long) 10000, (long) 500000, 0.018f, 0.07f, (long) 1, (long) 5);    
+	    em.persist(startupLoan);
+	    em.flush();
+	    
+	  	FinancialProductEntity professionalLoan = createFinancialProduct("Professional Loan", "business", "For doctors, dentists, lawyers, pharmacists, etc.", (long) 10000, (long) 500000, 0.05f, 0.10f, (long) 1, (long) 5);    
+	    em.persist(professionalLoan);
+	    em.flush();
 	  
+	  	FinancialProductEntity smallBusinessLoan = createFinancialProduct("Small Business Loan", "business", "Government-backed loans to small businesses from private sector", (long) 10000, (long) 500000, 0.058f, 0.085f, (long) 5, (long) 20);    
+	    em.persist(smallBusinessLoan);
+	    em.flush();
+	    
+	  	FinancialProductEntity constructionLoan = createFinancialProduct("Construction Financing", "business", "Loan for commercial construction", (long) 50000, (long) 5000000, 0.07f, 0.08f, (long) 5, (long) 25);    
+	    em.persist(constructionLoan);
+	    em.flush();
+	    
+	  	FinancialProductEntity gmnyAmbitiousBusinessLoan = createFinancialProduct("GMNY Ambitious Business", "business", "For those that want more", (long) 500000, (long) 8000000, 0.027f, 0.124f, (long) 3, (long) 25);    
+	    em.persist(gmnyAmbitiousBusinessLoan);
+	    em.flush();
+	    
 	  	CustomerEntity markusL = new CustomerEntity();
 	  
 	  	markusL.setFirstname("Markus");
@@ -88,6 +117,23 @@ public class ApplicationInitialiser {
 	   
 	    PdfServiceBean.createPrivateLoanContract(markusL, markusLoan);
 	    
+  }
+  
+  private FinancialProductEntity createFinancialProduct(String productName, String productType, String productDescription, Long minAmount, Long maxAmount, Float minInterestRate, Float maxInterestRate, Long minPeriod, Long maxPeriod) {
+	  
+	  	FinancialProductEntity product = new FinancialProductEntity();
+	    
+	    product.setProductName(productName);
+	    product.setProductType(productType);
+	    product.setProductDescription(productDescription);
+	    product.setMinAmount(minAmount);
+	    product.setMaxAmount(maxAmount);
+	    product.setMinInterestRate(minInterestRate);
+	    product.setMaxInterestRate(maxInterestRate);
+	    product.setMinPeriod(minPeriod);
+	    product.setMinPeriod(maxPeriod);
+	    
+	    return product;
   }
   
   
