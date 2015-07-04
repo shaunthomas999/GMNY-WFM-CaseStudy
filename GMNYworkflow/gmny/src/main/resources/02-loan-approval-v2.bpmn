@@ -19,35 +19,39 @@
         <bpmn2:documentation>The loan officer is the executive role that decides whether an applicants loan request is granted, or not. She forms her decision based onthe application parameters, the recent credit rating and a risk evaluation.</bpmn2:documentation>
         <bpmn2:flowNodeRef>service-task-get-customer-data</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>start-event-loan-application-received</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>xor-recent-credit-history-available</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>service-task-request-credit-history</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>service-task-automatic-risk-assessment</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>xor-loan-granted</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>merge-xor-recent-credit-history-available</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>service-task-look-for-recent-credit-history</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>service-task-persist-credit-history</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>merge-xor-updated-application</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>message-catch-event-received-credit-history</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>user-task-evaluate-loan-application</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ExclusiveGateway_2</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ExclusiveGateway_1</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>enter-loan-specifications</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>merge-xor-updated-application</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>user-task-evaluate-loan-application</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>message-catch-event-received-credit-history</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>merge-xor-recent-credit-history-available</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>xor-recent-credit-history-available</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-request-credit-history</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-automatic-risk-assessment</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-persist-credit-history</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-mobile-msg</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-look-for-recent-credit-history</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>ServiceTask_2</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>xor-loan-granted</bpmn2:flowNodeRef>
       </bpmn2:lane>
       <bpmn2:lane id="lane-bank-clerk" name="Bank Clerk">
         <bpmn2:documentation>The bank clerk is the operational role, that represents GMNY. She is the single face to the customer and interacts with the customer after he has applied and a decision on the application has been reached by a superior.</bpmn2:documentation>
-        <bpmn2:flowNodeRef>service-task-request-cleanup-service</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>user-task-prepare-updated-application</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>user-task-talk-to-customer</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>merge-xor-option-selected</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>UserTask_5</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>xor-reapply</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>user-task-induce-contract-conclusion</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>timer-event-wait-three-months</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>end-event-loan-contract-signed</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>end-event-loan-application-canceled</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>user-task-talk-to-customer</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>user-task-consult-customer</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>message-catch-event-cleanup-recommendation</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>end-event-loan-contract-signed</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-request-cleanup-service</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>timer-event-wait-three-months</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>user-task-induce-contract-conclusion</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>xor-option-selected</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>ExclusiveGateway_3</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>merge-xor-option-selected</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>user-task-prepare-updated-application</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>ServiceTask_3</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>end-event-loan-application-canceled</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
     <bpmn2:serviceTask id="service-task-get-customer-data" camunda:expression="${customerServiceBean.loadCustomer(execution)}" camunda:async="true" name="Get Customer Data">
@@ -60,183 +64,12 @@
       <bpmn2:outgoing>flow-loan-application-received-to-get-customer-data</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="flow-loan-application-received-to-get-customer-data" sourceRef="start-event-loan-application-received" targetRef="service-task-get-customer-data"/>
-    <bpmn2:serviceTask id="service-task-request-cleanup-service" camunda:expression="${creditHistoryServiceBean.requestCreditHistoryCleanup(execution)}" camunda:async="true" name="Request Cleanup Service">
-      <bpmn2:documentation>This service task executes the request regarding credit cleanup service. The service is provided by GTA as we have outsourced it to save costs. GTA is only allowed to perform this service for us as it is an important trademark of GMNY.</bpmn2:documentation>
-      <bpmn2:incoming>flow-option-selected-to-request-cleanup-service</bpmn2:incoming>
-      <bpmn2:outgoing>flow-request-cleanup-service-to-cleanup-recommendation</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="flow-request-cleanup-service-to-cleanup-recommendation" sourceRef="service-task-request-cleanup-service" targetRef="message-catch-event-cleanup-recommendation"/>
-    <bpmn2:userTask id="user-task-prepare-updated-application" camunda:formKey="embedded:app:forms/02-prepare-updated-application.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Prepare&#xD;&#xA;updated Application">
-      <bpmn2:documentation>This user task visualizes how a bank clerk sets more suitable parameters for the client regarding his desire to still get a loan after his original request was rejected.</bpmn2:documentation>
-      <bpmn2:incoming>flow-merge-xor-option-selected-to-prepare-updated-application</bpmn2:incoming>
-      <bpmn2:outgoing>flow-prepare-updated-application-to-merge-xor-updated-application</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="flow-prepare-updated-application-to-merge-xor-updated-application" sourceRef="user-task-prepare-updated-application" targetRef="merge-xor-updated-application"/>
-    <bpmn2:exclusiveGateway id="xor-recent-credit-history-available" name="Recent Credit&#xD;&#xA;History available?">
-      <bpmn2:documentation>This XOR gateway provides the option to choose either: Yes, we have a recent credit rating for this customer, or No, we need a new credit rating for this customer</bpmn2:documentation>
-      <bpmn2:incoming>flow-look-for-recent-credit-history-to-recent-credit-history-available</bpmn2:incoming>
-      <bpmn2:outgoing>flow-recent-credit-history-available-to-request-credit-history</bpmn2:outgoing>
-      <bpmn2:outgoing>flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-recent-credit-history-available-to-request-credit-history" name="No" sourceRef="xor-recent-credit-history-available" targetRef="service-task-request-credit-history">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${creditHistoryAvailable == false}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available" name="Yes" sourceRef="xor-recent-credit-history-available" targetRef="merge-xor-recent-credit-history-available">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${creditHistoryAvailable == true}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="user-task-talk-to-customer" camunda:formKey="embedded:app:forms/02-talk-to-customer.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Talk to Customer">
-      <bpmn2:documentation>This user task has to be performed if an application is rejected. A bank clerk figures out how the customer wants to react to the rejection and offers different options. The options are to update the application with parameters that are more likely to get accepted with regards to the customers credit rating.</bpmn2:documentation>
-      <bpmn2:incoming>flow-loan-granted-to-talk-to-customer</bpmn2:incoming>
-      <bpmn2:outgoing>flow-talk-to-customer-to-option-selected</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="flow-talk-to-customer-to-option-selected" sourceRef="user-task-talk-to-customer" targetRef="xor-option-selected"/>
-    <bpmn2:exclusiveGateway id="merge-xor-option-selected">
-      <bpmn2:incoming>flow-reapply-to-merge-xor-option-selected</bpmn2:incoming>
-      <bpmn2:incoming>flow-option-selected-merge-xor-option-selected</bpmn2:incoming>
-      <bpmn2:outgoing>flow-merge-xor-option-selected-to-prepare-updated-application</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-merge-xor-option-selected-to-prepare-updated-application" sourceRef="merge-xor-option-selected" targetRef="user-task-prepare-updated-application"/>
-    <bpmn2:userTask id="UserTask_5" camunda:formKey="embedded:app:forms/02-offer-reapplication.html" name="Offer Reapplication">
-      <bpmn2:incoming>flow-wait-three-months-to-offer-reapplication</bpmn2:incoming>
-      <bpmn2:outgoing>flow-offer-reapplication-to-reapply</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="flow-offer-reapplication-to-reapply" sourceRef="UserTask_5" targetRef="xor-reapply"/>
-    <bpmn2:exclusiveGateway id="xor-reapply" name="Reapply?">
-      <bpmn2:incoming>flow-offer-reapplication-to-reapply</bpmn2:incoming>
-      <bpmn2:outgoing>flow-reapply-to-merge-xor-option-selected</bpmn2:outgoing>
-      <bpmn2:outgoing>flow-reapply-to-loan-application-canceled</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-reapply-to-merge-xor-option-selected" name="Yes" sourceRef="xor-reapply" targetRef="merge-xor-option-selected">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${false}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="flow-reapply-to-loan-application-canceled" name="No" sourceRef="xor-reapply" targetRef="end-event-loan-application-canceled">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="user-task-induce-contract-conclusion" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Conclude Contract">
-      <bpmn2:documentation><![CDATA[PDF for customer as nice to have feature (Daniel) ... This user task encapsulates the work that has to be done in order to close the contract between GMNY and customer in case of a granted loan application.
-]]></bpmn2:documentation>
-      <bpmn2:incoming>flow-loan-granted-to-induce-contract-conclusion</bpmn2:incoming>
-      <bpmn2:outgoing>flow-induce-contract-conclusion-to-loan-contract-signed</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="flow-induce-contract-conclusion-to-loan-contract-signed" sourceRef="user-task-induce-contract-conclusion" targetRef="end-event-loan-contract-signed"/>
-    <bpmn2:serviceTask id="service-task-request-credit-history" camunda:expression="${creditHistoryServiceBean.requestCreditHistory(execution)}" camunda:async="true" name="Request Credit History">
-      <bpmn2:documentation>This service task handles the REST-API exchange with GTA regarding the credit rating of the customer.</bpmn2:documentation>
-      <bpmn2:incoming>flow-recent-credit-history-available-to-request-credit-history</bpmn2:incoming>
-      <bpmn2:outgoing>flow-request-credit-history-to-received-credit-history</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="flow-request-credit-history-to-received-credit-history" sourceRef="service-task-request-credit-history" targetRef="message-catch-event-received-credit-history"/>
-    <bpmn2:serviceTask id="service-task-automatic-risk-assessment" camunda:expression="${creditHistoryServiceBean.performRiskAssessment(execution)}" camunda:async="true" name="Automatic Risk Assessment">
-      <bpmn2:documentation>This service task performs an algorithmic risk assessment based on the credit rating for the customer. The result is a recommendation for the decision regarding the loan application</bpmn2:documentation>
-      <bpmn2:incoming>flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment</bpmn2:incoming>
-      <bpmn2:outgoing>flow-automatic-risk-assessment-to-evaluate-loan-application</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="flow-automatic-risk-assessment-to-evaluate-loan-application" sourceRef="service-task-automatic-risk-assessment" targetRef="user-task-evaluate-loan-application"/>
-    <bpmn2:exclusiveGateway id="xor-loan-granted" name="Loan Granted?">
-      <bpmn2:documentation>This XOR-gateway provides the different workflows for granted and rejected applications.</bpmn2:documentation>
-      <bpmn2:incoming>flow-evaluate-loan-application-to-loan-granted</bpmn2:incoming>
-      <bpmn2:outgoing>flow-loan-granted-to-induce-contract-conclusion</bpmn2:outgoing>
-      <bpmn2:outgoing>flow-loan-granted-to-talk-to-customer</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-loan-granted-to-induce-contract-conclusion" name="Yes" sourceRef="xor-loan-granted" targetRef="user-task-induce-contract-conclusion">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationStatus == "accepted"}]]></bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="flow-loan-granted-to-talk-to-customer" name="No" sourceRef="xor-loan-granted" targetRef="user-task-talk-to-customer">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationStatus == "declined"}]]></bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:exclusiveGateway id="merge-xor-recent-credit-history-available" camunda:async="true" default="flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment">
-      <bpmn2:incoming>flow-persist-credit-history-to-merge-xor-recent-credit-history-available</bpmn2:incoming>
-      <bpmn2:incoming>flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available</bpmn2:incoming>
-      <bpmn2:outgoing>flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment" sourceRef="merge-xor-recent-credit-history-available" targetRef="service-task-automatic-risk-assessment"/>
-    <bpmn2:serviceTask id="service-task-look-for-recent-credit-history" camunda:expression="${creditHistoryServiceBean.loadCreditHistory(execution)}" camunda:async="true" name="Look for recent Credit History">
-      <bpmn2:documentation>This service task queries the customer database for recent credit rating that can be used as basis for the evaluation of the loan application.</bpmn2:documentation>
-      <bpmn2:incoming>flow-merge-xor-updated-application-to-look-for-recent-credit-history</bpmn2:incoming>
-      <bpmn2:outgoing>flow-look-for-recent-credit-history-to-recent-credit-history-available</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="flow-look-for-recent-credit-history-to-recent-credit-history-available" sourceRef="service-task-look-for-recent-credit-history" targetRef="xor-recent-credit-history-available"/>
-    <bpmn2:serviceTask id="service-task-persist-credit-history" camunda:expression="${creditHistoryServiceBean.persistCreditHistory(execution)}" camunda:async="true" name="Persist Credit History">
-      <bpmn2:documentation>This service task safes the received credit rating from GTA in the customer database.</bpmn2:documentation>
-      <bpmn2:incoming>flow-received-credit-history-to-persist-credit-history</bpmn2:incoming>
-      <bpmn2:outgoing>flow-persist-credit-history-to-merge-xor-recent-credit-history-available</bpmn2:outgoing>
-    </bpmn2:serviceTask>
-    <bpmn2:sequenceFlow id="flow-persist-credit-history-to-merge-xor-recent-credit-history-available" sourceRef="service-task-persist-credit-history" targetRef="merge-xor-recent-credit-history-available"/>
-    <bpmn2:intermediateCatchEvent id="timer-event-wait-three-months" name="Wait Three&#xD;&#xA;Months">
-      <bpmn2:incoming>flow-consult-customer-to-wait-three-months</bpmn2:incoming>
-      <bpmn2:outgoing>flow-wait-three-months-to-offer-reapplication</bpmn2:outgoing>
-      <bpmn2:timerEventDefinition id="TimerEventDefinition_1">
-        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">P0DT0H0M10S</bpmn2:timeDuration>
-      </bpmn2:timerEventDefinition>
-    </bpmn2:intermediateCatchEvent>
-    <bpmn2:sequenceFlow id="flow-wait-three-months-to-offer-reapplication" sourceRef="timer-event-wait-three-months" targetRef="UserTask_5"/>
-    <bpmn2:exclusiveGateway id="merge-xor-updated-application" default="flow-merge-xor-updated-application-to-look-for-recent-credit-history">
-      <bpmn2:documentation>This XOR-gateway provides the option to re-enter an earlier stage of the workflow in order to reapply with updated parameters..</bpmn2:documentation>
-      <bpmn2:incoming>flow-prepare-updated-application-to-merge-xor-updated-application</bpmn2:incoming>
-      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
-      <bpmn2:outgoing>flow-merge-xor-updated-application-to-look-for-recent-credit-history</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-merge-xor-updated-application-to-look-for-recent-credit-history" sourceRef="merge-xor-updated-application" targetRef="service-task-look-for-recent-credit-history"/>
-    <bpmn2:intermediateCatchEvent id="message-catch-event-received-credit-history" name="Credit History&#xD;&#xA;received">
-      <bpmn2:documentation>This message event symbolizes the exchange between GMNY and GTA regarding the credit rating of the customer.</bpmn2:documentation>
-      <bpmn2:incoming>flow-request-credit-history-to-received-credit-history</bpmn2:incoming>
-      <bpmn2:outgoing>flow-received-credit-history-to-persist-credit-history</bpmn2:outgoing>
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="MessageCreditHistoryResponse"/>
-    </bpmn2:intermediateCatchEvent>
-    <bpmn2:sequenceFlow id="flow-received-credit-history-to-persist-credit-history" sourceRef="message-catch-event-received-credit-history" targetRef="service-task-persist-credit-history"/>
-    <bpmn2:userTask id="user-task-evaluate-loan-application" camunda:formKey="embedded:app:forms/02-evaluate-loan-application.html" camunda:candidateGroups="&quot;Loan Officers&quot;" name="Evaluate Loan Application">
-      <bpmn2:documentation>This user task presents a loan officer with the relevant customer data, application data, credit rating and recommendation. The loan officer then decides based on this information whether a loan should be granted or not.</bpmn2:documentation>
-      <bpmn2:incoming>flow-automatic-risk-assessment-to-evaluate-loan-application</bpmn2:incoming>
-      <bpmn2:outgoing>flow-evaluate-loan-application-to-loan-granted</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="flow-evaluate-loan-application-to-loan-granted" sourceRef="user-task-evaluate-loan-application" targetRef="xor-loan-granted"/>
-    <bpmn2:endEvent id="end-event-loan-contract-signed" name="Loan &#xD;&#xA;Contract Signed">
-      <bpmn2:incoming>flow-induce-contract-conclusion-to-loan-contract-signed</bpmn2:incoming>
-      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_2"/>
-    </bpmn2:endEvent>
-    <bpmn2:endEvent id="end-event-loan-application-canceled" name="Loan Application&#xD;&#xA;Canceled">
-      <bpmn2:documentation>This event ends the workflow in case that the loan was not granted.</bpmn2:documentation>
-      <bpmn2:incoming>flow-reapply-to-loan-application-canceled</bpmn2:incoming>
-      <bpmn2:incoming>flow-option-selected-to-loan-application-canceled</bpmn2:incoming>
-      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
-    </bpmn2:endEvent>
-    <bpmn2:userTask id="user-task-consult-customer" camunda:formKey="embedded:app:forms/02-consult-customer.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Consult Customer">
-      <bpmn2:documentation>This user task uses the results of the cleanup-service request. The bank clerk consults the customer based on that data with the goal to improve the cusomers financial situation.</bpmn2:documentation>
-      <bpmn2:incoming>flow-cleanup-recommendation-to-consult-customer</bpmn2:incoming>
-      <bpmn2:outgoing>flow-consult-customer-to-wait-three-months</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="flow-consult-customer-to-wait-three-months" sourceRef="user-task-consult-customer" targetRef="timer-event-wait-three-months"/>
-    <bpmn2:intermediateCatchEvent id="message-catch-event-cleanup-recommendation" camunda:async="true" name="Cleanup-&#xD;&#xA;Recommendation">
-      <bpmn2:documentation>This catch event represents the receiving end of the communication with GTA regarding the credit cleanup service.</bpmn2:documentation>
-      <bpmn2:incoming>flow-request-cleanup-service-to-cleanup-recommendation</bpmn2:incoming>
-      <bpmn2:outgoing>flow-cleanup-recommendation-to-consult-customer</bpmn2:outgoing>
-      <bpmn2:messageEventDefinition id="MessageEventDefinition_2" messageRef="MessageCleanupResponse"/>
-    </bpmn2:intermediateCatchEvent>
-    <bpmn2:sequenceFlow id="flow-cleanup-recommendation-to-consult-customer" sourceRef="message-catch-event-cleanup-recommendation" targetRef="user-task-consult-customer">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:exclusiveGateway id="xor-option-selected" camunda:async="true" name="Option &#xD;&#xA;Selected?">
-      <bpmn2:documentation>This XOR gateway visualizes the different workflows that have to be executed depending on the reaction of the customer regarding the application rejection.</bpmn2:documentation>
-      <bpmn2:incoming>flow-talk-to-customer-to-option-selected</bpmn2:incoming>
-      <bpmn2:outgoing>flow-option-selected-to-request-cleanup-service</bpmn2:outgoing>
-      <bpmn2:outgoing>flow-option-selected-to-loan-application-canceled</bpmn2:outgoing>
-      <bpmn2:outgoing>flow-option-selected-merge-xor-option-selected</bpmn2:outgoing>
-    </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-option-selected-to-request-cleanup-service" name="Cleanup&#xD;&#xA;Service" sourceRef="xor-option-selected" targetRef="service-task-request-cleanup-service">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "cleanup service"}]]></bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="flow-option-selected-to-loan-application-canceled" name="Terminate" sourceRef="xor-option-selected" targetRef="end-event-loan-application-canceled">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "terminate"}]]></bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
-    <bpmn2:sequenceFlow id="flow-option-selected-merge-xor-option-selected" name="Reapply (with updated Parameters)" sourceRef="xor-option-selected" targetRef="merge-xor-option-selected">
-      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "re-apply"}]]></bpmn2:conditionExpression>
-    </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="SequenceFlow_1" name="" sourceRef="service-task-get-customer-data" targetRef="ExclusiveGateway_1"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_2">
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:incoming>SequenceFlow_5</bpmn2:incoming>
-      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_7</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="ExclusiveGateway_2" targetRef="merge-xor-updated-application"/>
     <bpmn2:exclusiveGateway id="ExclusiveGateway_1" name="Online or offline&#xD;&#xA;application?">
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
@@ -253,22 +86,213 @@
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="SequenceFlow_3" name="" sourceRef="enter-loan-specifications" targetRef="ExclusiveGateway_2"/>
+    <bpmn2:exclusiveGateway id="merge-xor-updated-application">
+      <bpmn2:documentation>This XOR-gateway provides the option to re-enter an earlier stage of the workflow in order to reapply with updated parameters..</bpmn2:documentation>
+      <bpmn2:incoming>flow-prepare-updated-application-to-merge-xor-updated-application</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_7</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ExclusiveGateway_2" targetRef="merge-xor-updated-application"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="merge-xor-updated-application" targetRef="service-task-mobile-msg"/>
+    <bpmn2:userTask id="user-task-evaluate-loan-application" camunda:formKey="embedded:app:forms/02-evaluate-loan-application.html" camunda:candidateGroups="&quot;Loan Officers&quot;" name="Evaluate Loan Application">
+      <bpmn2:documentation>This user task presents a loan officer with the relevant customer data, application data, credit rating and recommendation. The loan officer then decides based on this information whether a loan should be granted or not.</bpmn2:documentation>
+      <bpmn2:incoming>flow-automatic-risk-assessment-to-evaluate-loan-application</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:intermediateCatchEvent id="message-catch-event-received-credit-history" name="Credit History&#xD;&#xA;received">
+      <bpmn2:documentation>This message event symbolizes the exchange between GMNY and GTA regarding the credit rating of the customer.</bpmn2:documentation>
+      <bpmn2:incoming>flow-request-credit-history-to-received-credit-history</bpmn2:incoming>
+      <bpmn2:outgoing>flow-received-credit-history-to-persist-credit-history</bpmn2:outgoing>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="MessageCreditHistoryResponse"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="flow-received-credit-history-to-persist-credit-history" sourceRef="message-catch-event-received-credit-history" targetRef="service-task-persist-credit-history"/>
+    <bpmn2:exclusiveGateway id="merge-xor-recent-credit-history-available" camunda:async="true" default="flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment">
+      <bpmn2:incoming>flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available</bpmn2:incoming>
+      <bpmn2:incoming>flow-persist-credit-history-to-merge-xor-recent-credit-history-available</bpmn2:incoming>
+      <bpmn2:outgoing>flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment" sourceRef="merge-xor-recent-credit-history-available" targetRef="service-task-automatic-risk-assessment"/>
+    <bpmn2:exclusiveGateway id="xor-recent-credit-history-available" name="Recent Credit&#xD;&#xA;History available?">
+      <bpmn2:documentation>This XOR gateway provides the option to choose either: Yes, we have a recent credit rating for this customer, or No, we need a new credit rating for this customer</bpmn2:documentation>
+      <bpmn2:incoming>flow-look-for-recent-credit-history-to-recent-credit-history-available</bpmn2:incoming>
+      <bpmn2:outgoing>flow-recent-credit-history-available-to-request-credit-history</bpmn2:outgoing>
+      <bpmn2:outgoing>flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="flow-recent-credit-history-available-to-request-credit-history" name="No" sourceRef="xor-recent-credit-history-available" targetRef="service-task-request-credit-history">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${creditHistoryAvailable == false}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available" name="Yes" sourceRef="xor-recent-credit-history-available" targetRef="merge-xor-recent-credit-history-available">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${creditHistoryAvailable == true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:serviceTask id="service-task-request-credit-history" camunda:expression="${creditHistoryServiceBean.requestCreditHistory(execution)}" camunda:async="true" name="Request Credit History">
+      <bpmn2:documentation>This service task handles the REST-API exchange with GTA regarding the credit rating of the customer.</bpmn2:documentation>
+      <bpmn2:incoming>flow-recent-credit-history-available-to-request-credit-history</bpmn2:incoming>
+      <bpmn2:outgoing>flow-request-credit-history-to-received-credit-history</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="flow-request-credit-history-to-received-credit-history" sourceRef="service-task-request-credit-history" targetRef="message-catch-event-received-credit-history"/>
+    <bpmn2:serviceTask id="service-task-automatic-risk-assessment" camunda:expression="${creditHistoryServiceBean.performRiskAssessment(execution)}" camunda:async="true" name="Automatic Risk Assessment">
+      <bpmn2:documentation>This service task performs an algorithmic risk assessment based on the credit rating for the customer. The result is a recommendation for the decision regarding the loan application</bpmn2:documentation>
+      <bpmn2:incoming>flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment</bpmn2:incoming>
+      <bpmn2:outgoing>flow-automatic-risk-assessment-to-evaluate-loan-application</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="flow-automatic-risk-assessment-to-evaluate-loan-application" sourceRef="service-task-automatic-risk-assessment" targetRef="user-task-evaluate-loan-application"/>
+    <bpmn2:serviceTask id="service-task-persist-credit-history" camunda:expression="${creditHistoryServiceBean.persistCreditHistory(execution)}" camunda:async="true" name="Persist Credit History">
+      <bpmn2:documentation>This service task safes the received credit rating from GTA in the customer database.</bpmn2:documentation>
+      <bpmn2:incoming>flow-received-credit-history-to-persist-credit-history</bpmn2:incoming>
+      <bpmn2:outgoing>flow-persist-credit-history-to-merge-xor-recent-credit-history-available</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="flow-persist-credit-history-to-merge-xor-recent-credit-history-available" sourceRef="service-task-persist-credit-history" targetRef="merge-xor-recent-credit-history-available"/>
+    <bpmn2:serviceTask id="service-task-mobile-msg" camunda:expression="${mobileMessageServiceBean.sendApplied(execution)}" name="Send push notification">
+      <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_9" name="" sourceRef="service-task-mobile-msg" targetRef="service-task-look-for-recent-credit-history"/>
+    <bpmn2:serviceTask id="service-task-look-for-recent-credit-history" camunda:expression="${creditHistoryServiceBean.loadCreditHistory(execution)}" camunda:async="true" name="Look for recent Credit History">
+      <bpmn2:documentation>This service task queries the customer database for recent credit rating that can be used as basis for the evaluation of the loan application.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_9</bpmn2:incoming>
+      <bpmn2:outgoing>flow-look-for-recent-credit-history-to-recent-credit-history-available</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="flow-look-for-recent-credit-history-to-recent-credit-history-available" sourceRef="service-task-look-for-recent-credit-history" targetRef="xor-recent-credit-history-available"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_10" name="" sourceRef="user-task-evaluate-loan-application" targetRef="ServiceTask_2"/>
+    <bpmn2:serviceTask id="ServiceTask_2" camunda:expression="${mobileMessageServiceBean.sendStatus(execution)}" name="Send push notification">
+      <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:userTask id="UserTask_5" camunda:formKey="embedded:app:forms/02-offer-reapplication.html" name="Offer Reapplication">
+      <bpmn2:incoming>flow-wait-three-months-to-offer-reapplication</bpmn2:incoming>
+      <bpmn2:outgoing>flow-offer-reapplication-to-reapply</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="flow-offer-reapplication-to-reapply" sourceRef="UserTask_5" targetRef="xor-reapply"/>
+    <bpmn2:exclusiveGateway id="xor-reapply" name="Reapply?">
+      <bpmn2:incoming>flow-offer-reapplication-to-reapply</bpmn2:incoming>
+      <bpmn2:outgoing>flow-reapply-to-merge-xor-option-selected</bpmn2:outgoing>
+      <bpmn2:outgoing>flow-reapply-to-loan-application-canceled</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="flow-reapply-to-merge-xor-option-selected" name="Yes" sourceRef="xor-reapply" targetRef="merge-xor-option-selected">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "re-apply"}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="flow-reapply-to-loan-application-canceled" name="No" sourceRef="xor-reapply" targetRef="ExclusiveGateway_3">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "terminate"}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:userTask id="user-task-talk-to-customer" camunda:formKey="embedded:app:forms/02-talk-to-customer.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Talk to Customer">
+      <bpmn2:documentation>This user task has to be performed if an application is rejected. A bank clerk figures out how the customer wants to react to the rejection and offers different options. The options are to update the application with parameters that are more likely to get accepted with regards to the customers credit rating.</bpmn2:documentation>
+      <bpmn2:incoming>flow-loan-granted-to-talk-to-customer</bpmn2:incoming>
+      <bpmn2:outgoing>flow-talk-to-customer-to-option-selected</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="flow-talk-to-customer-to-option-selected" sourceRef="user-task-talk-to-customer" targetRef="xor-option-selected"/>
+    <bpmn2:userTask id="user-task-consult-customer" camunda:formKey="embedded:app:forms/02-consult-customer.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Consult Customer">
+      <bpmn2:documentation>This user task uses the results of the cleanup-service request. The bank clerk consults the customer based on that data with the goal to improve the cusomers financial situation.</bpmn2:documentation>
+      <bpmn2:incoming>flow-cleanup-recommendation-to-consult-customer</bpmn2:incoming>
+      <bpmn2:outgoing>flow-consult-customer-to-wait-three-months</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="flow-consult-customer-to-wait-three-months" sourceRef="user-task-consult-customer" targetRef="timer-event-wait-three-months"/>
+    <bpmn2:intermediateCatchEvent id="message-catch-event-cleanup-recommendation" camunda:async="true" name="Cleanup-&#xD;&#xA;Recommendation">
+      <bpmn2:documentation>This catch event represents the receiving end of the communication with GTA regarding the credit cleanup service.</bpmn2:documentation>
+      <bpmn2:incoming>flow-request-cleanup-service-to-cleanup-recommendation</bpmn2:incoming>
+      <bpmn2:outgoing>flow-cleanup-recommendation-to-consult-customer</bpmn2:outgoing>
+      <bpmn2:messageEventDefinition id="MessageEventDefinition_2" messageRef="MessageCleanupResponse"/>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="flow-cleanup-recommendation-to-consult-customer" sourceRef="message-catch-event-cleanup-recommendation" targetRef="user-task-consult-customer">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:endEvent id="end-event-loan-contract-signed" name="Loan &#xD;&#xA;Contract Signed">
+      <bpmn2:incoming>flow-induce-contract-conclusion-to-loan-contract-signed</bpmn2:incoming>
+      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_2"/>
+    </bpmn2:endEvent>
+    <bpmn2:serviceTask id="service-task-request-cleanup-service" camunda:expression="${creditHistoryServiceBean.requestCreditHistoryCleanup(execution)}" camunda:async="true" name="Request Cleanup Service">
+      <bpmn2:documentation>This service task executes the request regarding credit cleanup service. The service is provided by GTA as we have outsourced it to save costs. GTA is only allowed to perform this service for us as it is an important trademark of GMNY.</bpmn2:documentation>
+      <bpmn2:incoming>flow-option-selected-to-request-cleanup-service</bpmn2:incoming>
+      <bpmn2:outgoing>flow-request-cleanup-service-to-cleanup-recommendation</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="flow-request-cleanup-service-to-cleanup-recommendation" sourceRef="service-task-request-cleanup-service" targetRef="message-catch-event-cleanup-recommendation"/>
+    <bpmn2:exclusiveGateway id="xor-loan-granted" name="Loan Granted?">
+      <bpmn2:documentation>This XOR-gateway provides the different workflows for granted and rejected applications.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_12</bpmn2:incoming>
+      <bpmn2:outgoing>flow-loan-granted-to-induce-contract-conclusion</bpmn2:outgoing>
+      <bpmn2:outgoing>flow-loan-granted-to-talk-to-customer</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="flow-loan-granted-to-induce-contract-conclusion" name="Yes" sourceRef="xor-loan-granted" targetRef="user-task-induce-contract-conclusion">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationStatus == "accepted"}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="flow-loan-granted-to-talk-to-customer" name="No" sourceRef="xor-loan-granted" targetRef="user-task-talk-to-customer">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationStatus == "declined"}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:intermediateCatchEvent id="timer-event-wait-three-months" name="Wait Three&#xD;&#xA;Months">
+      <bpmn2:incoming>flow-consult-customer-to-wait-three-months</bpmn2:incoming>
+      <bpmn2:outgoing>flow-wait-three-months-to-offer-reapplication</bpmn2:outgoing>
+      <bpmn2:timerEventDefinition id="TimerEventDefinition_1">
+        <bpmn2:timeDuration xsi:type="bpmn2:tFormalExpression">P0DT0H0M10S</bpmn2:timeDuration>
+      </bpmn2:timerEventDefinition>
+    </bpmn2:intermediateCatchEvent>
+    <bpmn2:sequenceFlow id="flow-wait-three-months-to-offer-reapplication" sourceRef="timer-event-wait-three-months" targetRef="UserTask_5"/>
+    <bpmn2:userTask id="user-task-induce-contract-conclusion" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Conclude Contract">
+      <bpmn2:documentation><![CDATA[PDF for customer as nice to have feature (Daniel) ... This user task encapsulates the work that has to be done in order to close the contract between GMNY and customer in case of a granted loan application.
+]]></bpmn2:documentation>
+      <bpmn2:incoming>flow-loan-granted-to-induce-contract-conclusion</bpmn2:incoming>
+      <bpmn2:outgoing>flow-induce-contract-conclusion-to-loan-contract-signed</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="flow-induce-contract-conclusion-to-loan-contract-signed" sourceRef="user-task-induce-contract-conclusion" targetRef="end-event-loan-contract-signed"/>
+    <bpmn2:exclusiveGateway id="xor-option-selected" camunda:async="true" name="Option &#xD;&#xA;Selected?">
+      <bpmn2:documentation>This XOR gateway visualizes the different workflows that have to be executed depending on the reaction of the customer regarding the application rejection.</bpmn2:documentation>
+      <bpmn2:incoming>flow-talk-to-customer-to-option-selected</bpmn2:incoming>
+      <bpmn2:outgoing>flow-option-selected-to-request-cleanup-service</bpmn2:outgoing>
+      <bpmn2:outgoing>flow-option-selected-merge-xor-option-selected</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_13</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="flow-option-selected-to-request-cleanup-service" name="Cleanup&#xD;&#xA;Service" sourceRef="xor-option-selected" targetRef="service-task-request-cleanup-service">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "cleanup service"}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="flow-option-selected-merge-xor-option-selected" name="Reapply (with updated Parameters)" sourceRef="xor-option-selected" targetRef="merge-xor-option-selected">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "re-apply"}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:sequenceFlow id="SequenceFlow_12" name="" sourceRef="ServiceTask_2" targetRef="xor-loan-granted"/>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_3">
+      <bpmn2:incoming>flow-reapply-to-loan-application-canceled</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_13</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_14</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_13" name="Terminate" sourceRef="xor-option-selected" targetRef="ExclusiveGateway_3">
+      <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "terminate"}]]></bpmn2:conditionExpression>
+    </bpmn2:sequenceFlow>
+    <bpmn2:exclusiveGateway id="merge-xor-option-selected">
+      <bpmn2:incoming>flow-reapply-to-merge-xor-option-selected</bpmn2:incoming>
+      <bpmn2:incoming>flow-option-selected-merge-xor-option-selected</bpmn2:incoming>
+      <bpmn2:outgoing>flow-merge-xor-option-selected-to-prepare-updated-application</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="flow-merge-xor-option-selected-to-prepare-updated-application" sourceRef="merge-xor-option-selected" targetRef="user-task-prepare-updated-application"/>
+    <bpmn2:userTask id="user-task-prepare-updated-application" camunda:formKey="embedded:app:forms/02-prepare-updated-application.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Prepare&#xD;&#xA;updated Application">
+      <bpmn2:documentation>This user task visualizes how a bank clerk sets more suitable parameters for the client regarding his desire to still get a loan after his original request was rejected.</bpmn2:documentation>
+      <bpmn2:incoming>flow-merge-xor-option-selected-to-prepare-updated-application</bpmn2:incoming>
+      <bpmn2:outgoing>flow-prepare-updated-application-to-merge-xor-updated-application</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="flow-prepare-updated-application-to-merge-xor-updated-application" sourceRef="user-task-prepare-updated-application" targetRef="merge-xor-updated-application"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_14" name="" sourceRef="ExclusiveGateway_3" targetRef="ServiceTask_3"/>
+    <bpmn2:serviceTask id="ServiceTask_3" camunda:expression="${mobileMessageServiceBean.sendResultStatus(execution)}" name="Send push notification">
+      <bpmn2:incoming>SequenceFlow_14</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_15</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_15" name="" sourceRef="ServiceTask_3" targetRef="end-event-loan-application-canceled"/>
+    <bpmn2:endEvent id="end-event-loan-application-canceled" name="Loan Application&#xD;&#xA;Canceled">
+      <bpmn2:documentation>This event ends the workflow in case that the loan was not granted.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
+      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
+    </bpmn2:endEvent>
   </bpmn2:process>
   <bpmn2:message id="MessageCreditHistoryResponse" name="CreditHistoryResponse"/>
   <bpmn2:message id="MessageCleanupResponse" name="CleanupResponse"/>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="loan-approval-process">
       <bpmndi:BPMNShape id="_BPMNShape_Participant_8" bpmnElement="pool-GMNY" isHorizontal="true">
-        <dc:Bounds height="493.0" width="3269.0" x="30.0" y="160.0"/>
+        <dc:Bounds height="493.0" width="3834.0" x="30.0" y="160.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Participant_9" bpmnElement="pool-GTA" isHorizontal="true">
-        <dc:Bounds height="97.0" width="3268.0" x="32.0" y="12.0"/>
+        <dc:Bounds height="97.0" width="3933.0" x="32.0" y="12.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Lane_8" bpmnElement="lane-loan-officer" isHorizontal="true">
-        <dc:Bounds height="215.0" width="3239.0" x="60.0" y="160.0"/>
+        <dc:Bounds height="215.0" width="3804.0" x="60.0" y="160.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_Lane_10" bpmnElement="lane-bank-clerk" isHorizontal="true">
-        <dc:Bounds height="279.0" width="3239.0" x="60.0" y="374.0"/>
+        <dc:Bounds height="279.0" width="3804.0" x="60.0" y="374.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_6" bpmnElement="start-event-loan-application-received">
         <dc:Bounds height="36.0" width="36.0" x="118.0" y="236.0"/>
@@ -286,52 +310,52 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_101" bpmnElement="service-task-look-for-recent-credit-history">
-        <dc:Bounds height="80.0" width="100.0" x="804.0" y="214.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="984.0" y="212.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_11" bpmnElement="message-catch-event-received-credit-history">
-        <dc:Bounds height="36.0" width="36.0" x="1164.0" y="239.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="1356.0" y="238.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="95.0" x="1135.0" y="280.0"/>
+          <dc:Bounds height="38.0" width="95.0" x="1327.0" y="279.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_102" bpmnElement="service-task-persist-credit-history">
-        <dc:Bounds height="80.0" width="100.0" x="1248.0" y="217.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="1440.0" y="216.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_23" bpmnElement="merge-xor-recent-credit-history-available" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="1404.0" y="231.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="1596.0" y="230.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1429.0" y="286.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1621.0" y="285.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_103" bpmnElement="service-task-automatic-risk-assessment">
-        <dc:Bounds height="80.0" width="100.0" x="1512.0" y="217.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="1704.0" y="216.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_10" bpmnElement="user-task-evaluate-loan-application">
-        <dc:Bounds height="80.0" width="100.0" x="1656.0" y="217.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="1848.0" y="216.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_11" bpmnElement="user-task-induce-contract-conclusion">
-        <dc:Bounds height="80.0" width="100.0" x="1788.0" y="474.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="2136.0" y="473.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_12" bpmnElement="user-task-talk-to-customer">
-        <dc:Bounds height="80.0" width="100.0" x="2006.0" y="474.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="2354.0" y="473.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_104" bpmnElement="service-task-request-cleanup-service">
-        <dc:Bounds height="80.0" width="100.0" x="2306.0" y="395.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="2654.0" y="394.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_12" bpmnElement="message-catch-event-cleanup-recommendation">
-        <dc:Bounds height="36.0" width="36.0" x="2452.0" y="417.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="2800.0" y="416.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="107.0" x="2417.0" y="458.0"/>
+          <dc:Bounds height="38.0" width="107.0" x="2765.0" y="457.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_13" bpmnElement="user-task-consult-customer">
-        <dc:Bounds height="80.0" width="100.0" x="2524.0" y="395.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="2872.0" y="394.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_14" bpmnElement="UserTask_5">
-        <dc:Bounds height="80.0" width="100.0" x="2764.0" y="395.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="3112.0" y="394.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_15" bpmnElement="user-task-prepare-updated-application">
-        <dc:Bounds height="80.0" width="100.0" x="3124.0" y="395.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="3720.0" y="394.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1" bpmnElement="flow-loan-application-received-to-get-customer-data" sourceElement="_BPMNShape_StartEvent_6" targetElement="_BPMNShape_ServiceTask_100">
         <di:waypoint xsi:type="dc:Point" x="154.0" y="254.0"/>
@@ -340,305 +364,278 @@
           <dc:Bounds height="0.0" width="0.0" x="176.0" y="318.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="flow-merge-xor-updated-application-to-look-for-recent-credit-history" sourceElement="_BPMNShape_ExclusiveGateway_22" targetElement="_BPMNShape_ServiceTask_101">
-        <di:waypoint xsi:type="dc:Point" x="770.0" y="253.0"/>
-        <di:waypoint xsi:type="dc:Point" x="804.0" y="254.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="792.0" y="318.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_5" bpmnElement="flow-received-credit-history-to-persist-credit-history" sourceElement="_BPMNShape_IntermediateCatchEvent_11" targetElement="_BPMNShape_ServiceTask_102">
-        <di:waypoint xsi:type="dc:Point" x="1200.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1248.0" y="257.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1392.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1440.0" y="256.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1224.0" y="257.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1416.0" y="256.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="flow-persist-credit-history-to-merge-xor-recent-credit-history-available" sourceElement="_BPMNShape_ServiceTask_102" targetElement="_BPMNShape_ExclusiveGateway_23">
-        <di:waypoint xsi:type="dc:Point" x="1348.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1379.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1379.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1404.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1540.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1571.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1571.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1596.0" y="255.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1382.0" y="256.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1574.0" y="255.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment" sourceElement="_BPMNShape_ExclusiveGateway_23" targetElement="_BPMNShape_ServiceTask_103">
-        <di:waypoint xsi:type="dc:Point" x="1454.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1483.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1483.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1512.0" y="257.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1646.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1675.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1675.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1704.0" y="256.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1475.0" y="320.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1667.0" y="319.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="flow-automatic-risk-assessment-to-evaluate-loan-application" sourceElement="_BPMNShape_ServiceTask_103" targetElement="_BPMNShape_UserTask_10">
-        <di:waypoint xsi:type="dc:Point" x="1612.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1656.0" y="257.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1804.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1848.0" y="256.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1638.0" y="257.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1830.0" y="256.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_24" bpmnElement="xor-loan-granted" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="1812.0" y="231.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="2160.0" y="230.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="91.0" x="1793.0" y="208.0"/>
+          <dc:Bounds height="22.0" width="91.0" x="2141.0" y="207.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_25" bpmnElement="xor-option-selected" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="2176.0" y="488.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="2524.0" y="487.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="64.0" x="2114.0" y="474.0"/>
+          <dc:Bounds height="38.0" width="64.0" x="2462.0" y="473.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_12" bpmnElement="flow-evaluate-loan-application-to-loan-granted" sourceElement="_BPMNShape_UserTask_10" targetElement="_BPMNShape_ExclusiveGateway_24">
-        <di:waypoint xsi:type="dc:Point" x="1756.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1780.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1780.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1812.0" y="256.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1779.0" y="320.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="flow-loan-granted-to-induce-contract-conclusion" sourceElement="_BPMNShape_ExclusiveGateway_24" targetElement="_BPMNShape_UserTask_11">
-        <di:waypoint xsi:type="dc:Point" x="1837.0" y="281.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1837.0" y="383.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1838.0" y="383.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1838.0" y="474.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2185.0" y="280.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2185.0" y="382.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2186.0" y="382.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2186.0" y="473.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="29.0" x="1849.0" y="281.0"/>
+          <dc:Bounds height="22.0" width="29.0" x="2196.0" y="312.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_14" bpmnElement="flow-loan-granted-to-talk-to-customer" sourceElement="_BPMNShape_ExclusiveGateway_24" targetElement="_BPMNShape_UserTask_12">
-        <di:waypoint xsi:type="dc:Point" x="1862.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2056.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2056.0" y="474.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2210.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2404.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2404.0" y="473.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="22.0" x="2028.0" y="281.0"/>
+          <dc:Bounds height="22.0" width="22.0" x="2412.0" y="300.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_15" bpmnElement="flow-option-selected-to-request-cleanup-service" sourceElement="_BPMNShape_ExclusiveGateway_25" targetElement="_BPMNShape_ServiceTask_104">
-        <di:waypoint xsi:type="dc:Point" x="2201.0" y="488.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2201.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2266.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2306.0" y="435.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2549.0" y="487.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2549.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2614.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2654.0" y="434.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="63.0" x="2196.0" y="435.0"/>
+          <dc:Bounds height="38.0" width="63.0" x="2556.0" y="394.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_16" bpmnElement="flow-request-cleanup-service-to-cleanup-recommendation" sourceElement="_BPMNShape_ServiceTask_104" targetElement="_BPMNShape_IntermediateCatchEvent_12">
-        <di:waypoint xsi:type="dc:Point" x="2406.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2452.0" y="435.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2754.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2800.0" y="434.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2427.0" y="499.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="2775.0" y="498.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_17" bpmnElement="flow-cleanup-recommendation-to-consult-customer" sourceElement="_BPMNShape_IntermediateCatchEvent_12" targetElement="_BPMNShape_UserTask_13">
-        <di:waypoint xsi:type="dc:Point" x="2488.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2524.0" y="435.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2836.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2872.0" y="434.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2506.0" y="435.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="2854.0" y="434.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="flow-talk-to-customer-to-option-selected" sourceElement="_BPMNShape_UserTask_12" targetElement="_BPMNShape_ExclusiveGateway_25">
-        <di:waypoint xsi:type="dc:Point" x="2106.0" y="514.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2128.0" y="514.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2128.0" y="513.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2176.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2454.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2476.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2476.0" y="512.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2524.0" y="512.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2128.0" y="514.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="2476.0" y="513.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_IntermediateCatchEvent_13" bpmnElement="timer-event-wait-three-months">
-        <dc:Bounds height="36.0" width="36.0" x="2680.0" y="417.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="3028.0" y="416.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="79.0" x="2659.0" y="458.0"/>
+          <dc:Bounds height="38.0" width="79.0" x="3007.0" y="457.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_20" bpmnElement="flow-consult-customer-to-wait-three-months" sourceElement="_BPMNShape_UserTask_13" targetElement="_BPMNShape_IntermediateCatchEvent_13">
-        <di:waypoint xsi:type="dc:Point" x="2624.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2680.0" y="435.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2972.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3028.0" y="434.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2655.0" y="435.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="3003.0" y="434.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_21" bpmnElement="flow-wait-three-months-to-offer-reapplication" sourceElement="_BPMNShape_IntermediateCatchEvent_13" targetElement="_BPMNShape_UserTask_14">
-        <di:waypoint xsi:type="dc:Point" x="2716.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2764.0" y="435.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3064.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3112.0" y="434.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2741.0" y="499.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="3089.0" y="498.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_26" bpmnElement="xor-reapply" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="2920.0" y="409.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="3268.0" y="408.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="60.0" x="2916.0" y="382.0"/>
+          <dc:Bounds height="22.0" width="60.0" x="3264.0" y="381.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_27" bpmnElement="merge-xor-option-selected" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="3016.0" y="409.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="3612.0" y="408.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="3041.0" y="464.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="3637.0" y="463.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_22" bpmnElement="flow-offer-reapplication-to-reapply" sourceElement="_BPMNShape_UserTask_14" targetElement="_BPMNShape_ExclusiveGateway_26">
-        <di:waypoint xsi:type="dc:Point" x="2864.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2886.0" y="435.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2886.0" y="434.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2920.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3212.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3234.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3234.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3268.0" y="433.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2884.0" y="499.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="3232.0" y="498.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_23" bpmnElement="flow-reapply-to-merge-xor-option-selected" sourceElement="_BPMNShape_ExclusiveGateway_26" targetElement="_BPMNShape_ExclusiveGateway_27">
-        <di:waypoint xsi:type="dc:Point" x="2970.0" y="434.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3016.0" y="434.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3318.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3612.0" y="433.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="29.0" x="2976.0" y="432.0"/>
+          <dc:Bounds height="22.0" width="29.0" x="3328.0" y="408.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_24" bpmnElement="flow-merge-xor-option-selected-to-prepare-updated-application" sourceElement="_BPMNShape_ExclusiveGateway_27" targetElement="_BPMNShape_UserTask_15">
-        <di:waypoint xsi:type="dc:Point" x="3066.0" y="434.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3124.0" y="435.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3662.0" y="433.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3720.0" y="434.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="3096.0" y="499.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="3692.0" y="498.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_17" bpmnElement="end-event-loan-application-canceled">
-        <dc:Bounds height="36.0" width="36.0" x="2928.0" y="496.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="3528.0" y="495.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="112.0" x="2890.0" y="537.0"/>
+          <dc:Bounds height="38.0" width="112.0" x="3490.0" y="536.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_18" bpmnElement="end-event-loan-contract-signed">
-        <dc:Bounds height="36.0" width="36.0" x="1922.0" y="496.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="2270.0" y="495.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="99.0" x="1891.0" y="537.0"/>
+          <dc:Bounds height="38.0" width="99.0" x="2239.0" y="536.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_26" bpmnElement="flow-reapply-to-loan-application-canceled" sourceElement="_BPMNShape_ExclusiveGateway_26" targetElement="_BPMNShape_EndEvent_17">
-        <di:waypoint xsi:type="dc:Point" x="2945.0" y="459.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2945.0" y="477.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2946.0" y="477.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2946.0" y="496.0"/>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_26" bpmnElement="flow-reapply-to-loan-application-canceled" sourceElement="_BPMNShape_ExclusiveGateway_26" targetElement="_BPMNShape_ExclusiveGateway_31">
+        <di:waypoint xsi:type="dc:Point" x="3293.0" y="458.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3293.0" y="488.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="22.0" x="2949.0" y="481.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_27" bpmnElement="flow-option-selected-to-loan-application-canceled" sourceElement="_BPMNShape_ExclusiveGateway_25" targetElement="_BPMNShape_EndEvent_17">
-        <di:waypoint xsi:type="dc:Point" x="2226.0" y="513.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2577.0" y="513.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2577.0" y="514.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2928.0" y="514.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="63.0" x="2604.0" y="513.0"/>
+          <dc:Bounds height="22.0" width="22.0" x="3298.0" y="467.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_28" bpmnElement="flow-option-selected-merge-xor-option-selected" sourceElement="_BPMNShape_ExclusiveGateway_25" targetElement="_BPMNShape_ExclusiveGateway_27">
-        <di:waypoint xsi:type="dc:Point" x="2201.0" y="538.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2201.0" y="593.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2266.0" y="593.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3041.0" y="593.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3041.0" y="459.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2549.0" y="537.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2549.0" y="592.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2614.0" y="592.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3637.0" y="592.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3637.0" y="458.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="209.0" x="2599.0" y="564.0"/>
+          <dc:Bounds height="22.0" width="209.0" x="2556.0" y="564.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_29" bpmnElement="flow-induce-contract-conclusion-to-loan-contract-signed" sourceElement="_BPMNShape_UserTask_11" targetElement="_BPMNShape_EndEvent_18">
-        <di:waypoint xsi:type="dc:Point" x="1888.0" y="514.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1922.0" y="514.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2236.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2270.0" y="513.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1906.0" y="578.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="2254.0" y="577.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_105" bpmnElement="service-task-request-credit-history">
-        <dc:Bounds height="80.0" width="100.0" x="1032.0" y="214.0"/>
+        <dc:Bounds height="80.0" width="100.0" x="1224.0" y="213.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_28" bpmnElement="xor-recent-credit-history-available" isMarkerVisible="true">
-        <dc:Bounds height="50.0" width="50.0" x="948.0" y="228.0"/>
+        <dc:Bounds height="50.0" width="50.0" x="1140.0" y="227.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="107.0" x="921.0" y="192.0"/>
+          <dc:Bounds height="38.0" width="107.0" x="1113.0" y="191.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_30" bpmnElement="flow-look-for-recent-credit-history-to-recent-credit-history-available" sourceElement="_BPMNShape_ServiceTask_101" targetElement="_BPMNShape_ExclusiveGateway_28">
-        <di:waypoint xsi:type="dc:Point" x="904.0" y="254.0"/>
-        <di:waypoint xsi:type="dc:Point" x="926.0" y="254.0"/>
-        <di:waypoint xsi:type="dc:Point" x="926.0" y="253.0"/>
-        <di:waypoint xsi:type="dc:Point" x="948.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1084.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1118.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1118.0" y="252.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1140.0" y="252.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="925.0" y="317.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1105.0" y="316.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_31" bpmnElement="flow-recent-credit-history-available-to-request-credit-history" sourceElement="_BPMNShape_ExclusiveGateway_28" targetElement="_BPMNShape_ServiceTask_105">
-        <di:waypoint xsi:type="dc:Point" x="998.0" y="253.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1015.0" y="253.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1015.0" y="254.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1032.0" y="254.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1190.0" y="252.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1207.0" y="252.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1207.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1224.0" y="253.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="22.0" x="1364.0" y="254.0"/>
+          <dc:Bounds height="22.0" width="22.0" x="1190.0" y="227.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_32" bpmnElement="flow-recent-credit-history-available-to-xor-merge-recent-credit-history-available" sourceElement="_BPMNShape_ExclusiveGateway_28" targetElement="_BPMNShape_ExclusiveGateway_23">
-        <di:waypoint xsi:type="dc:Point" x="973.0" y="278.0"/>
-        <di:waypoint xsi:type="dc:Point" x="973.0" y="352.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1429.0" y="352.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1429.0" y="281.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1165.0" y="277.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1165.0" y="351.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1621.0" y="351.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1621.0" y="280.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="22.0" width="29.0" x="1186.0" y="352.0"/>
+          <dc:Bounds height="22.0" width="29.0" x="1378.0" y="351.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_33" bpmnElement="flow-request-credit-history-to-received-credit-history" sourceElement="_BPMNShape_ServiceTask_105" targetElement="_BPMNShape_IntermediateCatchEvent_11">
-        <di:waypoint xsi:type="dc:Point" x="1132.0" y="254.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1148.0" y="254.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1148.0" y="257.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1164.0" y="257.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1324.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1340.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1340.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1356.0" y="256.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1148.0" y="256.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1340.0" y="255.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_34" bpmnElement="flow-prepare-updated-application-to-merge-xor-updated-application" sourceElement="_BPMNShape_UserTask_15" targetElement="_BPMNShape_ExclusiveGateway_22">
-        <di:waypoint xsi:type="dc:Point" x="3174.0" y="475.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3174.0" y="620.0"/>
-        <di:waypoint xsi:type="dc:Point" x="744.0" y="620.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3770.0" y="474.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3770.0" y="621.0"/>
+        <di:waypoint xsi:type="dc:Point" x="745.0" y="621.0"/>
         <di:waypoint xsi:type="dc:Point" x="745.0" y="278.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2062.0" y="684.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="2660.0" y="685.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_1" bpmnElement="message-flow-request-credit-history-to-GTA" sourceElement="_BPMNShape_ServiceTask_105" targetElement="_BPMNShape_Participant_9">
-        <di:waypoint xsi:type="dc:Point" x="1082.0" y="214.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1082.0" y="162.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="162.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="108.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1274.0" y="213.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1274.0" y="162.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="162.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="108.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1440.0" y="226.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1389.0" y="162.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_2" bpmnElement="message-flow-GTA-to-received-credit-history" sourceElement="_BPMNShape_Participant_9" targetElement="_BPMNShape_IntermediateCatchEvent_11">
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="108.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="176.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1182.0" y="176.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1182.0" y="239.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="108.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="176.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1374.0" y="176.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1374.0" y="238.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1358.0" y="240.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1938.0" y="176.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_3" bpmnElement="message-flow-request-cleanup-service-to-GTA" sourceElement="_BPMNShape_ServiceTask_104" targetElement="_BPMNShape_Participant_9">
-        <di:waypoint xsi:type="dc:Point" x="2356.0" y="395.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2356.0" y="149.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="149.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="108.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2704.0" y="394.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2704.0" y="149.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="149.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="108.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2220.0" y="213.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="2567.0" y="213.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_MessageFlow_4" bpmnElement="message-flow-GTA-to-cleanup-recommendation" sourceElement="_BPMNShape_Participant_9" targetElement="_BPMNShape_IntermediateCatchEvent_12">
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="108.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1666.0" y="137.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2470.0" y="137.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2470.0" y="417.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="108.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1998.0" y="137.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2818.0" y="137.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2818.0" y="416.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2148.0" y="137.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="2480.0" y="137.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_29" bpmnElement="ExclusiveGateway_1" isMarkerVisible="true">
@@ -683,13 +680,6 @@
           <dc:Bounds height="6.0" width="6.0" x="604.0" y="253.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_11" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_ExclusiveGateway_30" targetElement="_BPMNShape_ExclusiveGateway_22">
-        <di:waypoint xsi:type="dc:Point" x="674.0" y="253.0"/>
-        <di:waypoint xsi:type="dc:Point" x="720.0" y="253.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="694.0" y="253.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_18" bpmnElement="SequenceFlow_5" sourceElement="_BPMNShape_ExclusiveGateway_29" targetElement="_BPMNShape_ExclusiveGateway_30">
         <di:waypoint xsi:type="dc:Point" x="397.0" y="278.0"/>
         <di:waypoint xsi:type="dc:Point" x="397.0" y="342.0"/>
@@ -697,6 +687,85 @@
         <di:waypoint xsi:type="dc:Point" x="649.0" y="278.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="6.0" width="6.0" x="431.0" y="342.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_106" bpmnElement="service-task-mobile-msg">
+        <dc:Bounds height="80.0" width="100.0" x="828.0" y="213.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_25" bpmnElement="SequenceFlow_7" sourceElement="_BPMNShape_ExclusiveGateway_30" targetElement="_BPMNShape_ExclusiveGateway_22">
+        <di:waypoint xsi:type="dc:Point" x="674.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="720.0" y="253.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="694.0" y="253.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_35" bpmnElement="SequenceFlow_8" sourceElement="_BPMNShape_ExclusiveGateway_22" targetElement="_BPMNShape_ServiceTask_106">
+        <di:waypoint xsi:type="dc:Point" x="770.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="828.0" y="253.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="803.0" y="253.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_36" bpmnElement="SequenceFlow_9" sourceElement="_BPMNShape_ServiceTask_106" targetElement="_BPMNShape_ServiceTask_101">
+        <di:waypoint xsi:type="dc:Point" x="928.0" y="254.0"/>
+        <di:waypoint xsi:type="dc:Point" x="968.0" y="254.0"/>
+        <di:waypoint xsi:type="dc:Point" x="968.0" y="253.0"/>
+        <di:waypoint xsi:type="dc:Point" x="984.0" y="253.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="953.0" y="254.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_107" bpmnElement="ServiceTask_2">
+        <dc:Bounds height="80.0" width="100.0" x="1986.0" y="216.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_37" bpmnElement="SequenceFlow_10" sourceElement="_BPMNShape_UserTask_10" targetElement="_BPMNShape_ServiceTask_107">
+        <di:waypoint xsi:type="dc:Point" x="1948.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1986.0" y="256.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="1964.0" y="256.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_39" bpmnElement="SequenceFlow_12" sourceElement="_BPMNShape_ServiceTask_107" targetElement="_BPMNShape_ExclusiveGateway_24">
+        <di:waypoint xsi:type="dc:Point" x="2086.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2123.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2123.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2160.0" y="255.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="2120.0" y="256.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ExclusiveGateway_31" bpmnElement="ExclusiveGateway_3" isMarkerVisible="true">
+        <dc:Bounds height="50.0" width="50.0" x="3268.0" y="488.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="3293.0" y="543.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_40" bpmnElement="SequenceFlow_13" sourceElement="_BPMNShape_ExclusiveGateway_25" targetElement="_BPMNShape_ExclusiveGateway_31">
+        <di:waypoint xsi:type="dc:Point" x="2574.0" y="512.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2921.0" y="512.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2921.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3268.0" y="513.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="22.0" width="63.0" x="2574.0" y="488.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_108" bpmnElement="ServiceTask_3">
+        <dc:Bounds height="80.0" width="100.0" x="3372.0" y="473.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_41" bpmnElement="SequenceFlow_14" sourceElement="_BPMNShape_ExclusiveGateway_31" targetElement="_BPMNShape_ServiceTask_108">
+        <di:waypoint xsi:type="dc:Point" x="3318.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3351.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3351.0" y="514.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3372.0" y="514.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="3348.0" y="514.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_42" bpmnElement="SequenceFlow_15" sourceElement="_BPMNShape_ServiceTask_108" targetElement="_BPMNShape_EndEvent_17">
+        <di:waypoint xsi:type="dc:Point" x="3472.0" y="513.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3528.0" y="513.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="3503.0" y="513.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
