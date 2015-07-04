@@ -47,13 +47,12 @@ public class MobileMessageServiceBean implements MobileMessageService{
 	
 				Client client = Client.create();
 				
-				//for testing
+				System.out.println("http://localhost:3000/send_pushAds_api/sendPushAds?customerId=" + customerId.toString() + "&loanApplicationStatus="+ message);
+
 			    WebResource webResource = client.resource("http://localhost:3000/send_pushAds_api/sendPushAds?customerId=" + customerId.toString() + "&loanApplicationStatus="+ message);
-			    
-			 
-			    
+
 			    System.out.println(message);
-			    ClientResponse response = webResource.type(MediaType.TEXT_PLAIN).post(ClientResponse.class);
+			    ClientResponse response = webResource.type(MediaType.TEXT_PLAIN).get(ClientResponse.class);
 			   	        
 		        System.out.println(response);
 		        
