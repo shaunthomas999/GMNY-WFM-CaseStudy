@@ -154,38 +154,6 @@
 
     </script>
 
-    <!-- JS - Datepicker for contact details/dateOfBirth-->
-    <script cam-script type="text/form-script">
-    $scope.open = function($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-
-      $scope.dateFieldOpened = true;
-    };
-
-    </script>
-
-    <!--CSS for better select styling
-    <style type="text/css">
-        .styled-select {
-            /*width: 240px;
-            height: 34px;*/
-        }
-        .styled-select select {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-            line-height: 1;
-            border: 1;
-            border-radius: 1;
-            height: 34px;
-            -webkit-appearance: none;
-        }
-        .styled-select select:focus {
-            outline: none;
-        }
-    </style> -->
-
     <!--CSS for better select descriptions
     <style type="text/css">
         .styled-select-text {
@@ -211,27 +179,24 @@
     </style>
 
     <!--==the actual form== -->
-    <!-- Readonly - Customer Typem Customer ID and Registration date- Determines Show/Hide of Other Fields -->
+    <!-- Customer ID and Customer Type determine Show/Hide of Other Fields -->
     <div id="s0bp">
         <section>
             <h3>Basic Customer Information</h3>
         </section>
-        <p>Shows the customer type as well as the customer ID of the applicant.<br></p>
-        <!--two in one row - custoemr ID and type -->
+        <p>Shows the customer type as well as the customer ID of the applicant.</p>
+        <!-- Customer ID and Customer Type -->
         <div class="row">
-          <!--Customer ID; takes 1/4 of row-->
+            <!--Customer ID-->
             <div class="form-group col-md-3">
                 <label for="customerID">Customer ID</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId"
-                       name="customerId" readonly/>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
             </div>
-        
-            <!--Customer Type; takes 1/2 of row-->
-            <div class="styled-select col-md-3">
+            <!--Customer Type-->
+            <div class="form-group col-md-3">
                 <label for="customerType">Customer Type</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="customerType" name="customerType" id="customerType" readonly/>
             </div>
-          
         </div>
     </div>
 
@@ -247,6 +212,11 @@
                 <label for="firstname">Organization Name</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="orgName" name="orgName" readonly/>
             </div>
+            <!--Area of Activity-->
+            <div class="col-md-6">
+                <label for="lastname">Area of Activity</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="businessArea" name="businessArea" readonly/>
+            </div>
         </div>
     </div>
 
@@ -254,43 +224,14 @@
     <div id="s2bp">
         <!--section heading + change text depending on selector-->
         <section>
-            <h3>Personal- and Contact Information</h3>
+            <h3>Personal and Contact Information</h3>
         </section>
         <p id="s2bl">This fieldset shows the contact person with the organization.</p>
         <p id="s2pl">This fieldset shows the private contact details.</p>
-        
-        <!-- second row with first and last name-->
-        <div class="row">
-            <!--First Name-->
-            <div class="col-md-6">
-                <label for="firstname">First name</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
-            </div>
-            <!--Last Name-->
-            <div class="col-md-6">
-                <label for="lastname">Last name</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname" readonly/>
-            </div>
-        </div>
-        <!-- third row with email and phone-->
-        <div class="row">
-            <!--Email Address - single row-->
-            <div class="col-md-6">
-                <label for="email">Email address</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email" readonly/>
-            </div>
-            <!--Phone Number - single row-->
-            <div class="col-md-6">
-                <label for="phoneNumber">Phone number</label>
-                <input id="phoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber"
-                       name="phoneNumber" readonly/>
-            </div>
-        </div>
-        
-        <!--last row with gender and date of birth-->
+        <!-- First row with gender and date of birth-->
         <div class="row">
             <!--Gender-->
-            <div class="form-group styled-select col-md-6">
+            <div class="form-group col-md-6">
                 <label for="gender">Gender</label>
                 <input type="text"
                        cam-variable-name="gender"
@@ -301,13 +242,40 @@
             </div>
             <!--Date of Birth-->
             <div class="form-group col-md-6">
-            	<label for="dateOfBirth">Date of Birth</label>
+                <label for="dateOfBirth">Date of Birth</label>
                 <input type="text"
                        cam-variable-name="dateOfBirth"
                        cam-variable-type="String"
                        class="form-control"
                        name="dateOfBirth"
                        readonly/>
+            </div>
+        </div>
+        <!-- Second row with first and last name-->
+        <div class="row">
+            <!--First Name-->
+            <div class="col-md-6">
+                <label for="firstname">First Name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
+            </div>
+            <!--Last Name-->
+            <div class="col-md-6">
+                <label for="lastname">Last Name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname" readonly/>
+            </div>
+        </div>
+        <!-- Third row with email and phone-->
+        <div class="row">
+            <!--Email Address - single row-->
+            <div class="col-md-6">
+                <label for="email">Email Address</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email" readonly/>
+            </div>
+            <!--Phone Number - single row-->
+            <div class="col-md-6">
+                <label for="phoneNumber">Phone Number</label>
+                <input id="phoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber"
+                       name="phoneNumber" readonly/>
             </div>
         </div>
     </div>
@@ -324,12 +292,12 @@
         <div class="row">
             <!--Organization Street Name; takes 2/3 of row-->
             <div class="form-group col-md-8">
-                <label for="street">Steet Name</label>
+                <label for="street">Street Name</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street" readonly/>
             </div>
             <!--Organization Street Number; takes 1/3 of row-->
             <div class="form-group col-md-4">
-                <label for="streetNumber">Steet Number</label>
+                <label for="streetNumber">Street Number</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
                        name="streetNumber" readonly/>
             </div>
@@ -366,25 +334,26 @@
             <!--Loan Period; takes 1/2 of row-->
             <div class="form-group col-md-6">
                 <label for="period">Loan Period</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="period"
-                       name="period">
+                <input class="form-control" cam-variable-type="String" cam-variable-name="period" name="period">
             </div>
         </div>
         <!--Private Loan Type and Descriptions-->
         <div id="s4ss1">
-            <div class="form-group styled-select">
-                <label for="privateLoanType">Private Loan Type</label><br />
-                <select cam-variable-name="privateLoanType" cam-variable-type="String" name="privateLoanType" id="privateLoanType">
-                    <option value="0" selected style="display:none;">Please select</option>
-                    <option value="1">Car Loan</option>
-                    <option value="2">Debt Consolidation Loan</option>
-                    <option value="3">Home Improvement Loan</option>
-                    <option value="4">Holdiay Loans</option>
-                    <option value="5">GMNY Ambitions Private</option>
-                </select>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="privateLoanType">Private Loan Type</label><br />
+                    <select cam-variable-name="privateLoanType" cam-variable-type="String" name="privateLoanType" id="privateLoanType">
+                        <option value="0" selected style="display:none;">Please select</option>
+                        <option value="1">Car Loan</option>
+                        <option value="2">Debt Consolidation Loan</option>
+                        <option value="3">Home Improvement Loan</option>
+                        <option value="4">Holiday Loans</option>
+                        <option value="5">GMNY Ambitions Private</option>
+                    </select>
+                </div>
             </div>
             <div class="styled-select-text">
-                <p id="s4pl1">Treate yourself to a new car!</p>
+                <p id="s4pl1">Treat yourself to a new car!</p>
                 <p id="s4pl2">Do a debt conversion and benefit from our favourable conditions.</p>
                 <p id="s4pl3">Renovate your home!</p>
                 <p id="s4pl4">Here comes the sun!</p>
@@ -398,23 +367,25 @@
                 </div>
                 <!--Annual Salary; takes 1/2 of row-->
                 <div class="form-group col-md-6">
-                    <label for="period">Annual Salary</label>
+                    <label for="annualSalary">Annual Salary</label>
                     <input class="form-control" cam-variable-type="String" cam-variable-name="annualSalary"
                            name="annualSalary">
                 </div>
             </div>
         </div>
         <div id="s4ss2">
-            <div class="form-group styled-select">
-                <label for="businessLoanType">Business Loan Type</label><br />
-                <select cam-variable-name="businessLoanType" cam-variable-type="String" name="businessLoanType" id="businessLoanType">
-                    <option value="0" selected style="display:none;">Please select</option>
-                    <option value="6">Startup Loan</option>
-                    <option value="7">Professional Loan</option>
-                    <option value="8">Small Business Loan</option>
-                    <option value="9">Construction Financing</option>
-                    <option value="10">GMNY Ambitions Business</option>
-                </select>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="businessLoanType">Business Loan Type</label><br />
+                    <select cam-variable-name="businessLoanType" cam-variable-type="String" name="businessLoanType" id="businessLoanType">
+                        <option value="0" selected style="display:none;">Please select</option>
+                        <option value="6">Startup Loan</option>
+                        <option value="7">Professional Loan</option>
+                        <option value="8">Small Business Loan</option>
+                        <option value="9">Construction Financing</option>
+                        <option value="10">GMNY Ambitions Business</option>
+                    </select>
+                </div>
             </div>
             <div class="styled-select-text">
                 <p id="s4bl1">1.	5-7.5% Interest<br>
@@ -460,17 +431,17 @@
             <!--Credit Score-->
             <div class="col-md-6">
                 <label for="scoring">Credit Score</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="scoring" name="scoring" readonly/>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring" readonly/>
             </div>
             <!--Bad Debts-->
             <div class="col-md-3">
-                <label for="badDebts">Bad Debts</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="badDebts" name="badDebts" readonly/>
+                <label for="badDepts">Bad Debts</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="badDepts" name="badDepts" readonly/>
             </div>
             <!--Credits-->
             <div class="col-md-3">
                 <label for="consumerCredits">Credits Taken</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="consumerCredits" name="consumerCredits" readonly/>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="consumerCredits" name="consumerCredits" readonly/>
             </div>
         </div>
         <!-- second row for Business with rating baddept and dept ratio-->
@@ -482,20 +453,21 @@
             </div>
             <!--Bad Debts 2 Years-->
             <div class="col-md-3">
-                <label for="badDebtsInPastTwoYears">Bad Debts in the past 2 Years</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="badDebtsInPastTwoYears" name="badDebtsInPastTwoYears" readonly/>
+                <label for="badDeptsInPastTwoYears">Bad Debts in the past two years</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="badpebtsInPastTwoYears" name="badDeptsInPastTwoYears" readonly/>
             </div>
             <!--Debt Ratio-->
             <div class="col-md-3">
                 <label for="deptRatioWithNewCreditAmount">New Debt Ratio</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="deptRatioWithNewCreditAmount" name="deptRatioWithNewCreditAmount" readonly/>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="deptRatioWithNewCreditAmount" name="deptRatioWithNewCreditAmount" readonly/>
             </div>
         </div>
         <!-- Cleanup Recommendation - single row-->
-        <div>
-            <label for="cleanupRecommendation">Cleanup Recommendation</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="cleanupRecommendation" name="cleanupRecommendation" readonly/>
+        <div class="row">
+            <div class="col-md-12">
+                <label for="cleanupRecommendation">Cleanup Recommendation</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="cleanupRecommendation" name="cleanupRecommendation" readonly/>
+            </div>
         </div>
-    </div>
     </div>
 </form>

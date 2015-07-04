@@ -46,39 +46,7 @@
         }
     </script>
 
-    <!-- JS - Datepicker for contact details/dateOfBirth-->
-    <script cam-script type="text/form-script">
-    $scope.open = function($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-
-      $scope.dateFieldOpened = true;
-    };
-
-    </script>
-
-    <!--CSS for better select styling
-    <style type="text/css">
-        .styled-select {
-            /*width: 240px;
-            height: 34px;*/
-        }
-        .styled-select select {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-            line-height: 1;
-            border: 1;
-            border-radius: 1;
-            height: 34px;
-            -webkit-appearance: none;
-        }
-        .styled-select select:focus {
-            outline: none;
-        }
-    </style> -->
-
-    <!--CSS for section borders -->
+        <!--CSS for section borders -->
     <style type="text/css">
         section {
             display: block;
@@ -94,7 +62,7 @@
         <section>
             <h3>Customer Type</h3>
         </section>
-        <p>Please select the type of customer to be registered.<br></p>
+        <p>Please select the type of customer to be registered.</p>
         <div class="row">
             <div class="col-md-6">
                 <select cam-variable-name="customerType" cam-variable-type="String" id="customerType" required>
@@ -116,7 +84,7 @@
             <!--Organization Name-->
             <div class="col-md-6">
                 <label for="firstname">Organization Name</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="nameOfOrg" name="nameOfOrg"/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="orgName" name="orgName"/>
             </div>
             <!--Area of Activity-->
             <div class="col-md-6">
@@ -130,7 +98,7 @@
     <div id="s2bp">
         <!--section heading + change text depending on selector-->
         <section>
-            <h3>Personal- and Contact Information</h3>
+            <h3>Personal and Contact Information</h3>
         </section>
         <p id="s2bl">Please fill in required personal and contact information of the contact person with the client organization.</p>
         <p id="s2pl">Please fill in the customers personal and contact information.</p>
@@ -138,42 +106,46 @@
         <div class="row">
             <!--Gender-->
             <div class="form-group styled-select col-md-6">
-                <p><b>Gender</b></p>
+                <label for="gender">Gender</label><br/>
                 <select cam-variable-name="gender" cam-variable-type="String" name="gender">
-                    <option>Mr.</option>
-                    <option>Mrs.</option>
+                    <option value="" disabled selected style="display:none">Please select</option>
+                    <option value="20">Mr.</option>
+                    <option value="21">Ms.</option>
                 </select>
             </div>
             <!--Date of Birth-->
-            <div class="form-group col-md-5">
-                <p><b>Date of Birth</b></p>
-                <input type="text"
-                       cam-variable-name="dateOfBirth"
-                       cam-variable-type="Date"
-                       class="form-control"
-                       datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
-                       is-open="dateFieldOpened"
-                       name="dateOfBirth"/>
-            </div>
-            <div class="col-md-1">
-                <p><b><font color="white">btn</font></b></p>
-                <div class="input-group-btn">
-                    <button type="button" class="btn btn-default" ng-click="open($event)">
-                        <i class="glyphicon glyphicon-calendar"></i>
-                    </button>
+            <div class="form-group col-md-6">
+                <label for="dateOfBirth">Date of Birth</label>
+                <div class="input-group">
+                    <input type="text" is-open="dateFieldOpeneddateOfBirth" datepicker-popup="dd/MM/yyyy" cam-variable-name="dateOfBirth" cam-variable-type="String" name="dateOfBirth" class="form-control" ng-model="dateOfBirth">
+                    <div class="input-group-btn">
+                        <button ng-click="opendateOfBirth($event)" class="btn btn-default" type="button">
+                            <i class="glyphicon glyphicon-calendar">
+                            </i>
+                        </button>
+                    </div>
+                    <script type="text/form-script" cam-script="">
+                        $scope.opendateOfBirth = function ($event)
+                        {
+                            $event.preventDefault();
+                            $event.stopPropagation();
+                            $scope.dateFieldOpeneddateOfBirth = true;
+                        };
+                    </script>
                 </div>
             </div>
         </div>
+
         <!-- second row with first and last name-->
         <div class="row">
             <!--First Name-->
             <div class="col-md-6">
-                <label for="firstname">First name</label>
+                <label for="firstname">First Name</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"/>
             </div>
             <!--Last Name-->
             <div class="col-md-6">
-                <label for="lastname">Last name</label>
+                <label for="lastname">Last Name</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname"/>
             </div>
         </div>
@@ -181,12 +153,12 @@
         <div class="row">
             <!--Email Address - single row-->
             <div class="col-md-6">
-                <label for="email">Email address</label>
+                <label for="email">Email Address</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email"/>
             </div>
             <!--Phone Number - single row-->
             <div class="col-md-6">
-                <label for="phoneNumber">Phone number</label>
+                <label for="phoneNumber">Phone Number</label>
                 <input id="phoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber"
                        name="phoneNumber"/>
             </div>
@@ -205,12 +177,12 @@
         <div class="row">
             <!-- Street Name; takes 2/3 of row-->
             <div class="form-group col-md-8">
-                <label for="street">Steet Name</label>
+                <label for="street">Street Name</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street"/>
             </div>
             <!-- Street Number; takes 1/3 of row-->
             <div class="form-group col-md-4">
-                <label for="streetNumber">Steet Number</label>
+                <label for="streetNumber">Street Number</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
                        name="streetNumber"/>
             </div>

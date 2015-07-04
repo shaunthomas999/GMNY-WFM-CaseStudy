@@ -1,12 +1,12 @@
 <form name="talk-to-customer">
   
   <div class="form-group">
-    <label for="applicationResultStatus">Result status</label>
+    <label for="applicationResultStatus">Application Result Status</label>
     <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required> <option>cleanup service</option> <option>terminate</option> <option>re-apply</option> </select>
   </div>
   
   <div class="form-group">
-    <label for="applicationStatusComment">Status comment</label>
+    <label for="applicationStatusComment">Application Status Comment</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" required/>
   </div>
   
@@ -23,51 +23,91 @@
     </div>
   
   <div class="form-group">
-    <label for="applicationStatus">status</label>
+    <label for="applicationStatus">Application Status</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus" name="applicationStatus" readonly/>
   </div>
 
-  
-  <!-- Read only customer data from database -->
+
+    <section>
+        <h3>Personal and Contact Information</h3>
+    </section>
+    <p>This fieldset shows the private contact details.</p>
+    <div class="row">
+        <!--Gender-->
+        <div class="form-group col-md-6">
+            <label for="gender">Gender</label>
+            <input type="text"
+                   cam-variable-name="gender"
+                   cam-variable-type="String"
+                   class="form-control"
+                   name="gender"
+                   readonly/>
+        </div>
+        <!--Date of Birth-->
+        <div class="form-group col-md-6">
+            <label for="dateOfBirth">Date of Birth</label>
+            <input type="text"
+                   cam-variable-name="dateOfBirth"
+                   cam-variable-type="String"
+                   class="form-control"
+                   name="dateOfBirth"
+                   readonly/>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-6 form-group">
-            <label for="firstname">Customer's first name</label>
+            <label for="firstname">First Name</label>
             <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
         </div>
         <div class="col-md-6 form-group">
-            <label for="lastname">Customer's last name</label>
+            <label for="lastname">Last Name</label>
             <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname" readonly/>
         </div>
     </div>
-  <div class="form-group">
-    <label for="email">Email address</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email" readonly/>
-  </div>
-  <div class="form-group">
-    <label for="phoneNumber">Phone number</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber" readonly/>
-  </div>
-  <!-- not needed?
-  <div class="form-group">
-    <label for="street">Street name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="street" name ="street" readonly/>
-  </div>
-  <div class="form-group">
-    <label for="streetNumber">Street number</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber" name ="streetNumber" readonly/>
-  </div>
-  <div class="form-group">
-    <label for="zipCode">Zip code</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name ="zipCode" readonly/>
-  </div>
-  <div class="form-group">
-    <label for="city">City</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="city" name ="city" readonly/>
-  </div>
-  <div class="form-group">
-    <label for="type">Type</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="type" name ="type"/>
-  </div>
-  -->
+    <div class="row">
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email" readonly/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber" readonly/>
+        </div>
+    </div>
+
+    <!-- Readonly -- Adress of private customer -->
+    <section>
+        <h3>Address</h3>
+    </section>
+    <p>Shows the customer's private address.</p>
+    <!--two in one row / Street Name and Number-->
+    <div class="row">
+        <!--Organization Street Name; takes 2/3 of row-->
+        <div class="form-group col-md-8">
+            <label for="street">Street Name</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street" readonly/>
+        </div>
+        <!--Organization Street Number; takes 1/3 of row-->
+        <div class="form-group col-md-4">
+            <label for="streetNumber">Street Number</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
+                   name="streetNumber" readonly/>
+        </div>
+    </div>
+    <!---two in one row / ZIP and City-->
+    <div class="row">
+        <!-- Zip Code 1/3-->
+        <div class="form-group col-md-4">
+            <label for="zipCode">ZIP Code</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name="zipCode" readonly/>
+        </div>
+        <!-- City 2/3-->
+        <div class="form-group col-md-8">
+            <label for="city">City</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="city" name="city" readonly/>
+        </div>
+    </div>
   
 </form>
