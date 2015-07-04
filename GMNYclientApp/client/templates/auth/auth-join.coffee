@@ -44,17 +44,20 @@ Template.join.events
     customerObj.city = $('#city').val()
     customerObj.pincode = $('#pincode').val()
     customerObj.contactNumber = $('#contactNumber').val()
+    gender = $( "#gender option:selected" ).text()
+    if gender is "Male"
+      customerObj.gender = "Mr."
+    else
+      customerObj.gender = "Ms."
 
     if Session.get("isCurrentCustomerPrivate")
       customerObj.customerType = "private"
       customerObj.dateOfBirth = $('#dateOfBirth').val()
-      customerObj.gender = $( "#gender option:selected" ).text();
       customerObj.orgName = ""
       customerObj.businessArea = ""
     else
       customerObj.customerType = "business"
       customerObj.dateOfBirth = ""
-      customerObj.gender = ""
       customerObj.orgName = $('#orgName').val()
       customerObj.businessArea = $('#businessArea').val()
 
