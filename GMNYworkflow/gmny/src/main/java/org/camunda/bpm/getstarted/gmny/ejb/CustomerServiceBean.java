@@ -47,7 +47,7 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity.setStreetNumber((String) variables.get("streetNumber"));
     customerEntity.setZipCode((String) variables.get("zipCode"));
     customerEntity.setCity((String) variables.get("city"));
-    customerEntity.setDateOfBirth((Date) variables.get("dateOfBirth"));
+    customerEntity.setDateOfBirth((String) variables.get("dateOfBirth"));
     customerEntity.setGender((String) variables.get("gender"));
     customerEntity.setCustomerType((String) variables.get("customerType"));
     
@@ -93,6 +93,8 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity1.setZipCode("48161");
     customerEntity1.setCity("Muenster");
     customerEntity1.setCustomerType("business");
+    customerEntity1.setGender("Mr.");
+    customerEntity1.setDateOfBirth("05/06/1966");
     
     // generate password
     System.out.println("Generating random password");
@@ -146,6 +148,8 @@ public class CustomerServiceBean implements CustomerService{
     customerEntity2.setZipCode("48162");
     customerEntity2.setCity("Muenster");
     customerEntity2.setCustomerType("private");
+    customerEntity2.setGender("Mr.");
+    customerEntity2.setDateOfBirth("05/06/1966");
     
     // generate password
     System.out.println("Generating random password");
