@@ -27,6 +27,7 @@ Template.applyLoan.events
     loanObj.period = $('#period').val()
 
     customerObj = Session.get("currentuser")
+    loanObj.customerId = customerObj.id
     if customerObj.customerType is "private"
       loanObj.occupation = $('#occupation').val()
       loanObj.annualSalary = $('#annualSalary').val()
