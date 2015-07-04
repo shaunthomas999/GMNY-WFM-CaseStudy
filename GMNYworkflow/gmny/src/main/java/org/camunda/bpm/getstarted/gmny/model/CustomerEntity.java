@@ -20,6 +20,7 @@ public class CustomerEntity implements Serializable {
   @Version
   protected long version;
  
+  private String orgName;
   private String firstname;
   private String lastname;
   private String email;
@@ -33,13 +34,8 @@ public class CustomerEntity implements Serializable {
   private String gender;
   private Date registrationDate;
   private Long creditHistoryId;
-  
-  //business only
-  
-  private enum type{
-	  business,
-	  person
-  };
+
+  private String customerType;
  
   public Long getId() {
     return id;
@@ -153,6 +149,22 @@ public class CustomerEntity implements Serializable {
 		this.dateOfBirth = dateOfBirth;
 	}
 
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
 	public String getGender() {
 		return gender;
 	}
@@ -161,6 +173,10 @@ public class CustomerEntity implements Serializable {
 		this.gender = gender;
 	}
 
-
- 
+	@Override
+	public String toString() {
+		return new StringBuffer(" First Name : ").append(this.firstname)
+				.append(" Last Name : ").append(this.lastname)
+				.append(this.id).toString();
+	}
 }

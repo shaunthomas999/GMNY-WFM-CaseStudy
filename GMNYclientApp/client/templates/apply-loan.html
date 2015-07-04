@@ -1,0 +1,59 @@
+<template name="applyLoan">
+	<form id="loanApplicationForm">
+    <div>
+      <div class="list list-inset">
+        <label class="item item-input bar bar-dark">
+          Loan Application
+        </label>
+
+        <label class="item item-input">
+          <span class="input-label">Loan amount : </span>
+          <input id="amount" type="text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Loan period : </span>
+          <input id="period" type="text">
+        </label>
+        
+        <label class="item item-input {{isPrivateCustomer}}">
+          <span class="input-label">Occupation : </span>
+          <input id="occupation" type="text">
+        </label>
+        <label class="item item-input {{isPrivateCustomer}}">
+          <span class="input-label">Annual Salary : </span>
+          <input id="annualSalary" type="text">
+        </label>
+        <label class="item item-input item-select {{isPrivateCustomer}}">
+          <div class="input-label">
+            Loan type : 
+          </div>
+          <select id="loanType">
+            <option selected>Car Loan</option>
+            <option>Debt Consolidation Loan</option>
+            <option selected>Home Improvement Loan</option>
+            <option>Holiday Loans</option>
+            <option selected>GMNY Ambitious Private</option>
+          </select>
+        </label>
+
+        <label class="item item-input item-select {{isBusinessCustomer}}">
+          <div class="input-label">
+            Loan type : 
+          </div>
+          <select id="loanType">
+            <option selected>Startup Loan</option>
+            <option>Professional Loan</option>
+            <option selected>Small Business Loan</option>
+            <option>Construction Financing</option>
+            <option selected>GMNY Ambitious Business</option>
+          </select>
+        </label>
+        <div class="item item-body">
+          <button id="loanApplicationFormSubmit" class="button button-full button-positive">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    
+  </form>
+</template>

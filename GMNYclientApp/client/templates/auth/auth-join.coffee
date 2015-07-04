@@ -1,3 +1,4 @@
+Session.setDefault "isCurrentCustomerPrivate", true
 ERRORS_KEY = "joinErrors"
 Template.join.created = ->
   Session.set ERRORS_KEY, {}
@@ -10,45 +11,53 @@ Template.join.helpers
   errorClass: (key) ->
     Session.get(ERRORS_KEY)[key] and "error"
 
+  isPrivateCustomer: ->
+    if Session.get("isCurrentCustomerPrivate")
+      return ""
+    else
+      return "display-none"
+
+  isBusinessCustomer: ->
+    if not Session.get("isCurrentCustomerPrivate")
+      return ""
+    else
+      return "display-none"
+
 Template.join.events
   "click #privCustomerOption":->
-    $('#privateCustomerRegForm').show()
-    $('#businessCustomerRegForm').hide()
+    Session.set "isCurrentCustomerPrivate", true
 
   "click #busCustomerOption":->
-    $('#privateCustomerRegForm').hide()
-    $('#businessCustomerRegForm').show()
+    Session.set "isCurrentCustomerPrivate", false
 
-  "click #privateCustomerSubmit": (event) ->
+  "click #customerRegFormSubmit": (event) ->
     event.preventDefault()
-    privateCustomerObj = {}
-    privateCustomerObj.firstName = $('#priv_firstName').val()
-    privateCustomerObj.lastName = $('#priv_lastName').val()
-    privateCustomerObj.email = $('#priv_email').val()
-    privateCustomerObj.streetNameNum = $('#priv_streetNameNum').val()
-    privateCustomerObj.city = $('#priv_city').val()
-    privateCustomerObj.pincode = $('#priv_pincode').val()
-    privateCustomerObj.mobileNum = $('#priv_mobileNum').val()
-    privateCustomerObj.DOB = $('#priv_DOB').val()
 
-    Meteor.call "privateCustomerRegistration", privateCustomerObj, (error, result) ->
-      if error
-        Router.go('errorPage')
-      else
-        Router.go('joinResponse')
+    errors = {}
+    customerObj = {}
 
-  "click #businessCustomerSubmit": (event) ->
-    event.preventDefault()
-    businessCustomerObj = {}
-    businessCustomerObj.orgName = $('#bus_orgName').val()
-    businessCustomerObj.streetNameNum = $('#bus_streetNameNum').val()
-    businessCustomerObj.city = $('#bus_city').val()
-    businessCustomerObj.pincode = $('#bus_pincode').val()
-    businessCustomerObj.telNum = $('#bus_telNum').val()
-    businessCustomerObj.YOF = $('#bus_YOF').val()
-    businessCustomerObj.businessArea = $('#bus_businessArea').val()
+    customerObj.firstName = $('#firstName').val()
+    customerObj.lastName = $('#lastName').val()
+    customerObj.email = $('#email').val()
+    customerObj.streetNameNum = $('#street').val()
+    customerObj.city = $('#city').val()
+    customerObj.pincode = $('#pincode').val()
+    customerObj.mobileNum = $('#contactNumber').val()
 
-    Meteor.call "businessCustomerRegistration", businessCustomerObj, (error, result) ->
+    if Session.get("isCurrentCustomerPrivate")
+      customerObj.customerType = "private"
+      customerObj.dateOfBirth = $('#dateOfBirth').val()
+      customerObj.gender = $( "#gender option:selected" ).text();
+      customerObj.orgName = ""
+      customerObj.businessArea = ""
+    else
+      customerObj.customerType = "business"
+      customerObj.dateOfBirth = ""
+      customerObj.gender = ""
+      customerObj.orgName = $('#orgName').val()
+      customerObj.businessArea = $('#businessArea').val()
+
+    Meteor.call "customerRegistration", customerObj, (error, result) ->
       if error
         Router.go('errorPage')
       else
