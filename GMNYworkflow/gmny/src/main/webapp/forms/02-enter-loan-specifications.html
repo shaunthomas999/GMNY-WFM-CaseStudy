@@ -154,18 +154,7 @@
 
     </script>
 
-    <!-- JS - Datepicker for contact details/dateOfBirth-->
-    <script cam-script type="text/form-script">
-    $scope.open = function($event) {
-      $event.preventDefault();
-      $event.stopPropagation();
-
-      $scope.dateFieldOpened = true;
-    };
-
-    </script>
-
-    <!--CSS for better select styling
+    <!--CSS for better select styling -->
     <style type="text/css">
         .styled-select {
             /*width: 240px;
@@ -184,9 +173,9 @@
         .styled-select select:focus {
             outline: none;
         }
-    </style> -->
+    </style>
 
-    <!--CSS for better select descriptions
+    <!--CSS for better select descriptions -->
     <style type="text/css">
         .styled-select-text {
             width: 100%;
@@ -198,7 +187,7 @@
             height: 34px;
             -webkit-appearance: none;
         }
-    </style> -->
+    </style>
 
     <!--CSS for section borders-->
     <style type="text/css">
@@ -211,27 +200,24 @@
     </style>
 
     <!--==the actual form== -->
-    <!-- Readonly - Customer Typem Customer ID and Registration date- Determines Show/Hide of Other Fields -->
+    <!-- Customer ID and Customer Type determine Show/Hide of Other Fields -->
     <div id="s0bp">
         <section>
             <h3>Basic Customer Information</h3>
         </section>
-        <p>Shows the customer type as well as the customer ID of the applicant.<br></p>
-        <!--two in one row - custoemr ID and type -->
+        <p>Shows the customer type as well as the customer ID of the applicant.</p>
+        <!-- Customer ID and Customer Type -->
         <div class="row">
-          <!--Customer ID; takes 1/4 of row-->
+            <!--Customer ID-->
             <div class="form-group col-md-3">
                 <label for="customerID">Customer ID</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId"
-                       name="customerId" readonly/>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
             </div>
-        
-            <!--Customer Type; takes 1/2 of row-->
+            <!--Customer Type-->
             <div class="styled-select col-md-3">
                 <label for="customerType">Customer Type</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="customerType" name="customerType" id="customerType" readonly/>
             </div>
-          
         </div>
     </div>
 
@@ -247,6 +233,11 @@
                 <label for="firstname">Organization Name</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="orgName" name="orgName" readonly/>
             </div>
+            <!--Area of Activity-->
+            <div class="col-md-6">
+                <label for="lastname">Area of Activity</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="businessArea" name="businessArea" readonly/>
+            </div>
         </div>
     </div>
 
@@ -258,8 +249,30 @@
         </section>
         <p id="s2bl">This fieldset shows the contact person with the organization.</p>
         <p id="s2pl">This fieldset shows the private contact details.</p>
-        
-        <!-- second row with first and last name-->
+        <!-- First row with gender and date of birth-->
+        <div class="row">
+            <!--Gender-->
+            <div class="form-group col-md-6">
+                <label for="gender">Gender</label>
+                <input type="text"
+                       cam-variable-name="gender"
+                       cam-variable-type="String"
+                       class="form-control"
+                       name="gender"
+                       readonly/>
+            </div>
+            <!--Date of Birth-->
+            <div class="form-group col-md-6">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="text"
+                       cam-variable-name="dateOfBirth"
+                       cam-variable-type="String"
+                       class="form-control"
+                       name="dateOfBirth"
+                       readonly/>
+            </div>
+        </div>
+        <!-- Second row with first and last name-->
         <div class="row">
             <!--First Name-->
             <div class="col-md-6">
@@ -272,7 +285,7 @@
                 <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname" readonly/>
             </div>
         </div>
-        <!-- third row with email and phone-->
+        <!-- Third row with email and phone-->
         <div class="row">
             <!--Email Address - single row-->
             <div class="col-md-6">
@@ -284,30 +297,6 @@
                 <label for="phoneNumber">Phone number</label>
                 <input id="phoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber"
                        name="phoneNumber" readonly/>
-            </div>
-        </div>
-        
-        <!--last row with gender and date of birth-->
-        <div class="row">
-            <!--Gender-->
-            <div class="form-group styled-select col-md-6">
-                <label for="gender">Gender</label>
-                <input type="text"
-                       cam-variable-name="gender"
-                       cam-variable-type="String"
-                       class="form-control"
-                       name="gender"
-                       readonly/>
-            </div>
-            <!--Date of Birth-->
-            <div class="form-group col-md-6">
-            	<label for="dateOfBirth">Date of Birth</label>
-                <input type="text"
-                       cam-variable-name="dateOfBirth"
-                       cam-variable-type="String"
-                       class="form-control"
-                       name="dateOfBirth"
-                       readonly/>
             </div>
         </div>
     </div>
@@ -398,7 +387,7 @@
                 </div>
                 <!--Annual Salary; takes 1/2 of row-->
                 <div class="form-group col-md-6">
-                    <label for="period">Annual Salary</label>
+                    <label for="annualSalary">Annual Salary</label>
                     <input class="form-control" cam-variable-type="String" cam-variable-name="annualSalary"
                            name="annualSalary">
                 </div>
@@ -492,7 +481,7 @@
             </div>
         </div>
         <!-- Cleanup Recommendation - single row-->
-        <div>
+        <div class="row">
             <label for="cleanupRecommendation">Cleanup Recommendation</label>
             <input class="form-control" cam-variable-type="String" cam-variable-name="cleanupRecommendation" name="cleanupRecommendation" readonly/>
         </div>
