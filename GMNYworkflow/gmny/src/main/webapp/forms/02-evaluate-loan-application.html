@@ -1,7 +1,7 @@
 <form name="evaluate-loan-application">
   
   <div class="form-group">
-    <label for="applicationStatus">Status</label>
+    <label for="applicationStatus">Application Status</label>
     <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required>
         <option value="0" selected style="display:none;">Please select</option>
         <option value="1">declined</option>
@@ -10,7 +10,7 @@
   </div>
   
   <div class="form-group">
-    <label for="applicationStatusComment">Status comment</label>
+    <label for="applicationStatusComment">Application Status comment</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" required/>
   </div>
   
@@ -21,7 +21,7 @@
         <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring" readonly/>
       </div>
       <div class="col-md-4 form-group">
-        <label for="badDepts">Bad Depts</label>
+        <label for="badDepts">Bad Debts</label>
         <input class="form-control" cam-variable-type="Long" cam-variable-name="badDepts" name="badDepts" readonly/>
       </div>
       <div class="col-md-4 form-group">
@@ -105,12 +105,12 @@
     <div class="row">
         <!--Organization Street Name; takes 2/3 of row-->
         <div class="form-group col-md-8">
-            <label for="street">Steet Name</label>
+            <label for="street">Street Name</label>
             <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street" readonly/>
         </div>
         <!--Organization Street Number; takes 1/3 of row-->
         <div class="form-group col-md-4">
-            <label for="streetNumber">Steet Number</label>
+            <label for="streetNumber">Street Number</label>
             <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
                    name="streetNumber" readonly/>
         </div>
