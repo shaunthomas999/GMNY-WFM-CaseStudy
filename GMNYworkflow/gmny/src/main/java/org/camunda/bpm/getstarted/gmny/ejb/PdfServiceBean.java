@@ -44,7 +44,7 @@ import org.camunda.bpm.getstarted.gmny.ejb.LoanServiceBean;
 @Stateless
 public class PdfServiceBean {
 	
-	public static void createWelcome(CustomerEntity customer, LoanEntity loan) {
+	public static void createPrivateLoanContract(CustomerEntity customer, LoanEntity loan) {
 
 		Document document = new Document(PageSize.A4, Utilities.millimetersToPoints(20), Utilities.millimetersToPoints(22), Utilities.millimetersToPoints(25), Utilities.millimetersToPoints(10));
 		Font fontAddressHeader = new Font(FontFamily.HELVETICA, 8, Font.UNDERLINE, new BaseColor(0, 0, 0));

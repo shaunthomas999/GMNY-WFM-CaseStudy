@@ -69,7 +69,7 @@ public class CustomerServiceBean implements CustomerService{
     delegateExecution.setVariable("customerId", customerEntity.getId());
     System.out.println("Customer saved with ID: " + customerEntity.getId());
     System.out.println(" ");
-    PdfServiceBean.createWelcome(customerEntity, null);
+    PdfServiceBean.createPrivateLoanContract(customerEntity, null);
   }
   
   public void generateTestData(){

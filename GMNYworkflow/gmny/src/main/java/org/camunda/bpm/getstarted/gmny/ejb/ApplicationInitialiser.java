@@ -86,7 +86,7 @@ public class ApplicationInitialiser {
 	    em.persist(markusLoan);
 	    em.flush();
 	   
-	    PdfServiceBean.createWelcome(markusL, markusLoan);
+	    PdfServiceBean.createPrivateLoanContract(markusL, markusLoan);
 	    
   }
   
