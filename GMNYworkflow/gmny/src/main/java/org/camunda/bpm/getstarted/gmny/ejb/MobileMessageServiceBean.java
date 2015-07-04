@@ -21,6 +21,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.camunda.bpm.getstarted.gmny.ejb.CustomerServiceBean;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+import org.camunda.bpm.getstarted.gmny.service.MobileMessageService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 
 import com.google.common.base.Charsets;
@@ -35,80 +36,81 @@ import com.sun.jersey.multipart.file.FileDataBodyPart;
 
 
 @Stateless
-public class MobileMessageServiceBean {
-	
-public void sendMessage(Long customerId, String message) {
+@Named
+public class MobileMessageServiceBean implements MobileMessageService{
 		
-		System.out.println("* Trying to send push notification to customer: " + customerId.toString() + ", message: " + message + " *");
+	public void sendMessage(Long customerId, String message) {
+			
+			System.out.println("* Trying to send push notification to customer: " + customerId.toString() + ", message: " + message + " *");
+			
+			try {
+	
+				Client client = Client.create();
+				
+				//for testing
+			    WebResource webResource = client.resource("http://localhost:3000/send_pushAds_api/sendPushAds?customerId=" + customerId.toString() + "&loanApplicationStatus="+ message);
+			    
+			 
+			    
+			    System.out.println(message);
+			    ClientResponse response = webResource.type(MediaType.TEXT_PLAIN).post(ClientResponse.class);
+			   	        
+		        System.out.println(response);
+		        
+			} catch (Exception e) {
+	        e.printStackTrace();
+	        }
+		}
+	
+	public void sendApplied(DelegateExecution delegateExecution) {
 		
 		try {
-
-			Client client = Client.create();
 			
-			//for testing
-		    WebResource webResource = client.resource("http://localhost:3000/send_pushAds_api/sendPushAds?customerId=" + customerId.toString() + "&loanApplicationStatus="+ message);
+			// Get all process variables
+		    Map<String, Object> variables = delegateExecution.getVariables();
 		    
-		 
+		    String message = "applied";
+		    Long customerId = (Long) variables.get("customerId");
 		    
-		    System.out.println(message);
-		    ClientResponse response = webResource.type(MediaType.TEXT_PLAIN).post(ClientResponse.class);
-		   	        
-	        System.out.println(response);
-	        
+		    sendMessage(customerId, message);
+		    
 		} catch (Exception e) {
-        e.printStackTrace();
-        }
+	    e.printStackTrace();
+	    }
 	}
-
-public void sendApplied(DelegateExecution delegateExecution) {
 	
-	try {
+	public void sendStatus(DelegateExecution delegateExecution) {
 		
-		// Get all process variables
-	    Map<String, Object> variables = delegateExecution.getVariables();
-	    
-	    String message = "applied";
-	    Long customerId = (Long) variables.get("customerId");
-	    
-	    sendMessage(customerId, message);
-	    
-	} catch (Exception e) {
-    e.printStackTrace();
-    }
-}
-
-public void sendStatus(DelegateExecution delegateExecution) {
+		try {
+			
+			// Get all process variables
+		    Map<String, Object> variables = delegateExecution.getVariables();
+		    
+		    String message = (String) variables.get("applicationStatus");
+		    Long customerId = (Long) variables.get("customerId");
+		    
+		    sendMessage(customerId, message);
+		    
+		} catch (Exception e) {
+	    e.printStackTrace();
+	    }
+	}
 	
-	try {
+	public void sendResultStatus(DelegateExecution delegateExecution) {
 		
-		// Get all process variables
-	    Map<String, Object> variables = delegateExecution.getVariables();
-	    
-	    String message = (String) variables.get("applicationStatus");
-	    Long customerId = (Long) variables.get("customerId");
-	    
-	    sendMessage(customerId, message);
-	    
-	} catch (Exception e) {
-    e.printStackTrace();
-    }
-}
-
-public void sendResultStatus(DelegateExecution delegateExecution) {
-	
-	try {
-		
-		// Get all process variables
-	    Map<String, Object> variables = delegateExecution.getVariables();
-	    
-	    String message = (String) variables.get("applicationResultStatus");
-	    Long customerId = (Long) variables.get("customerId");
-	    
-	    sendMessage(customerId, message);
-	    
-	} catch (Exception e) {
-    e.printStackTrace();
-    }
-}
+		try {
+			
+			// Get all process variables
+		    Map<String, Object> variables = delegateExecution.getVariables();
+		    
+		    String message = (String) variables.get("applicationResultStatus");
+		    Long customerId = (Long) variables.get("customerId");
+		    
+		    sendMessage(customerId, message);
+		    
+		} catch (Exception e) {
+	    e.printStackTrace();
+	    }
+	}
 
 }
