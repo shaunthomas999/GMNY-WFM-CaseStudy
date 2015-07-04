@@ -89,30 +89,16 @@
 		    required
 		    readonly/>
   </div>
-  </div>
-  
-
-    
-		<script cam-script type="text/form-script">
-		  $scope.open = function($event) {
-		    $event.preventDefault();
-		    $event.stopPropagation();
-		
-		    $scope.dateFieldOpened = true;
-		  };
-		</script>          
+  </div>       
 	
 	      <!--Due Date-->
       	    <div class="row">
             <div class="col-md-6">  
                 <p><b>Due Date</b></p>
-                <input type="text"
+                <input class="form-control"
+                       cam-variable-type="String"
                        cam-variable-name="duedateGTA"
-                       cam-variable-type="Date"
-                       class="form-control"
-                       datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
-                       is-open="dateFieldOpened"
-                       name="dueDate"
+                       name="duedateGTA
                        required
                        readonly/>
             </div>
