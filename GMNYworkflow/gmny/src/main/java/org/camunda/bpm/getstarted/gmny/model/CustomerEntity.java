@@ -34,6 +34,7 @@ public class CustomerEntity implements Serializable {
   private String gender;
   private Date registrationDate;
   private Long creditHistoryId;
+
   private String customerType;
  
   public Long getId() {
