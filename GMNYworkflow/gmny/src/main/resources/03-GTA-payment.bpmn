@@ -7,77 +7,14 @@
     <bpmn2:messageFlow id="MessageFlow_2" name="" sourceRef="UserTask_2" targetRef="Participant_1"/>
   </bpmn2:collaboration>
   <bpmn2:process id="Process_3" name="3 - GTA Payment" isExecutable="true">
-    <bpmn2:startEvent id="GTAPaymentStart" camunda:initiator="GTA" name="Invoice received">
+    <bpmn2:startEvent id="GTAPaymentStart" camunda:initiator="GTA" camunda:formKey="embedded:app:forms/03-GTA-payment-00-initiateform.html" name="Invoice received">
       <bpmn2:documentation><![CDATA[-Receive invoice as mail from GTA
 ]]></bpmn2:documentation>
-      <bpmn2:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="ordernumber" label="Order Number" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="iban" label="IBAN" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-              <camunda:constraint name="minlength" config="15"/>
-              <camunda:constraint name="maxlength" config="34"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="bic" label="BIC" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-              <camunda:constraint name="minlength" config="8"/>
-              <camunda:constraint name="maxlength" config="11"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="amount" label="Amount" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="duedate" label="Due Date" type="date">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn2:extensionElements>
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="clerk" name="Check for errors in invoice">
+    <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="clerk" camunda:formKey="embedded:app:forms/03-GTA-payment-01-checkform.html" name="Check for errors in invoice">
       <bpmn2:documentation>Compare the invoice description and amount against the one stored in the system, i.e. check for errors in the invoice.</bpmn2:documentation>
-      <bpmn2:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="ordernumber" label="Order Number" type="long">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="iban" label="IBAN" type="string">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="bic" label="BIC" type="string">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="amount" label="Amount" type="long">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="duedate" label="Due Date" type="date">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="correct" label="Is the invoice correct?" type="boolean"/>
-        </camunda:formData>
-      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -88,41 +25,8 @@
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:userTask id="UserTask_2" camunda:candidateGroups="clerk" name="Resolve Discrepancy with GTA">
+    <bpmn2:userTask id="UserTask_2" camunda:candidateGroups="clerk" camunda:formKey="embedded:app:forms/03-GTA-payment-02-editform.html" name="Resolve Discrepancy with GTA">
       <bpmn2:documentation>Send an email to GTA about the discrepancy in the invoice and change the data accordingly.</bpmn2:documentation>
-      <bpmn2:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="ordernumber" label="Order Number" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="iban" label="IBAN" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-              <camunda:constraint name="minlength" config="15"/>
-              <camunda:constraint name="maxlength" config="34"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="bic" label="BIC" type="string">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-              <camunda:constraint name="minlength" config="8"/>
-              <camunda:constraint name="maxlength" config="11"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="amount" label="Amount" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="duedate" label="Due Date" type="date">
-            <camunda:validation>
-              <camunda:constraint name="required"/>
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -141,31 +45,7 @@
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="UserTask_2" targetRef="ExclusiveGateway_2"/>
-    <bpmn2:userTask id="UserTask_3" camunda:candidateGroups="clerk" camunda:dueDate="${duedate}" name="Initiate payment">
-      <bpmn2:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="ordernumber" label="Order Number" type="long">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="iban" label="IBAN" type="string">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="bic" label="BIC" type="string">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="amount" label="Amount" type="long">
-            <camunda:validation>
-              <camunda:constraint name="readonly"/>
-            </camunda:validation>
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn2:extensionElements>
+    <bpmn2:userTask id="UserTask_3" camunda:candidateGroups="clerk" camunda:dueDate="${duedateGTA}" camunda:formKey="embedded:app:forms/03-GTA-payment-03-displayform.html" name="Initiate payment">
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
     </bpmn2:userTask>

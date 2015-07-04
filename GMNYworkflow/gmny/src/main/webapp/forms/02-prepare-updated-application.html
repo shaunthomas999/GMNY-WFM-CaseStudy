@@ -2,35 +2,39 @@
   
   <div class="form-group">
     <label for="applicationStatus">Application status</label>
-    <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required> <option>reopened</option> </select>
+    <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required>
+        <option>reopened</option>
+    </select>
   </div>
   
   <div class="form-group">
     <label for="applicationStatusComment">Status comment</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" />
   </div>
-  
-  <div class="form-group">
-    <label for="amount">Loan Amount</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" />
-  </div>
-  
-  <!-- Read only application data -->
-  <div class="form-group">
-    <label for="customerID">Customer ID</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="customerId" name="customerId" readonly/>
+  <div class="row">
+      <!-- Read only application data -->
+      <div class="col-md-6 form-group">
+          <label for="customerID">Customer ID</label>
+          <input class="form-control" cam-variable-type="String" cam-variable-name="customerId" name="customerId" readonly/>
+      </div>
+      <div class="col-md-6 form-group">
+        <label for="amount">Loan Amount</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" />
+      </div>
   </div>
   
   
   <!-- Read only customer data from database -->
-  <div class="form-group">
-    <label for="firstname">Customer's first name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
-  </div>
-  <div class="form-group">
-    <label for="lastname">Customer's last name</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname" readonly/>
-  </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="firstname">Customer's first name</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="lastname">Customer's last name</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname" readonly/>
+        </div>
+    </div>
   <div class="form-group">
     <label for="email">Email address</label>
     <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email" readonly/>

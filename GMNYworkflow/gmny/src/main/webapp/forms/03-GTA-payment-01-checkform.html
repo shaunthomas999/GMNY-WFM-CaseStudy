@@ -1,0 +1,141 @@
+<form name="03-GTA-payment-01-checkform">
+
+    <!--CSS for better select styling -->
+    <style type="text/css">
+        .styled-select {
+            /*width: 240px;
+            height: 34px;*/
+        }
+        .styled-select select {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1;
+            border: 1;
+            border-radius: 1;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+        .styled-select select:focus {
+            outline: none;
+        }
+    </style>
+
+    <!--CSS for section borders-->
+    <style type="text/css">
+        section {
+            display: block;
+            border-bottom: 1px
+            solid
+            darkgrey
+        }
+    </style>
+
+      	<section>
+            <h3>Order Payment</h3>
+        </section>
+        <p>Please check the order payment data for mistakes.<br></p>
+		
+	        <div class="row">
+            <!--Order Number-->
+            <div class="col-md-6">
+			    <label for="ordernumberGTA">Order Number</label>
+			    	<input class="form-control" 
+					    cam-variable-type="Long" 
+					    cam-variable-name="ordernumberGTA" 
+					    name="ordernumberGTA"
+					    required
+					    readonly/>
+  </div>
+
+            <!--Payment Amount-->
+            <div class="col-md-6">
+            
+		    	<label for="amountGTA">Amount</label>
+		    	<input class="form-control" 
+				    cam-variable-type="Long" 
+				    cam-variable-name="amountGTA" 
+				    name="amountGTA"
+				    required
+				    readonly/>
+	</div>
+	</div>
+            
+      	     <div class="row">
+            <!--IBAN-->
+            <div class="col-md-6">  
+                  
+		    <label for="ibanGTA">IBAN</label>
+		    	<input class="form-control" 
+				    cam-variable-type="String" 
+				    cam-variable-name="ibanGTA" 
+				    name ="ibanGTA"
+				    ng-minlength="15"
+				    ng-maxlength="34"
+				    required
+				    readonly/>
+  </div>
+
+            <!--BIC-->
+            <div class="col-md-6"> 
+            
+    <label for="bicGTA">BIC</label>
+    	<input class="form-control" 
+		    cam-variable-type="String" 
+		    cam-variable-name="bicGTA" 
+		    name ="bicGTA"
+		    ng-minlength="9"
+		    ng-maxlength="11"
+		    required
+		    readonly/>
+  </div>
+  </div>
+  
+
+    
+		<script cam-script type="text/form-script">
+		  $scope.open = function($event) {
+		    $event.preventDefault();
+		    $event.stopPropagation();
+		
+		    $scope.dateFieldOpened = true;
+		  };
+		</script>          
+	
+	      <!--Due Date-->
+      	    <div class="row">
+            <div class="col-md-6">  
+                <p><b>Due Date</b></p>
+                <input type="text"
+                       cam-variable-name="duedateGTA"
+                       cam-variable-type="Date"
+                       class="form-control"
+                       datepicker-popup="yyyy-MM-dd'T'HH:mm:ss"
+                       is-open="dateFieldOpened"
+                       name="dueDate"
+                       required
+                       readonly/>
+            </div>
+            <div class="col-md-1">
+                <p><b><font color="white">btn</font></b></p>
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open($event)">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                    </button>
+                </div>
+            </div>
+
+
+  <div class="row">
+  	<div class="col-md-6 col-md-offset-2">
+    <label for="correct">Is the invoice correct?</label>
+    	<input type="checkbox" 
+		    cam-variable-type="Boolean" 
+		    cam-variable-name="correct" 
+		    name="correct"
+		    /> 
+	</div>
+	</div>
+      
+       
+</form>
