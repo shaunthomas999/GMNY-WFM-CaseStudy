@@ -69,7 +69,7 @@ public class CustomerServiceBean implements CustomerService{
     delegateExecution.setVariable("customerId", customerEntity.getId());
     System.out.println("Customer saved with ID: " + customerEntity.getId());
     System.out.println(" ");
-    PdfServiceBean.createPrivateLoanContract(customerEntity, null);
+    //PdfServiceBean.createPrivateLoanContract(customerEntity, null);
   }
   
   public void generateTestData(){
@@ -189,7 +189,8 @@ public class CustomerServiceBean implements CustomerService{
     Long customerId = (Long) variables.get("customerId");
     String lastname = (String) variables.get("lastname");
     
-    String identifier = customerId + "_" + lastname;
+    //String identifier = customerId + "_" + lastname;
+    String identifier = "none";
     
     // Send simple mail
     /*

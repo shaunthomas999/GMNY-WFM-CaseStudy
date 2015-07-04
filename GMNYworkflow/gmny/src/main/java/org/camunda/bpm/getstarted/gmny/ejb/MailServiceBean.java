@@ -53,8 +53,10 @@ public class MailServiceBean {
 	    formData.field("subject", subject);
 	    formData.field("html", message);
 	    
+	    if(identifier != "none") {
 	    File pdfFile = new File( identifier + ".pdf");
 	    formData.bodyPart(new FileDataBodyPart("attachment",pdfFile, MediaType.APPLICATION_OCTET_STREAM_TYPE));
+	    }
 	    
 	    System.out.println("Sending mail to " + to);
 	    return webResource.type(MediaType.MULTIPART_FORM_DATA_TYPE).post(ClientResponse.class, formData);
