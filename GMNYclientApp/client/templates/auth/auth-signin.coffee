@@ -26,15 +26,12 @@ Template.signin.events submit: (event, template) ->
                 none: "Authentication failed"
             )
         else
-            customerType = result
+            customerObj = result
             Meteor.loginWithPassword customerId, password, (err) ->
                 if err
                     return Session.set(ERRORS_KEY,
                         none: "Authentication failed"
                     )
                 else
-                    customerObj = {}
-                    customerObj.customerId = customerId
-                    customerObj.customerType = customerType
                     Session.set("currentuser", customerObj)
                     Router.go "home"

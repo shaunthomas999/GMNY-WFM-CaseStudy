@@ -52,7 +52,7 @@ Template.appBody.helpers
 
   currentUsername: ->
     currentUser = Session.get("currentuser")
-    return currentUser.customerId
+    return currentUser.firstname + " " + currentUser.lastname
 
   userMenuOpen: ->
     Session.get USER_MENU_KEY

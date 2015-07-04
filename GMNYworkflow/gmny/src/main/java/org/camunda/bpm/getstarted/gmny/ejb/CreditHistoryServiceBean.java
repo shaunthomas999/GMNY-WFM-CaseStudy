@@ -173,7 +173,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		    
 		    String message = "";
 		    
-		    boolean privateClient = (variables.get("customerType")=="private");
+		    boolean privateClient = ("private".equals(variables.get("customerType")));
 		    
 		    if(privateClient){
 		    	message = "{\"variables\": {"
@@ -204,10 +204,10 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			Client client = Client.create();
 			
 			//for testing
-		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/HistoryAPIsimulation/start");
+		    //WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/HistoryAPIsimulation/start");
 		    
 		    //real GTA path
-		    //WebResource webResource = client.resource("http://localhost:8080/GTA/rest/order/creditHistory");
+		    WebResource webResource = client.resource("http://localhost:8080/GTA/rest/order/creditHistory");
 		    
 		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
@@ -242,7 +242,7 @@ public void requestCreditHistoryCleanup(DelegateExecution delegateExecution) {
 		    
 		    String message = "";
 		    
-		    boolean privateClient = (variables.get("customerType")=="private");
+		    boolean privateClient = ("private".equals(variables.get("customerType")));
 		    
 		    if(privateClient){
 		    	message = "{\"variables\": {"
@@ -272,10 +272,10 @@ public void requestCreditHistoryCleanup(DelegateExecution delegateExecution) {
 			Client client = Client.create();
 			
 			//for testing
-		    WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/CleanupAPIsimulation/start");
+		    //WebResource webResource = client.resource("http://localhost:8080/engine-rest/process-definition/key/CleanupAPIsimulation/start");
 		    		    
 		    //real GTA path
-		    //WebResource webResource = client.resource("http://localhost:8080/GTA/rest/order/creditCleanup");
+		    WebResource webResource = client.resource("http://localhost:8080/GTA/rest/order/creditCleanup");
 		    
 		    System.out.println(message);
 		    ClientResponse response = webResource.type(MediaType.APPLICATION_JSON).post(ClientResponse.class, message);
