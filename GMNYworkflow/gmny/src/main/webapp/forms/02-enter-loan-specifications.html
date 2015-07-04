@@ -154,28 +154,7 @@
 
     </script>
 
-    <!--CSS for better select styling -->
-    <style type="text/css">
-        .styled-select {
-            /*width: 240px;
-            height: 34px;*/
-        }
-        .styled-select select {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-            line-height: 1;
-            border: 1;
-            border-radius: 1;
-            height: 34px;
-            -webkit-appearance: none;
-        }
-        .styled-select select:focus {
-            outline: none;
-        }
-    </style>
-
-    <!--CSS for better select descriptions -->
+    <!--CSS for better select descriptions
     <style type="text/css">
         .styled-select-text {
             width: 100%;
@@ -187,7 +166,7 @@
             height: 34px;
             -webkit-appearance: none;
         }
-    </style>
+    </style> -->
 
     <!--CSS for section borders-->
     <style type="text/css">
@@ -214,7 +193,7 @@
                 <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
             </div>
             <!--Customer Type-->
-            <div class="styled-select col-md-3">
+            <div class="form-group col-md-3">
                 <label for="customerType">Customer Type</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="customerType" name="customerType" id="customerType" readonly/>
             </div>
@@ -360,16 +339,18 @@
         </div>
         <!--Private Loan Type and Descriptions-->
         <div id="s4ss1">
-            <div class="form-group styled-select">
-                <label for="privateLoanType">Private Loan Type</label><br />
-                <select cam-variable-name="privateLoanType" cam-variable-type="String" name="privateLoanType" id="privateLoanType">
-                    <option value="0" selected style="display:none;">Please select</option>
-                    <option value="1">Car Loan</option>
-                    <option value="2">Debt Consolidation Loan</option>
-                    <option value="3">Home Improvement Loan</option>
-                    <option value="4">Holiday Loans</option>
-                    <option value="5">GMNY Ambitions Private</option>
-                </select>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="privateLoanType">Private Loan Type</label><br />
+                    <select cam-variable-name="privateLoanType" cam-variable-type="String" name="privateLoanType" id="privateLoanType">
+                        <option value="0" selected style="display:none;">Please select</option>
+                        <option value="1">Car Loan</option>
+                        <option value="2">Debt Consolidation Loan</option>
+                        <option value="3">Home Improvement Loan</option>
+                        <option value="4">Holiday Loans</option>
+                        <option value="5">GMNY Ambitions Private</option>
+                    </select>
+                </div>
             </div>
             <div class="styled-select-text">
                 <p id="s4pl1">Treat yourself to a new car!</p>
@@ -393,16 +374,18 @@
             </div>
         </div>
         <div id="s4ss2">
-            <div class="form-group styled-select">
-                <label for="businessLoanType">Business Loan Type</label><br />
-                <select cam-variable-name="businessLoanType" cam-variable-type="String" name="businessLoanType" id="businessLoanType">
-                    <option value="0" selected style="display:none;">Please select</option>
-                    <option value="6">Startup Loan</option>
-                    <option value="7">Professional Loan</option>
-                    <option value="8">Small Business Loan</option>
-                    <option value="9">Construction Financing</option>
-                    <option value="10">GMNY Ambitions Business</option>
-                </select>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="businessLoanType">Business Loan Type</label><br />
+                    <select cam-variable-name="businessLoanType" cam-variable-type="String" name="businessLoanType" id="businessLoanType">
+                        <option value="0" selected style="display:none;">Please select</option>
+                        <option value="6">Startup Loan</option>
+                        <option value="7">Professional Loan</option>
+                        <option value="8">Small Business Loan</option>
+                        <option value="9">Construction Financing</option>
+                        <option value="10">GMNY Ambitions Business</option>
+                    </select>
+                </div>
             </div>
             <div class="styled-select-text">
                 <p id="s4bl1">1.	5-7.5% Interest<br>
@@ -481,9 +464,10 @@
         </div>
         <!-- Cleanup Recommendation - single row-->
         <div class="row">
-            <label for="cleanupRecommendation">Cleanup Recommendation</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="cleanupRecommendation" name="cleanupRecommendation" readonly/>
+            <div class="col-md-12">
+                <label for="cleanupRecommendation">Cleanup Recommendation</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="cleanupRecommendation" name="cleanupRecommendation" readonly/>
+            </div>
         </div>
-    </div>
     </div>
 </form>
