@@ -83,7 +83,7 @@ public class ApplicationInitialiser {
 	    markusL.setStreetNumber("4-6");
 	    markusL.setZipCode("48143");
 	    markusL.setCity("Muenster");
-	    markusL.setCustomerType("private");
+	    markusL.setCustomerType("Private");
 	    
 	    markusL.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
 	    
@@ -104,7 +104,7 @@ public class ApplicationInitialiser {
 	  	jochenK.setStreetNumber("9");
 	  	jochenK.setZipCode("48143");
 	  	jochenK.setCity("Muenster");
-	  	jochenK.setCustomerType("private");
+	  	jochenK.setCustomerType("Private");
 	    
 	  	jochenK.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
 	    
