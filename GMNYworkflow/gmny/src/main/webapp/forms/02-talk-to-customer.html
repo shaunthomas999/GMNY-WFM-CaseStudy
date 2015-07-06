@@ -1,65 +1,60 @@
 <form name="talk-to-customer">
-
     <!--CSS for select descroption and section borders-->
     <style type="text/css">
-        .styled-select-text {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-            line-height: 1;
-            border: 1;
-            border-radius: 1;
-            height: 34px;
-            -webkit-appearance: none;
-        }
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
+        }
+        textarea {
+            min-width: 100%;
         }
     </style>
-  <div class="row">
-      <div class="col-md-6 form-group">
-        <label for="applicationResultStatus">Application Result Status</label>
-        <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required>
-            <option value="" selected style="display:none">Please select</option>
-            <option value="1">Cleanup Service</option>
-            <option value="2">Terminate</option>
-            <option value="3">Re-Apply</option>
-        </select>
-      </div>
-  </div>
-  <div class="row">
-      <div class="form-group">
-        <label for="applicationStatusComment">Application Status Comment</label>
-        <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" readonly/>
-      </div>
-  </div>
-  
-  <!-- Read only application data -->
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="applicationResultStatus">Application Result Status</label>
+            <select name="applicationResultStatus" cam-variable-type="String"
+                    cam-variable-name="applicationResultStatus" required>
+                <option value="" selected style="display:none">Please select</option>
+                <option value="cleanup service">Cleanup Service</option>
+                <option value="terminate">Terminate</option>
+                <option value="re-apply">Re-Apply</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-6">
+            <label for="applicationStatusComment">Application Status Comment</label><br/>
+            <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
+                      name="applicationStatusComment" readonly/>
+        </div>
+    </div>
+
+    <!-- Read only application data -->
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="customerID">Customer ID</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId"
+                   readonly/>
         </div>
         <div class="col-md-6 form-group">
             <label for="amount">Loan Amount</label>
             <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
         </div>
     </div>
-  <div class="row">
-      <div class="form-group">
-        <label for="applicationStatus">Application Status</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus" name="applicationStatus" readonly/>
-      </div>
-  </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="applicationStatus">Application Status</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus"
+                   name="applicationStatus" readonly/>
+        </div>
+    </div>
 
 
     <section>
         <h3>Personal and Contact Information</h3>
     </section>
     <p>This fieldset shows the private contact details.</p>
+
     <div class="row">
         <!--Gender-->
         <div class="form-group col-md-6">
@@ -85,23 +80,26 @@
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="firstname">First Name</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"
+                   readonly/>
         </div>
         <div class="col-md-6 form-group">
             <label for="lastname">Last Name</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname" readonly/>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname"
+                   readonly/>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             <label for="email">Email Address</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email" readonly/>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email" readonly/>
         </div>
     </div>
     <div class="row">
         <div class="form-group col-md-6">
             <label for="phoneNumber">Phone Number</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber" readonly/>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name="phoneNumber"
+                   readonly/>
         </div>
     </div>
 
@@ -137,5 +135,5 @@
             <input class="form-control" cam-variable-type="String" cam-variable-name="city" name="city" readonly/>
         </div>
     </div>
-  
+
 </form>
