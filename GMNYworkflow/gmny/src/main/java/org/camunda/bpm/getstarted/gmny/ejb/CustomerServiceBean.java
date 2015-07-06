@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 //import javax.inject.Inject;
 import javax.inject.Named;
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
+import org.camunda.bpm.getstarted.gmny.model.FinancialProductEntity;
 import org.camunda.bpm.getstarted.gmny.service.CustomerService;
  
 @Stateless
@@ -25,6 +27,9 @@ public class CustomerServiceBean implements CustomerService{
   // Inject the entity manager
   @PersistenceContext
   private EntityManager entityManager;
+  
+  @EJB
+  FinancialProductServiceBean financialProductServiceBean;
   
   // Inject task form available through the camunda cdi artifact
   //@Inject
@@ -248,5 +253,48 @@ public class CustomerServiceBean implements CustomerService{
 	System.out.println(" ");
 	
   }
+  
+  
+public void sendContractToCustomer(DelegateExecution delegateExecution) {
+	  
+	  System.out.println("*** Sending email to customer ***");
+	  
+	  // Get customerId from process memory
+  Map<String, Object> variables = delegateExecution.getVariables();
+  Long customerId = (Long) variables.get("customerId");
+  String lastname = (String) variables.get("lastname");
+  
+	Long productId = (Long) variables.get("privateLoanType");
+	FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
+  
+  String identifier = customerId + "_" + lastname;
+  
+  // Send fancy mail
+  HashMap<String, String> vars = new HashMap<String, String>();
+	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getGender() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + "!");
+  vars.put("text", "We are pleased to inform you that your" + product.getProductName() + " request has been accepted. We are willing to make the loan according to the terms and conditions set out in the loan agreement attached. <br /> <b>Please mail or fax us the signed agreement as soon as possible.</b> <br /> If there are any questions left do not hesitate to contact us." );
+  vars.put("buttonTitle", "Go to Online-Banking!");
+	vars.put("buttonLink", "http://localhost:3000/home");
+	try {
+		System.out.println(
+			MailServiceBean.send(
+					entityManager.find(CustomerEntity.class, customerId).getEmail(),
+					"Your " + product.getProductName() + " application",
+					vars,
+					identifier
+			)
+		);
+	} catch (IOException e) {
+		// Error when Sending the welcome mail
+		e.printStackTrace();
+	}
+	
+	System.out.println(" ");
+	
+}
+
+  
+  
+  
   
 }

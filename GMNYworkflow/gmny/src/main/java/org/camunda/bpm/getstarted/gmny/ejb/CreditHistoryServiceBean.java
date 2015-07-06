@@ -102,77 +102,161 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		
 		// Get relevant variables from process memory
 		Map<String, Object> variables = delegateExecution.getVariables();
-		Long scoring = (Long) variables.get("scoring");
-		Long badDepts = (Long) variables.get("badDepts");
-		Long consumerCredits = (Long) variables.get("consumerCredits");
 		
-		// apply business rules
-		boolean flag = false;
-		flag = (scoring >= 8 && badDepts == 0 && consumerCredits <= 2) ? true : false;
+		if (variables.get("customerType") == "private") {
 		
-		// convert to a clear recommendation
-		String recommendation = "LOAN APPROVAL NOT RECOMMENDED";
-		recommendation = (flag == true) ? "LOAN APPROVAL RECOMMENDED" : "LOAN APPROVAL NOT RECOMMENDED";
+			Long scoring = (Long) variables.get("scoring");
+			Long badDepts = (Long) variables.get("badDepts");
+			Long consumerCredits = (Long) variables.get("consumerCredits");
+			
+			// apply business rules
+			boolean flag = false;
+			flag = (scoring >= 8 && badDepts == 0 && consumerCredits <= 2) ? true : false;
+			
+			// convert to a clear recommendation
+			String recommendation = "LOAN APPROVAL NOT RECOMMENDED";
+			recommendation = (flag == true) ? "LOAN APPROVAL RECOMMENDED" : "LOAN APPROVAL NOT RECOMMENDED";
+			
+			//set the process variable
+			delegateExecution.setVariable("recommendation", recommendation);
+			
+			System.out.println("Outcome - recommendation: " + recommendation);
+			
+			//get the chosen financial product
+			Long productId = (Long) variables.get("privateLoanType");
+			FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
+			
+			Float interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
+			Float interestStep = interestSpread / 8.0f;
+			
+			
+			Float individualInterestRate = product.getMaxInterestRate();
+			String scoringDirty = variables.get("scoring").toString();
+			int scoringInt = Integer.parseInt(scoringDirty);
+			// int scoringInt = (int) variables.get("scoring");
+			
+			switch (scoringInt) {
+				case 15: individualInterestRate = product.getMinInterestRate(); break;
+				case 14: individualInterestRate = product.getMinInterestRate() + interestStep; break;
+				case 13: individualInterestRate = product.getMinInterestRate() + (2.0f * interestStep); break;
+				case 12: individualInterestRate = product.getMinInterestRate() + (3.0f * interestStep); break;
+				case 11: individualInterestRate = product.getMinInterestRate() + (4.0f * interestStep); break;
+				case 10: individualInterestRate = product.getMinInterestRate() + (5.0f * interestStep); break;
+				case 9: individualInterestRate = product.getMinInterestRate() + (6.0f * interestStep); break;
+				case 8: individualInterestRate = product.getMinInterestRate() + (7.0f * interestStep); break;
+				default: individualInterestRate = product.getMaxInterestRate(); break;
+			}
+			
+			String problems = "";
+			
+			delegateExecution.setVariable("interestRate", ""+(individualInterestRate * 100.0f));
+			
+			Long amount = (Long) variables.get("amount");
+			Long period = (Long) variables.get("period");
+			
+			Long individualAmount;
+			Long individualPeriod;
+			
+			
+			
+			if (amount <= product.getMaxAmount() && amount >= product.getMinAmount()) {
+				individualAmount = amount;
+				delegateExecution.setVariable("amount", individualAmount);
+			} else {
+				individualAmount = amount;
+				delegateExecution.setVariable("amount", individualAmount);
+				problems = problems + "WARNING: The amount of EUR " + amount + " is out of range for the " + product.getProductName() + ". ";
+			}
+			
+			if (period <= product.getMaxPeriod() && period >= product.getMinPeriod()) {
+				individualPeriod = period;
+				delegateExecution.setVariable("period", individualPeriod);
+			} else {
+				individualPeriod = period;
+				delegateExecution.setVariable("period", individualPeriod);
+				problems = problems + "WARNING: The period of " + period + " years is out of range for the " + product.getProductName() + ". ";
+			}
 		
-		//set the process variable
-		delegateExecution.setVariable("recommendation", recommendation);
-		
-		System.out.println("Outcome - recommendation: " + recommendation);
-		
-		//get the chosen financial product
-		Long productId = (Long) variables.get("privateLoanType");
-		FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
-		
-		Float interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
-		Float interestStep = interestSpread / 8.0f;
-		
-		System.out.println("INTEREST STEP AAAA" + interestStep);
-		
-		Float individualInterestRate = product.getMaxInterestRate();
-		String scoringDirty = variables.get("scoring").toString();
-		int scoringInt = Integer.parseInt(scoringDirty);
-		// int scoringInt = (int) variables.get("scoring");
-		
-		switch (scoringInt) {
-			case 15: individualInterestRate = product.getMinInterestRate(); break;
-			case 14: individualInterestRate = product.getMinInterestRate() + interestStep; break;
-			case 13: individualInterestRate = product.getMinInterestRate() + (2.0f * interestStep); System.out.println("RATING 13 AAAA" + individualInterestRate); break;
-			case 12: individualInterestRate = product.getMinInterestRate() + (3.0f * interestStep); break;
-			case 11: individualInterestRate = product.getMinInterestRate() + (4.0f * interestStep); break;
-			case 10: individualInterestRate = product.getMinInterestRate() + (5.0f * interestStep); break;
-			case 9: individualInterestRate = product.getMinInterestRate() + (6.0f * interestStep); break;
-			case 8: individualInterestRate = product.getMinInterestRate() + (7.0f * interestStep); break;
-			default: individualInterestRate = product.getMaxInterestRate(); break;
-		}
-		
-		delegateExecution.setVariable("interestRate", ""+individualInterestRate);
-		
-		Long amount = (Long) variables.get("amount");
-		Long period = (Long) variables.get("period");
-		
-		Long individualAmount;
-		Long individualPeriod;
-		
-		
-		
-		if (amount <= product.getMaxAmount() && amount >= product.getMinAmount()) {
-			individualAmount = amount;
-			delegateExecution.setVariable("amount", individualAmount);
-		} else {
-			individualAmount = (long) 0;
-			delegateExecution.setVariable("amount", (long) 0);
-		}
-		
-		if (period <= product.getMaxPeriod() && period >= product.getMinPeriod()) {
-			individualPeriod = period;
-			delegateExecution.setVariable("period", individualPeriod);
-		} else {
-			individualPeriod = (long) 0;
-			delegateExecution.setVariable("period", (long) 0);
-		}
-		
+			//business
 
+		} else {
+//			
+//			String rating = (String) variables.get("rating");
+//			Long badDeptsInPastTwoYears = (Long) variables.get("badDepts");
+//			String dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
+//			
+//			// apply business rules
+//			boolean flag = false;
+//			flag = (scoring >= 8 && badDepts == 0 && consumerCredits <= 2) ? true : false;
+//			
+//			// convert to a clear recommendation
+//			String recommendation = "LOAN APPROVAL NOT RECOMMENDED";
+//			recommendation = (flag == true) ? "LOAN APPROVAL RECOMMENDED" : "LOAN APPROVAL NOT RECOMMENDED";
+//			
+//			//set the process variable
+//			delegateExecution.setVariable("recommendation", recommendation);
+//			
+//			System.out.println("Outcome - recommendation: " + recommendation);
+//			
+//			//get the chosen financial product
+//			Long productId = (Long) variables.get("privateLoanType");
+//			FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
+//			
+//			Float interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
+//			Float interestStep = interestSpread / 8.0f;
+//			
+//			
+//			Float individualInterestRate = product.getMaxInterestRate();
+//			String scoringDirty = variables.get("scoring").toString();
+//			int scoringInt = Integer.parseInt(scoringDirty);
+//			// int scoringInt = (int) variables.get("scoring");
+//			
+//			switch (scoringInt) {
+//				case 15: individualInterestRate = product.getMinInterestRate(); break;
+//				case 14: individualInterestRate = product.getMinInterestRate() + interestStep; break;
+//				case 13: individualInterestRate = product.getMinInterestRate() + (2.0f * interestStep); break;
+//				case 12: individualInterestRate = product.getMinInterestRate() + (3.0f * interestStep); break;
+//				case 11: individualInterestRate = product.getMinInterestRate() + (4.0f * interestStep); break;
+//				case 10: individualInterestRate = product.getMinInterestRate() + (5.0f * interestStep); break;
+//				case 9: individualInterestRate = product.getMinInterestRate() + (6.0f * interestStep); break;
+//				case 8: individualInterestRate = product.getMinInterestRate() + (7.0f * interestStep); break;
+//				default: individualInterestRate = product.getMaxInterestRate(); break;
+//			}
+//			
+//			String problems = "";
+//			
+//			delegateExecution.setVariable("interestRate", ""+(individualInterestRate * 100.0f));
+//			
+//			Long amount = (Long) variables.get("amount");
+//			Long period = (Long) variables.get("period");
+//			
+//			Long individualAmount;
+//			Long individualPeriod;
+//			
+//			
+//			
+//			if (amount <= product.getMaxAmount() && amount >= product.getMinAmount()) {
+//				individualAmount = amount;
+//				delegateExecution.setVariable("amount", individualAmount);
+//			} else {
+//				individualAmount = amount;
+//				delegateExecution.setVariable("amount", individualAmount);
+//				problems = problems + "WARNING: The amount of EUR " + amount + " is out of range for the " + product.getProductName() + ". ";
+//			}
+//			
+//			if (period <= product.getMaxPeriod() && period >= product.getMinPeriod()) {
+//				individualPeriod = period;
+//				delegateExecution.setVariable("period", individualPeriod);
+//			} else {
+//				individualPeriod = period;
+//				delegateExecution.setVariable("period", individualPeriod);
+//				problems = problems + "WARNING: The period of " + period + " years is out of range for the " + product.getProductName() + ". ";
+//			}
+			
+			
+			
 		
+		}
 		
 		
 	  }
