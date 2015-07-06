@@ -57,7 +57,7 @@ public class CustomerServiceBean implements CustomerService{
     
     // generate password
     System.out.println("Generating random password");
-    customerEntity.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 7));
+    customerEntity.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
     
     // set creation date
     Date today = new Date();
@@ -100,7 +100,7 @@ public class CustomerServiceBean implements CustomerService{
     
     // generate password
     System.out.println("Generating random password");
-    customerEntity1.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 7));
+    customerEntity1.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
     
     // set creation date
     Date today1 = new Date();
@@ -155,7 +155,7 @@ public class CustomerServiceBean implements CustomerService{
     
     // generate password
     System.out.println("Generating random password");
-    customerEntity2.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 7));
+    customerEntity2.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
     
     // set creation date
     Date today2 = new Date();
@@ -227,7 +227,7 @@ public class CustomerServiceBean implements CustomerService{
     
     // Send fancy mail
     HashMap<String, String> vars = new HashMap<String, String>();
-	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getFirstname() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + "!");
+	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getGender() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + "!");
     vars.put("text", "We are happy to welcome you as a customer of GMNY. You are now able to access our Online-Banking system! Your login crediantials are as follows: <br> Customer-ID: " + entityManager.find(CustomerEntity.class, customerId).getId() + "<br> Password: " + entityManager.find(CustomerEntity.class, customerId).getPassword());
     vars.put("buttonTitle", "Go to Online-Banking!");
 	vars.put("buttonLink", "http://localhost:3000/home");
