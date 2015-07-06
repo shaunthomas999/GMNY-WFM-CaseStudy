@@ -14,10 +14,10 @@ App.icons({
   'ipad_2x': 'resources/icons/icon-72x72@2x.png',
 
   // Android
-  'android_ldpi': 'resources/icons/icon-36x36.png',
-  'android_mdpi': 'resources/icons/icon-48x48.png',
-  'android_hdpi': 'resources/icons/icon-72x72.png',
-  'android_xhdpi': 'resources/icons/icon-96x96.png'
+  'android_ldpi': 'resources/icons/favicon_36x36.png',
+  'android_mdpi': 'resources/icons/favicon_48x48.png',
+  'android_hdpi': 'resources/icons/favicon_72x72.png',
+  'android_xhdpi': 'resources/icons/favicon_96x96.png'
 });
 
 App.setPreference('StatusBarOverlaysWebView', 'false');
