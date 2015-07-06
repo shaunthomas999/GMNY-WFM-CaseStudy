@@ -45,7 +45,7 @@
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="UserTask_2" targetRef="ExclusiveGateway_2"/>
-    <bpmn2:userTask id="UserTask_3" camunda:candidateGroups="clerk" camunda:dueDate="${duedateGTA}" camunda:formKey="embedded:app:forms/03-GTA-payment-03-displayform.html" name="Initiate payment">
+    <bpmn2:userTask id="UserTask_3" camunda:candidateGroups="clerk" camunda:formKey="embedded:app:forms/03-GTA-payment-03-displayform.html" name="Initiate payment">
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
     </bpmn2:userTask>
