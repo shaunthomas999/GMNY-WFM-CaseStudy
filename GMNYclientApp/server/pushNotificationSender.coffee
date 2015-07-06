@@ -11,6 +11,7 @@ Meteor.methods
 				throw "User undefined"
 
 			console.log "Going to send push notification"
+			console.log "**Title - #{title} \n **Message - #{message}"
 		
 			#- Send push notifications to customers with given userIds
 			App.notificationClient.sendNotification usersArray, {title: title, message: message}
