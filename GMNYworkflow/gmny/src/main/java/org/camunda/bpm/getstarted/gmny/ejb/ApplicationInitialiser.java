@@ -143,7 +143,7 @@ public class ApplicationInitialiser {
 	    product.setMinInterestRate(minInterestRate);
 	    product.setMaxInterestRate(maxInterestRate);
 	    product.setMinPeriod(minPeriod);
-	    product.setMinPeriod(maxPeriod);
+	    product.setMaxPeriod(maxPeriod);
 	    product.setIdentifier(identifier);
 	    
 	    return product;

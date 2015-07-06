@@ -126,6 +126,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		Float interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
 		Float interestStep = interestSpread / 8.0f;
 		
+		System.out.println("INTEREST STEP AAAA" + interestStep);
+		
 		Float individualInterestRate = product.getMaxInterestRate();
 		String scoringDirty = variables.get("scoring").toString();
 		int scoringInt = Integer.parseInt(scoringDirty);
@@ -134,7 +136,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		switch (scoringInt) {
 			case 15: individualInterestRate = product.getMinInterestRate(); break;
 			case 14: individualInterestRate = product.getMinInterestRate() + interestStep; break;
-			case 13: individualInterestRate = product.getMinInterestRate() + (2.0f * interestStep); break;
+			case 13: individualInterestRate = product.getMinInterestRate() + (2.0f * interestStep); System.out.println("RATING 13 AAAA" + individualInterestRate); break;
 			case 12: individualInterestRate = product.getMinInterestRate() + (3.0f * interestStep); break;
 			case 11: individualInterestRate = product.getMinInterestRate() + (4.0f * interestStep); break;
 			case 10: individualInterestRate = product.getMinInterestRate() + (5.0f * interestStep); break;
@@ -143,7 +145,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			default: individualInterestRate = product.getMaxInterestRate(); break;
 		}
 		
-		delegateExecution.setVariable("interestRate", individualInterestRate);
+		delegateExecution.setVariable("interestRate", ""+individualInterestRate);
 		
 		Long amount = (Long) variables.get("amount");
 		Long period = (Long) variables.get("period");
@@ -155,18 +157,18 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		
 		if (amount <= product.getMaxAmount() && amount >= product.getMinAmount()) {
 			individualAmount = amount;
-			delegateExecution.setVariable("amount", individualInterestRate);
+			delegateExecution.setVariable("amount", individualAmount);
 		} else {
 			individualAmount = (long) 0;
-			delegateExecution.setVariable("amount", "Amount is out of range!");
+			delegateExecution.setVariable("amount", (long) 0);
 		}
 		
 		if (period <= product.getMaxPeriod() && period >= product.getMinPeriod()) {
-			individualPeriod = amount;
-			delegateExecution.setVariable("period", individualInterestRate);
+			individualPeriod = period;
+			delegateExecution.setVariable("period", individualPeriod);
 		} else {
 			individualPeriod = (long) 0;
-			delegateExecution.setVariable("period", "Period is out of range!");
+			delegateExecution.setVariable("period", (long) 0);
 		}
 		
 
