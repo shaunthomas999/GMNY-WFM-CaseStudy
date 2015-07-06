@@ -1,8 +1,33 @@
 <form name="talk-to-customer">
+
+    <!--CSS for select descroption and section borders-->
+    <style type="text/css">
+        .styled-select-text {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1;
+            border: 1;
+            border-radius: 1;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+        section {
+            display: block;
+            border-bottom: 1px
+            solid
+            darkgrey
+        }
+    </style>
   
   <div class="form-group">
     <label for="applicationResultStatus">Application Result Status</label>
-    <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required> <option>cleanup service</option> <option>terminate</option> <option>re-apply</option> </select>
+    <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required>
+        <option value="" disabled selected style="display:none">Please select</option>
+        <option value="1">Cleanup Service</option>
+        <option value="2">Terminate</option>
+        <option value="3">Re-Apply</option>
+    </select>
   </div>
   
   <div class="form-group">
@@ -14,11 +39,11 @@
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="customerID">Customer ID</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="customerId" name="customerId" readonly/>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
         </div>
         <div class="col-md-6 form-group">
             <label for="amount">Loan Amount</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" readonly/>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
         </div>
     </div>
   

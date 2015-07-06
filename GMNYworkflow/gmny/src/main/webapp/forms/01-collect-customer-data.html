@@ -46,8 +46,18 @@
         }
     </script>
 
-        <!--CSS for section borders -->
+    <!--CSS for select descroption and section borders-->
     <style type="text/css">
+        .styled-select-text {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1;
+            border: 1;
+            border-radius: 1;
+            height: 34px;
+            -webkit-appearance: none;
+        }
         section {
             display: block;
             border-bottom: 1px
@@ -66,7 +76,7 @@
         <div class="row">
             <div class="col-md-6">
                 <select cam-variable-name="customerType" cam-variable-type="String" id="customerType" required>
-                    <option value="0" selected style="display:none;">Please select</option>
+                    <option value="" disabled selected style="display:none;">Please select</option>
                     <option value="1">Private</option>
                     <option value="2">Business</option>
                 </select>
@@ -109,8 +119,8 @@
                 <label for="gender">Gender</label><br/>
                 <select cam-variable-name="gender" cam-variable-type="String" name="gender">
                     <option value="" disabled selected style="display:none">Please select</option>
-                    <option value="20">Mr.</option>
-                    <option value="21">Ms.</option>
+                    <option value="Mr.">Mr.</option>
+                    <option value="Ms.">Ms.</option>
                 </select>
             </div>
             <!--Date of Birth-->

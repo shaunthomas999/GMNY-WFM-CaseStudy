@@ -1,21 +1,40 @@
 <form name="consult-customer">
+    <!--CSS for select descroption and section borders-->
+    <style type="text/css">
+        .styled-select-text {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1;
+            border: 1;
+            border-radius: 1;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+        section {
+            display: block;
+            border-bottom: 1px
+            solid
+            darkgrey
+        }
+    </style>
   
   <div class="form-group">
     <label for="cleanupRecommendation">Cleanup Recommendation</label>
-    <textarea name="cleanupRecommendation" cam-variable-type="String" cam-variable-name="cleanupRecommendation" readonly></textarea>
+    <input class="form-control" name="cleanupRecommendation" cam-variable-type="String" cam-variable-name="cleanupRecommendation" readonly/>
   </div>
   
   <!-- Read only application data -->
   <div class="row">
       <div class="col-md-6 form-group">
         <label for="customerID">Customer ID</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="customerId" name="customerId" readonly/>
+        <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
       </div>
   </div>
   <div class="row">
       <div class="col-md-6 form-group">
         <label for="amount">Loan Amount</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" readonly/>
+        <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
       </div>
 
       <div class="col-md-6 form-group">

@@ -1,9 +1,29 @@
 <form name="evaluate-loan-application">
+
+    <!--CSS for select descroption and section borders-->
+    <style type="text/css">
+        .styled-select-text {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1;
+            border: 1;
+            border-radius: 1;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+        section {
+            display: block;
+            border-bottom: 1px
+            solid
+            darkgrey
+        }
+    </style>
   
   <div class="form-group">
     <label for="applicationStatus">Application Status</label>
     <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required>
-        <option value="0" selected style="display:none;">Please select</option>
+        <option value="" disabled selected style="display:none;">Please select</option>
         <option value="1">declined</option>
         <option value="2">accepted</option>
     </select>
@@ -46,17 +66,17 @@
   <div class="row">
       <div class="col-md-6 form-group">
         <label for="customerID">Customer ID</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="customerId" name="customerId" readonly/>
+        <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
       </div>
       <div class="col-md-6 form-group">
         <label for="amount">Loan Amount</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount" readonly/>
+        <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
       </div>
   </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="period">Loan Period</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="period" name="period"/>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="period" name="period"/>
         </div>
         <div class="col-md-6 form-group">
             <label for="interestRate">Interest Rate</label>

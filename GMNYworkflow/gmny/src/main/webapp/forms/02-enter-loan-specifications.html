@@ -154,7 +154,7 @@
 
     </script>
 
-    <!--CSS for better select descriptions
+    <!--CSS for select descroption and section borders-->
     <style type="text/css">
         .styled-select-text {
             width: 100%;
@@ -166,10 +166,6 @@
             height: 34px;
             -webkit-appearance: none;
         }
-    </style> -->
-
-    <!--CSS for section borders-->
-    <style type="text/css">
         section {
             display: block;
             border-bottom: 1px
@@ -329,7 +325,7 @@
             <!-- Loan Amount; takes 1/2 of row-->
             <div class="form-group col-md-6">
                 <label for="loanAmount">Loan Amount</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="amount" name="amount">
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount">
             </div>
             <!--Loan Period; takes 1/2 of row-->
             <div class="form-group col-md-6">
@@ -343,7 +339,7 @@
                 <div class="form-group col-md-4">
                     <label for="privateLoanType">Private Loan Type</label><br />
                     <select cam-variable-name="privateLoanType" cam-variable-type="String" name="privateLoanType" id="privateLoanType">
-                        <option value="0" selected style="display:none;">Please select</option>
+                        <option value="" disabled selected style="display:none;">Please select</option>
                         <option value="1">Car Loan</option>
                         <option value="2">Debt Consolidation Loan</option>
                         <option value="3">Home Improvement Loan</option>
@@ -378,7 +374,7 @@
                 <div class="form-group col-md-4">
                     <label for="businessLoanType">Business Loan Type</label><br />
                     <select cam-variable-name="businessLoanType" cam-variable-type="String" name="businessLoanType" id="businessLoanType">
-                        <option value="0" selected style="display:none;">Please select</option>
+                        <option value="" disabled selected style="display:none;">Please select</option>
                         <option value="6">Startup Loan</option>
                         <option value="7">Professional Loan</option>
                         <option value="8">Small Business Loan</option>
@@ -454,7 +450,7 @@
             <!--Bad Debts 2 Years-->
             <div class="col-md-3">
                 <label for="badDeptsInPastTwoYears">Bad Debts in the past two years</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="badpebtsInPastTwoYears" name="badDeptsInPastTwoYears" readonly/>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="badDeptsInPastTwoYears" name="badDeptsInPastTwoYears" readonly/>
             </div>
             <!--Debt Ratio-->
             <div class="col-md-3">

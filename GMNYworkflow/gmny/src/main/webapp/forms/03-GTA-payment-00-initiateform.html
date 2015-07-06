@@ -1,12 +1,8 @@
 <form name="03-GTA-payment-00-initiateform">
 
-    <!--CSS for better select styling -->
+    <!--CSS for select descroption and section borders-->
     <style type="text/css">
-        .styled-select {
-            /*width: 240px;
-            height: 34px;*/
-        }
-        .styled-select select {
+        .styled-select-text {
             width: 100%;
             padding: 5px;
             font-size: 14px;
@@ -16,13 +12,6 @@
             height: 34px;
             -webkit-appearance: none;
         }
-        .styled-select select:focus {
-            outline: none;
-        }
-    </style>
-
-    <!--CSS for section borders-->
-    <style type="text/css">
         section {
             display: block;
             border-bottom: 1px
@@ -101,7 +90,11 @@
         </button>
       </div>
       <script type="text/form-script" cam-script="">
-        $scope.openduedateGTA = function ($event) { $event.preventDefault(); $event.stopPropagation(); $scope.dateFieldOpenedduedateGTA = true; };
+        $scope.openduedateGTA = function ($event) {
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.dateFieldOpenedduedateGTA = true;
+        };
       </script>
     </div>
     <!-- ngIf: this.generatedForm.duedateGTA.$invalid && this.generatedForm.duedateGTA.$dirty -->
