@@ -42,16 +42,17 @@
         <bpmn2:flowNodeRef>user-task-talk-to-customer</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>user-task-consult-customer</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>message-catch-event-cleanup-recommendation</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>end-event-loan-contract-signed</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>service-task-request-cleanup-service</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>timer-event-wait-three-months</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>user-task-induce-contract-conclusion</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>xor-option-selected</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ExclusiveGateway_3</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>merge-xor-option-selected</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>user-task-prepare-updated-application</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ServiceTask_3</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>end-event-loan-application-canceled</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-finalize-contract</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>service-task-send-contract</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>end-event-loan-contract-signed</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
     <bpmn2:serviceTask id="service-task-get-customer-data" camunda:expression="${customerServiceBean.loadCustomer(execution)}" camunda:async="true" name="Get Customer Data">
@@ -195,10 +196,6 @@
     <bpmn2:sequenceFlow id="flow-cleanup-recommendation-to-consult-customer" sourceRef="message-catch-event-cleanup-recommendation" targetRef="user-task-consult-customer">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression">${true}</bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:endEvent id="end-event-loan-contract-signed" name="Loan &#xD;&#xA;Contract Signed">
-      <bpmn2:incoming>flow-induce-contract-conclusion-to-loan-contract-signed</bpmn2:incoming>
-      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_2"/>
-    </bpmn2:endEvent>
     <bpmn2:serviceTask id="service-task-request-cleanup-service" camunda:expression="${creditHistoryServiceBean.requestCreditHistoryCleanup(execution)}" camunda:async="true" name="Request Cleanup Service">
       <bpmn2:documentation>This service task executes the request regarding credit cleanup service. The service is provided by GTA as we have outsourced it to save costs. GTA is only allowed to perform this service for us as it is an important trademark of GMNY.</bpmn2:documentation>
       <bpmn2:incoming>flow-option-selected-to-request-cleanup-service</bpmn2:incoming>
@@ -211,7 +208,7 @@
       <bpmn2:outgoing>flow-loan-granted-to-induce-contract-conclusion</bpmn2:outgoing>
       <bpmn2:outgoing>flow-loan-granted-to-talk-to-customer</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
-    <bpmn2:sequenceFlow id="flow-loan-granted-to-induce-contract-conclusion" name="Yes" sourceRef="xor-loan-granted" targetRef="user-task-induce-contract-conclusion">
+    <bpmn2:sequenceFlow id="flow-loan-granted-to-induce-contract-conclusion" name="Yes" sourceRef="xor-loan-granted" targetRef="service-task-finalize-contract">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationStatus == "accepted"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
     <bpmn2:sequenceFlow id="flow-loan-granted-to-talk-to-customer" name="No" sourceRef="xor-loan-granted" targetRef="user-task-talk-to-customer">
@@ -225,13 +222,6 @@
       </bpmn2:timerEventDefinition>
     </bpmn2:intermediateCatchEvent>
     <bpmn2:sequenceFlow id="flow-wait-three-months-to-offer-reapplication" sourceRef="timer-event-wait-three-months" targetRef="UserTask_5"/>
-    <bpmn2:userTask id="user-task-induce-contract-conclusion" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" name="Conclude Contract">
-      <bpmn2:documentation><![CDATA[PDF for customer as nice to have feature (Daniel) ... This user task encapsulates the work that has to be done in order to close the contract between GMNY and customer in case of a granted loan application.
-]]></bpmn2:documentation>
-      <bpmn2:incoming>flow-loan-granted-to-induce-contract-conclusion</bpmn2:incoming>
-      <bpmn2:outgoing>flow-induce-contract-conclusion-to-loan-contract-signed</bpmn2:outgoing>
-    </bpmn2:userTask>
-    <bpmn2:sequenceFlow id="flow-induce-contract-conclusion-to-loan-contract-signed" sourceRef="user-task-induce-contract-conclusion" targetRef="end-event-loan-contract-signed"/>
     <bpmn2:exclusiveGateway id="xor-option-selected" camunda:async="true" name="Option &#xD;&#xA;Selected?">
       <bpmn2:documentation>This XOR gateway visualizes the different workflows that have to be executed depending on the reaction of the customer regarding the application rejection.</bpmn2:documentation>
       <bpmn2:incoming>flow-talk-to-customer-to-option-selected</bpmn2:incoming>
@@ -276,6 +266,22 @@
       <bpmn2:documentation>This event ends the workflow in case that the loan was not granted.</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
       <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
+    </bpmn2:endEvent>
+    <bpmn2:serviceTask id="service-task-finalize-contract" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" camunda:expression="${CreditHistoryServiceBean.finalizeContract(execution)}" name="Finalize Contract">
+      <bpmn2:documentation><![CDATA[PDF for customer as nice to have feature (Daniel) ... This user task encapsulates the work that has to be done in order to close the contract between GMNY and customer in case of a granted loan application.
+]]></bpmn2:documentation>
+      <bpmn2:incoming>flow-loan-granted-to-induce-contract-conclusion</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:serviceTask id="service-task-send-contract" camunda:expression="${CustomerServiceBean.sendContractToCustomer(execution)}" name="Send Contract">
+      <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="service-task-finalize-contract" targetRef="service-task-send-contract"/>
+    <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="service-task-send-contract" targetRef="end-event-loan-contract-signed"/>
+    <bpmn2:endEvent id="end-event-loan-contract-signed" name="Loan &#xD;&#xA;Contract Signed">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_2"/>
     </bpmn2:endEvent>
   </bpmn2:process>
   <bpmn2:message id="MessageCreditHistoryResponse" name="CreditHistoryResponse"/>
@@ -333,8 +339,8 @@
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_10" bpmnElement="user-task-evaluate-loan-application">
         <dc:Bounds height="80.0" width="100.0" x="1848.0" y="216.0"/>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_UserTask_11" bpmnElement="user-task-induce-contract-conclusion">
-        <dc:Bounds height="80.0" width="100.0" x="2136.0" y="473.0"/>
+      <bpmndi:BPMNShape id="_BPMNShape_UserTask_11" bpmnElement="service-task-finalize-contract">
+        <dc:Bounds height="80.0" width="100.0" x="2136.0" y="394.0"/>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_UserTask_12" bpmnElement="user-task-talk-to-customer">
         <dc:Bounds height="80.0" width="100.0" x="2354.0" y="473.0"/>
@@ -410,9 +416,7 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_13" bpmnElement="flow-loan-granted-to-induce-contract-conclusion" sourceElement="_BPMNShape_ExclusiveGateway_24" targetElement="_BPMNShape_UserTask_11">
         <di:waypoint xsi:type="dc:Point" x="2185.0" y="280.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2185.0" y="382.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2186.0" y="382.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2186.0" y="473.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2186.0" y="394.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="22.0" width="29.0" x="2196.0" y="312.0"/>
         </bpmndi:BPMNLabel>
@@ -519,9 +523,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_18" bpmnElement="end-event-loan-contract-signed">
-        <dc:Bounds height="36.0" width="36.0" x="2270.0" y="495.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="2280.0" y="503.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="99.0" x="2239.0" y="536.0"/>
+          <dc:Bounds height="38.0" width="99.0" x="2249.0" y="544.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_26" bpmnElement="flow-reapply-to-loan-application-canceled" sourceElement="_BPMNShape_ExclusiveGateway_26" targetElement="_BPMNShape_ExclusiveGateway_31">
@@ -539,13 +543,6 @@
         <di:waypoint xsi:type="dc:Point" x="3637.0" y="458.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="22.0" width="209.0" x="2556.0" y="564.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_29" bpmnElement="flow-induce-contract-conclusion-to-loan-contract-signed" sourceElement="_BPMNShape_UserTask_11" targetElement="_BPMNShape_EndEvent_18">
-        <di:waypoint xsi:type="dc:Point" x="2236.0" y="513.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2270.0" y="513.0"/>
-        <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="2254.0" y="577.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_105" bpmnElement="service-task-request-credit-history">
@@ -766,6 +763,22 @@
         <di:waypoint xsi:type="dc:Point" x="3528.0" y="513.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="6.0" width="6.0" x="3503.0" y="513.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_ServiceTask_111" bpmnElement="service-task-send-contract">
+        <dc:Bounds height="80.0" width="100.0" x="2136.0" y="513.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_2" bpmnElement="SequenceFlow_4" sourceElement="_BPMNShape_UserTask_11" targetElement="_BPMNShape_ServiceTask_111">
+        <di:waypoint xsi:type="dc:Point" x="2186.0" y="474.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2186.0" y="513.0"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ServiceTask_111" targetElement="_BPMNShape_EndEvent_18">
+        <di:waypoint xsi:type="dc:Point" x="2236.0" y="553.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2253.0" y="553.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2253.0" y="521.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2280.0" y="521.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="6.0" width="6.0" x="2250.0" y="533.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
