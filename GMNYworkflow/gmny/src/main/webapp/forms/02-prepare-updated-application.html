@@ -1,4 +1,157 @@
 <form name="prepare-updated-application">
+    <!--==scripts==-->
+    <!-- JS - Show Hide Fields Depending on Customer Type -->
+    <!-- USE IN COMBINATION WITH EXCEL FILE FOR FORM MASTERS WITH LIST OF IDs-->
+    <script cam-script type="text/javascript">
+
+        $(document).ready(function () {
+
+            console.log("ready!");
+
+            //hide texts
+            $("#s4pl1").hide();
+            $("#s4pl2").hide();
+            $("#s4pl3").hide();
+            $("#s4pl4").hide();
+            $("#s4pl5").hide();
+            $("#s4bl1").hide();
+            $("#s4bl2").hide();
+            $("#s4bl3").hide();
+            $("#s4bl4").hide();
+            $("#s4bl5").hide();
+
+            //prep togglefields2 for privateLoanType
+            $("#privateLoanType").change(function () {
+                toggleFields2();
+            });
+            //prep togglefields3 for businessLoanType
+            $("#businessLoanType").change(function () {
+                toggleFields3();
+            });
+
+
+            var $myText = $("#customerType");
+            $myText.data("value", $myText.val());
+
+            setInterval(function() {
+                var data = $myText.data("value"),
+                        val = $myText.val();
+
+                if (data !== val) {
+                    $myText.data("value", val);
+                    console.log("Customer type changed:");
+                    console.log($("#customerType").val());
+                    toggleFields();
+                }
+            }, 100);
+        });
+
+        //toggle function for customer type
+        function toggleFields() {
+            $("#s1b").show();
+            $("#s2bp").show();
+            $("#s3bp").show();
+            $("#s4bp").show();
+            $("#s5bp").show();
+            if ($("#customerType").val() == "private") {
+                //show for private relevant sections
+                $("#s2bp").show();
+                $("#s3bp").show();
+                $("#s4ss1").show();
+
+                //show for private relevant labels
+                $("#s2pl").show();
+                $("#s3pl").show();
+                $("#s4pl").show();
+                $("#sProcessInfoPriv").show();
+                $("#s5pl").show();
+                $("#s5pf1").show();
+
+                //hide business stuff
+                $("#s1b").hide();
+                $("#s2bl").hide();
+                $("#s3bl").hide();
+                $("#s4bl").hide();
+                $("#s5bl").hide();
+                $("#s4ss2").hide();
+                $("#sProcessInfoBus").hide();
+                $("#s5bf1").hide();
+            }
+            else if ($("#customerType").val() == "business") {
+                //show for business relevant sections
+                $("#s1b").show();
+                $("#s2bp").show();
+                $("#s3bp").show();
+                $("#s4ss2").show();
+
+                //show for business relevant labels
+                $("#s2bl").show();
+                $("#s3bl").show();
+                $("#s4bl").show();
+                $("#s5bl").show();
+                $("#sProcessInfoBus").show();
+
+                $("#s5bf1").show();
+                //hide private stuff
+                $("#s2pl").hide();
+                $("#s3pl").hide();
+                $("#s4pl").hide();
+                $("#s5pl").hide();
+                $("#s4ss1").hide();
+                $("#sProcessInfoPriv").hide();
+                $("#s5pf1").hide();
+            } else {
+                $("#s1b").hide();
+                $("#s2bp").hide();
+                $("#s3bp").hide();
+                $("#s4bp").hide();
+                $("#s5bp").hide();
+            }
+        }
+
+        //toggle function private loan type
+        function toggleFields2() {
+            console.log("private loan type changed:");
+            $("#s4pl1").hide();
+            $("#s4pl2").hide();
+            $("#s4pl3").hide();
+            $("#s4pl4").hide();
+            $("#s4pl5").hide();
+            if ($("#privateLoanType").val() == 1) {
+                $("#s4pl1").show();
+            } else if ($("#privateLoanType").val() == 2) {
+                $("#s4pl2").show();
+            } else if ($("#privateLoanType").val() == 3) {
+                $("#s4pl3").show();
+            } else if ($("#privateLoanType").val() == 4) {
+                $("#s4pl4").show();
+            } else if ($("#privateLoanType").val() == 5) {
+                $("#s4pl5").show();
+            } else{}
+        }
+
+        //toggle function for customer type
+        function toggleFields3() {
+            console.log("business loan type changed:");
+            $("#s4bl1").hide();
+            $("#s4bl2").hide();
+            $("#s4bl3").hide();
+            $("#s4bl4").hide();
+            $("#s4bl5").hide();
+            if ($("#businessLoanType").val() == 6) {
+                $("#s4bl1").show();
+            } else if ($("#businessLoanType").val() == 7) {
+                $("#s4bl2").show();
+            } else if ($("#businessLoanType").val() == 8) {
+                $("#s4bl3").show();
+            } else if ($("#businessLoanType").val() == 9) {
+                $("#s4bl4").show();
+            } else if ($("#businessLoanType").val() == 10) {
+                $("#s4bl5").show();
+            } else{}
+        }
+
+    </script>
 
     <!--CSS for select descroption and section borders-->
     <style type="text/css">
@@ -196,7 +349,7 @@
                 <div class="form-group col-md-4">
                     <label for="privateLoanType">Private Loan Type</label><br />
                     <select cam-variable-name="privateLoanType" cam-variable-type="String" name="privateLoanType" id="privateLoanType">
-                        <option value="" disabled selected style="display:none;">Please select</option>
+                        <option value="" selected style="display:none;">Please select</option>
                         <option value="1">Car Loan</option>
                         <option value="2">Debt Consolidation Loan</option>
                         <option value="3">Home Improvement Loan</option>
@@ -231,7 +384,7 @@
                 <div class="form-group col-md-4">
                     <label for="businessLoanType">Business Loan Type</label><br />
                     <select cam-variable-name="businessLoanType" cam-variable-type="String" name="businessLoanType" id="businessLoanType">
-                        <option value="" disabled selected style="display:none;">Please select</option>
+                        <option value="" selected style="display:none;">Please select</option>
                         <option value="6">Startup Loan</option>
                         <option value="7">Professional Loan</option>
                         <option value="8">Small Business Loan</option>
