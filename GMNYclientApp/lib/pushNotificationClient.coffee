@@ -6,14 +6,8 @@ root = global ? window
 # @param {Object} payload Payload received in push-ad
 root.notificationCallback = (payload) ->
 	console.log "\n\nnotificationCallback : #{JSON.stringify(payload)}\n\n"
-	Session.set("deliveryPrice_Pushad", payload.deliveryPrice)
-	Session.set("selectedBundleID", parseInt(payload.bundleId))
-	customerId = parseInt(payload.CID)
-	if Session.get("currentuser") is null or Session.get("currentuser") is undefined
-		Meteor.call 'authenticateUserWithCIDFromPushAd', customerId, (error, result) ->
-			Session.set("currentuser", result)
-			console.log "Customer added to session - CID : " + result?.CID
-	Router.go('bundleList')
+	Session.set("loanStatusMessage", payload.message)
+	Router.go('loanStatus')
 
 # Push-ad reception handler
 # 

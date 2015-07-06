@@ -14,7 +14,7 @@ Meteor.methods
 		#authObj.data = {}
 		#authObj.data.customerId = customerId
 		#authObj.data.password = password
-		console.log "Data to send to proxy : " + customerId + " - " + password
+		console.log "Data to send to BPM app : " + customerId + " - " + password
 		responseValue = null
 		try
 			checkPasswordURL = "http://localhost:8081/gmny/client/api/checkPassword/#{customerId}/#{password}"

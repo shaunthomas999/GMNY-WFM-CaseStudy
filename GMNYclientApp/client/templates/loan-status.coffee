@@ -1,3 +1,4 @@
 Template.loanStatus.helpers
   getLoanStatus: ->
-  	return "Applied"
+  	loanStatusMsg = Session.get "loanStatusMessage"
+  	return loanStatusMsg

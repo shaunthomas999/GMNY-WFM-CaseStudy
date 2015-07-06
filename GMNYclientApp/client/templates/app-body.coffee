@@ -8,6 +8,8 @@ SHOW_CONNECTION_ISSUE_KEY = "showConnectionIssue"
 Session.setDefault SHOW_CONNECTION_ISSUE_KEY, false
 CONNECTION_ISSUE_TIMEOUT = 5000
 
+Session.setDefault "loanStatusMessage", "Unknown!"
+
 # set up a swipe left / right handler
 Meteor.startup ->
   $(document.body).touchwipe
