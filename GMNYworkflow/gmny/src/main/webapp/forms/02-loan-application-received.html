@@ -12,21 +12,23 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
-
-  <div class="form-group col-md-3">
-    <label for="customerId">Customer ID</label>
-    <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" required/>
-  </div>
-  <div class="form-group" ng-show="false">
-    <label for="applicationType">Hidden applicationType</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="applicationType" name="applicationType"  value="offline" required/>
-  </div>
-  
+    <div class="row">
+        <div class="form-group col-md-3">
+            <label for="customerId">Customer ID</label>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" required/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col-md-12" ng-show="false">
+            <label for="applicationType">Hidden applicationType</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="applicationType"
+                   name="applicationType" value="offline" required/>
+        </div>
+    </div>
 </form>

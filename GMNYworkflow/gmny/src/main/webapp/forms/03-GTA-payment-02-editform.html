@@ -12,81 +12,80 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
 
-      	<section>
-            <h3>Order Payment</h3>
-        </section>
-        <p>Please contact GTA to fix the errors in the order payment data.<br></p>
-		
-	        <div class="row">
-            <!--Order Number-->
-            <div class="col-md-6">
-			    <label for="ordernumberGTA">Order Number</label>
-			    	<input class="form-control" 
-					    cam-variable-type="Long" 
-					    cam-variable-name="ordernumberGTA" 
-					    name="ordernumberGTA"
-					    required/>
-  </div>
+    <section>
+        <h3>Order Payment</h3>
+    </section>
+    <p>Please contact GTA to fix the errors in the order payment data.<br></p>
 
-            <!--Payment Amount-->
-            <div class="col-md-6">
-            
-		    	<label for="amountGTA">Amount</label>
-		    	<input class="form-control" 
-				    cam-variable-type="Long" 
-				    cam-variable-name="amountGTA" 
-				    name="amountGTA"
-				    required/>
-	</div>
-	</div>
-            
-      	     <div class="row">
-            <!--IBAN-->
-            <div class="col-md-6">  
-                  
-		    <label for="ibanGTA">IBAN</label>
-		    	<input class="form-control" 
-				    cam-variable-type="String" 
-				    cam-variable-name="ibanGTA" 
-				    name ="ibanGTA"
-				    ng-minlength="15"
-				    ng-maxlength="34"
-				    required/>
-  </div>
+    <div class="row">
+        <!--Order Number-->
+        <div class="col-md-6 form-group">
+            <label for="ordernumberGTA">Order Number</label>
+            <input class="form-control"
+                   cam-variable-type="Long"
+                   cam-variable-name="ordernumberGTA"
+                   name="ordernumberGTA"
+                   required/>
+        </div>
 
-            <!--BIC-->
-            <div class="col-md-6"> 
-            
-    <label for="bicGTA">BIC</label>
-    	<input class="form-control" 
-		    cam-variable-type="String" 
-		    cam-variable-name="bicGTA" 
-		    name ="bicGTA"
-		    ng-minlength="9"
-		    ng-maxlength="11"
-		    required/>
-  </div>
-  </div>
+        <!--Payment Amount-->
+        <div class="col-md-6 form-group">
 
-	      <!--Due Date-->
-      	    <div class="row">
-            <div class="col-md-6">  
-                <p><b>Due Date - DD/MM/YYYY</b></p>
-                <input class="form-control"
-                       cam-variable-type="String"
-                       cam-variable-name="duedateGTA"
-                       name="duedateGTA"
-                       ng-minlength="10"
-                       ng-maxlength="10"
-                       required/>
-            </div>
-            </div>
+            <label for="amountGTA">Amount</label>
+            <input class="form-control"
+                   cam-variable-type="Long"
+                   cam-variable-name="amountGTA"
+                   name="amountGTA"
+                   required/>
+        </div>
+    </div>
+
+    <div class="row">
+        <!--IBAN-->
+        <div class="col-md-6 form-group">
+
+            <label for="ibanGTA">IBAN</label>
+            <input class="form-control"
+                   cam-variable-type="String"
+                   cam-variable-name="ibanGTA"
+                   name="ibanGTA"
+                   ng-minlength="15"
+                   ng-maxlength="34"
+                   required/>
+        </div>
+
+        <!--BIC-->
+        <div class="col-md-6 form-group">
+
+            <label for="bicGTA">BIC</label>
+            <input class="form-control"
+                   cam-variable-type="String"
+                   cam-variable-name="bicGTA"
+                   name="bicGTA"
+                   ng-minlength="9"
+                   ng-maxlength="11"
+                   required/>
+        </div>
+    </div>
+
+    <!--Due Date-->
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <p><b>Due Date - DD/MM/YYYY</b></p>
+            <input class="form-control"
+                   cam-variable-type="String"
+                   cam-variable-name="duedateGTA"
+                   name="duedateGTA"
+                   ng-minlength="10"
+                   ng-maxlength="10"
+                   required/>
+        </div>
+    </div>
 </form>

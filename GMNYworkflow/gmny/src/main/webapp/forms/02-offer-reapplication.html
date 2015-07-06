@@ -12,21 +12,22 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
 
-  <div class="form-group">
-    <label for="applicationResultStatus">Application Result Status</label>
-    <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required>
-        <option value="" selected style="style:none">Please select</option>
-        <option value="1">Terminate</option>
-        <option value="2">Re-Apply</option>
-    </select>
-  </div>
-  
-  </form>
+    <div class="row">
+        <div class="form-group">
+            <label for="applicationResultStatus">Application Result Status</label>
+            <select name="applicationResultStatus" cam-variable-type="String"
+                    cam-variable-name="applicationResultStatus" required>
+                <option value="" selected style="style:none">Please select</option>
+                <option value="1">Terminate</option>
+                <option value="2">Re-Apply</option>
+            </select>
+        </div>
+    </div>
+</form>

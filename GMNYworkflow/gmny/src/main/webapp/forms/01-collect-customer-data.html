@@ -58,11 +58,10 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
 
@@ -73,6 +72,7 @@
             <h3>Customer Type</h3>
         </section>
         <p>Please select the type of customer to be registered.</p>
+
         <div class="row">
             <div class="col-md-6">
                 <select cam-variable-name="customerType" cam-variable-type="String" id="customerType" required>
@@ -90,6 +90,7 @@
             <h3>Business Information</h3>
         </section>
         <p>Please enter the legal name and the business area of the organization being registered as a customer.</p>
+
         <div class="row">
             <!--Organization Name-->
             <div class="col-md-6">
@@ -99,7 +100,8 @@
             <!--Area of Activity-->
             <div class="col-md-6">
                 <label for="lastname">Area of Activity</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="businessArea" name="businessArea"/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="businessArea"
+                       name="businessArea"/>
             </div>
         </div>
     </div>
@@ -110,12 +112,14 @@
         <section>
             <h3>Personal and Contact Information</h3>
         </section>
-        <p id="s2bl">Please fill in required personal and contact information of the contact person with the client organization.</p>
+        <p id="s2bl">Please fill in required personal and contact information of the contact person with the client
+            organization.</p>
+
         <p id="s2pl">Please fill in the customers personal and contact information.</p>
         <!--first row with gender and date of birth (+gylphicon)-->
         <div class="row">
             <!--Gender-->
-            <div class="form-group styled-select col-md-6">
+            <div class="form-group col-md-6">
                 <label for="gender">Gender</label><br/>
                 <select cam-variable-name="gender" cam-variable-type="String" name="gender">
                     <option value="" selected style="display:none">Please select</option>
@@ -126,8 +130,12 @@
             <!--Date of Birth-->
             <div class="form-group col-md-6">
                 <label for="dateOfBirth">Date of Birth</label>
+
                 <div class="input-group">
-                    <input type="text" is-open="dateFieldOpeneddateOfBirth" datepicker-popup="dd/MM/yyyy" cam-variable-name="dateOfBirth" cam-variable-type="String" name="dateOfBirth" class="form-control" ng-model="dateOfBirth">
+                    <input type="text" is-open="dateFieldOpeneddateOfBirth" datepicker-popup="dd/MM/yyyy"
+                           cam-variable-name="dateOfBirth" cam-variable-type="String" name="dateOfBirth"
+                           class="form-control" ng-model="dateOfBirth">
+
                     <div class="input-group-btn">
                         <button ng-click="opendateOfBirth($event)" class="btn btn-default" type="button">
                             <i class="glyphicon glyphicon-calendar">
@@ -182,6 +190,7 @@
             <h3>Address</h3>
         </section>
         <p id="s3bl">Please fill in the business address of the organization.</p>
+
         <p id="s3pl">Please fill in the customers private address.</p>
         <!--two in one row / Street Name and Number-->
         <div class="row">

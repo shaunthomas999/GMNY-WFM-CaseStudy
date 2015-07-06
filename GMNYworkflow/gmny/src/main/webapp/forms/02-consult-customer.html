@@ -11,44 +11,47 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
-  
-  <div class="form-group">
-    <label for="cleanupRecommendation">Cleanup Recommendation</label>
-    <input class="form-control" name="cleanupRecommendation" cam-variable-type="String" cam-variable-name="cleanupRecommendation" readonly/>
-  </div>
-  
-  <!-- Read only application data -->
-  <div class="row">
-      <div class="col-md-6 form-group">
-        <label for="customerID">Customer ID</label>
-        <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
-      </div>
-  </div>
-  <div class="row">
-      <div class="col-md-6 form-group">
-        <label for="amount">Loan Amount</label>
-        <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
-      </div>
 
-      <div class="col-md-6 form-group">
-        <label for="applicationStatus">Application Status</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus" name="applicationStatus" readonly/>
-      </div>
-  </div>
+    <div class="form-group">
+        <label for="cleanupRecommendation">Cleanup Recommendation</label>
+        <textarea name="cleanupRecommendation" cam-variable-type="String"
+                  cam-variable-name="cleanupRecommendation" readonly/>
+    </div>
 
-  
-  <!-- Read only customer data from database -->
+    <!-- Read only application data -->
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="customerID">Customer ID</label>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId"
+                   readonly/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="amount">Loan Amount</label>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
+        </div>
+
+        <div class="col-md-6 form-group">
+            <label for="applicationStatus">Application Status</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus"
+                   name="applicationStatus" readonly/>
+        </div>
+    </div>
+
+
+    <!-- Read only customer data from database -->
     <section>
         <h3>Personal and Contact Information</h3>
     </section>
     <p>This fieldset shows the private contact details.</p>
+
     <div class="row">
         <!--Gender-->
         <div class="form-group col-md-6">
@@ -71,28 +74,31 @@
                    readonly/>
         </div>
     </div>
-  <div class="row">
-      <div class="col-md-6 form-group">
-        <label for="firstname">First Name</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
-      </div>
-      <div class="col-md-6 form-group">
-        <label for="lastname">Last Name</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name ="lastname" readonly/>
-      </div>
-  </div>
-  <div class="row">
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email" readonly/>
-      </div>
-  </div>
-  <div class="row">
-      <div class="form-group">
-        <label for="phoneNumber">Phone Number</label>
-        <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber" readonly/>
-      </div>
-  </div>
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="firstname">First Name</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"
+                   readonly/>
+        </div>
+        <div class="col-md-6 form-group">
+            <label for="lastname">Last Name</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname"
+                   readonly/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email" readonly/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <label for="phoneNumber">Phone Number</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name="phoneNumber"
+                   readonly/>
+        </div>
+    </div>
 
     <!-- Readonly -- Adress of private customer -->
     <section>
