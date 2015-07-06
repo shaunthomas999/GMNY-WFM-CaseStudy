@@ -5,6 +5,7 @@ import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.getstarted.gmny.model.CreditHistoryEntity;
 import org.camunda.bpm.getstarted.gmny.model.CustomerEntity;
 import org.camunda.bpm.getstarted.gmny.model.FinancialProductEntity;
+import org.camunda.bpm.getstarted.gmny.model.LoanEntity;
 import org.camunda.bpm.getstarted.gmny.service.CreditHistoryService;
 
 import com.sun.jersey.api.client.Client;
@@ -41,6 +42,35 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	
 	@EJB
 	FinancialProductServiceBean financialProductServiceBean;
+	
+	public void finalizeContract(DelegateExecution delegateExecution) {
+		
+		Map<String, Object> variables = delegateExecution.getVariables();
+		
+		Long amount = (long) variables.get("amount");
+		Float interestRate = Float.parseFloat((String) variables.get("interestRate"));
+		Long period = (long) variables.get("period");
+		
+		Long customerId = (long) variables.get("customerId");
+		Long productId = (Long) variables.get("privateLoanType");
+		
+		FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
+		
+		CustomerEntity customer = entityManager.find(CustomerEntity.class, customerId);
+		
+	    LoanEntity loan = new LoanEntity();
+	    loan.setAmount(amount);
+	    loan.setPeriod(period);
+	    loan.setInterestRate(interestRate);
+	    loan.setCustomerEntity(customer);
+	    loan.setFinancialProduct(product);
+	    
+	    entityManager.persist(loan);
+	    entityManager.flush();
+	    
+	    PdfServiceBean.createPrivateLoanContract(customer, loan);
+		
+	}
 	
 	public void persistCreditHistory(DelegateExecution delegateExecution) {
 		
