@@ -1,27 +1,21 @@
 <form name="consult-customer">
     <!--CSS for select descroption and section borders-->
     <style type="text/css">
-        .styled-select-text {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-            line-height: 1;
-            border: 1;
-            border-radius: 1;
-            height: 34px;
-            -webkit-appearance: none;
-        }
-
         section {
             display: block;
             border-bottom: 1px solid darkgrey
         }
+        textarea {
+            min-width: 100%;
+        }
     </style>
 
-    <div class="form-group">
-        <label for="cleanupRecommendation">Cleanup Recommendation</label>
-        <textarea name="cleanupRecommendation" cam-variable-type="String"
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="cleanupRecommendation">Cleanup Recommendation</label><br/>
+            <textarea name="cleanupRecommendation" cam-variable-type="String"
                   cam-variable-name="cleanupRecommendation" readonly/>
+        </div>
     </div>
 
     <!-- Read only application data -->
