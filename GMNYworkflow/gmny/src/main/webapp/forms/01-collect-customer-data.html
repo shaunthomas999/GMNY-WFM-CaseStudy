@@ -15,7 +15,7 @@
             $("#s1b").show();
             $("#s2bp").show();
             $("#s3bp").show();
-            if ($("#customerType").val() == 1) {
+            if ($("#customerType").val() == "Private") {
                 //show for private relevant sections
                 $("#s2bp").show();
                 $("#s3bp").show();
@@ -27,7 +27,7 @@
                 $("#s2bl").hide();
                 $("#s3bl").hide();
             }
-            else if ($("#customerType").val() == 2) {
+            else if ($("#customerType").val() == "Business") {
                 //show for business relevant sections
                 $("#s1b").show();
                 $("#s2bp").show();
@@ -77,8 +77,8 @@
             <div class="col-md-6">
                 <select cam-variable-name="customerType" cam-variable-type="String" id="customerType" required>
                     <option value="" selected style="display:none;">Please select</option>
-                    <option value="1">Private</option>
-                    <option value="2">Business</option>
+                    <option value="Private">Private</option>
+                    <option value="Business">Business</option>
                 </select>
             </div>
         </div>
