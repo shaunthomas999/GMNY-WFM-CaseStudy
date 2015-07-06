@@ -320,25 +320,12 @@
             <h3>Loan Application Information</h3>
             <br />
         </section>
-        <!--two in one row / Street Name and Number-->
-        <div class="row">
-            <!-- Loan Amount; takes 1/2 of row-->
-            <div class="form-group col-md-6">
-                <label for="loanAmount">Loan Amount</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount">
-            </div>
-            <!--Loan Period; takes 1/2 of row-->
-            <div class="form-group col-md-6">
-                <label for="period">Loan Period</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="period" name="period">
-            </div>
-        </div>
         <!--Private Loan Type and Descriptions-->
         <div id="s4ss1">
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="privateLoanType">Private Loan Type</label><br />
-                    <select cam-variable-name="privateLoanType" cam-variable-type="String" name="privateLoanType" id="privateLoanType">
+                    <select cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType" id="privateLoanType">
                         <option value="" selected style="display:none;">Please select</option>
                         <option value="1">Car Loan</option>
                         <option value="2">Debt Consolidation Loan</option>
@@ -364,7 +351,7 @@
                 <!--Annual Salary; takes 1/2 of row-->
                 <div class="form-group col-md-6">
                     <label for="annualSalary">Annual Salary</label>
-                    <input class="form-control" cam-variable-type="String" cam-variable-name="annualSalary"
+                    <input class="form-control" cam-variable-type="Long" cam-variable-name="annualSalary"
                            name="annualSalary">
                 </div>
             </div>
@@ -373,7 +360,7 @@
             <div class="row">
                 <div class="form-group col-md-4">
                     <label for="businessLoanType">Business Loan Type</label><br />
-                    <select cam-variable-name="businessLoanType" cam-variable-type="String" name="businessLoanType" id="businessLoanType">
+                    <select cam-variable-name="businessLoanType" cam-variable-type="Long" name="businessLoanType" id="businessLoanType">
                         <option value="" selected style="display:none;">Please select</option>
                         <option value="6">Startup Loan</option>
                         <option value="7">Professional Loan</option>
@@ -407,62 +394,17 @@
                 <p id="s4bl5">The customized loan product for our ambitious business customers.</p>
             </div>
         </div>
-    </div>
-
-    <!-- Readonly Textfields - Process Information - Hybrid Fields that are always shown; change label  -->
-    <div id="s5bp">
-        <!--section heading + change text depending on selector-->
-        <section>
-            <h3>Process Information</h3>
-        </section>
-        <p id="sProcessInfoBus">This fieldset shows the process information associated with this business loan application.</p>
-        <p id="sProcessInfoPriv">This fieldset shows the process information associated with this private loan application.</p>
-        <!--Process Status-->
-        <div>
-            <label for="status">Process Status</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="status" name="status" readonly/>
-        </div>
-        <!-- second row for PRIVATE with credit score bad debt and credits-->
-        <div id="s5pf1" class="row">
-            <!--Credit Score-->
-            <div class="col-md-6">
-                <label for="scoring">Credit Score</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring" readonly/>
-            </div>
-            <!--Bad Debts-->
-            <div class="col-md-3">
-                <label for="badDepts">Bad Debts</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="badDepts" name="badDepts" readonly/>
-            </div>
-            <!--Credits-->
-            <div class="col-md-3">
-                <label for="consumerCredits">Credits Taken</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="consumerCredits" name="consumerCredits" readonly/>
-            </div>
-        </div>
-        <!-- second row for Business with rating baddept and dept ratio-->
-        <div id="s5bf1" class="row">
-            <!--Rating-->
-            <div class="col-md-6">
-                <label for="rating">Rating</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="rating" name="rating" readonly/>
-            </div>
-            <!--Bad Debts 2 Years-->
-            <div class="col-md-3">
-                <label for="badDeptsInPastTwoYears">Bad Debts in the past two years</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="badDeptsInPastTwoYears" name="badDeptsInPastTwoYears" readonly/>
-            </div>
-            <!--Debt Ratio-->
-            <div class="col-md-3">
-                <label for="deptRatioWithNewCreditAmount">New Debt Ratio</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="deptRatioWithNewCreditAmount" name="deptRatioWithNewCreditAmount" readonly/>
-            </div>
-        </div>
-        <!-- Cleanup Recommendation - single row-->
+        <!--two in one row / Street Name and Number-->
         <div class="row">
-            <div class="col-md-12">
-                <label for="cleanupRecommendation">Cleanup Recommendation</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="cleanupRecommendation" name="cleanupRecommendation" readonly/>
+            <!-- Loan Amount; takes 1/2 of row-->
+            <div class="form-group col-md-6">
+                <label for="loanAmount">Loan Amount</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount">
+            </div>
+            <!--Loan Period; takes 1/2 of row-->
+            <div class="form-group col-md-6">
+                <label for="period">Loan Period</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="period" name="period">
             </div>
         </div>
     </div>
