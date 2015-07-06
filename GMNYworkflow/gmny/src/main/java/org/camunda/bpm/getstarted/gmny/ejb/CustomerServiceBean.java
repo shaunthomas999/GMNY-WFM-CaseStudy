@@ -39,6 +39,7 @@ public class CustomerServiceBean implements CustomerService{
  
     // Set customer attributes from form
     customerEntity.setOrgName((String) variables.get("orgName"));
+    customerEntity.setOrgName((String) variables.get("businessArea"));
     customerEntity.setFirstname((String) variables.get("firstname"));
     customerEntity.setLastname((String) variables.get("lastname"));
     customerEntity.setEmail((String) variables.get("email"));
@@ -56,7 +57,7 @@ public class CustomerServiceBean implements CustomerService{
     
     // generate password
     System.out.println("Generating random password");
-    customerEntity.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
+    customerEntity.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 7));
     
     // set creation date
     Date today = new Date();
@@ -84,6 +85,7 @@ public class CustomerServiceBean implements CustomerService{
  
     // Set customer attributes
     customerEntity1.setOrgName("Otto GmbH");
+    customerEntity1.setBusinessArea("Retail");
     customerEntity1.setFirstname("Max");
     customerEntity1.setLastname("Muster");
     customerEntity1.setEmail("max.muster@rautschka.com");
@@ -98,7 +100,7 @@ public class CustomerServiceBean implements CustomerService{
     
     // generate password
     System.out.println("Generating random password");
-    customerEntity1.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
+    customerEntity1.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 7));
     
     // set creation date
     Date today1 = new Date();
@@ -153,7 +155,7 @@ public class CustomerServiceBean implements CustomerService{
     
     // generate password
     System.out.println("Generating random password");
-    customerEntity2.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
+    customerEntity2.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 7));
     
     // set creation date
     Date today2 = new Date();
@@ -183,6 +185,7 @@ public class CustomerServiceBean implements CustomerService{
     // Load customer entity from database and save it in process memory
   	System.out.println("Loading customer into process memory: " + entityManager.find(CustomerEntity.class, customerId));
   	delegateExecution.setVariable("orgName", entityManager.find(CustomerEntity.class, customerId).getOrgName());
+  	delegateExecution.setVariable("businessArea", entityManager.find(CustomerEntity.class, customerId).getBusinessArea());
   	delegateExecution.setVariable("firstname", entityManager.find(CustomerEntity.class, customerId).getFirstname());
   	delegateExecution.setVariable("lastname", entityManager.find(CustomerEntity.class, customerId).getLastname());
   	delegateExecution.setVariable("email", entityManager.find(CustomerEntity.class, customerId).getEmail());

@@ -21,6 +21,7 @@ public class CustomerEntity implements Serializable {
   protected long version;
  
   private String orgName;
+  private String businessArea;
   private String firstname;
   private String lastname;
   private String email;
@@ -179,5 +180,13 @@ public class CustomerEntity implements Serializable {
 		return new StringBuffer(" First Name : ").append(this.firstname)
 				.append(" Last Name : ").append(this.lastname)
 				.append(" CustomerId : ").append(this.id).toString();
+	}
+
+	public String getBusinessArea() {
+		return businessArea;
+	}
+
+	public void setBusinessArea(String businessArea) {
+		this.businessArea = businessArea;
 	}
 }
