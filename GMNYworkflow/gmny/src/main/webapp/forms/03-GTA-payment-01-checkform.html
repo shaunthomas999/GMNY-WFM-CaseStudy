@@ -12,100 +12,98 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
 
-      	<section>
-            <h3>Order Payment</h3>
-        </section>
-        <p>Please check the order payment data for mistakes.<br></p>
-		
-	        <div class="row">
-            <!--Order Number-->
-            <div class="col-md-6">
-			    <label for="ordernumberGTA">Order Number</label>
-			    	<input class="form-control" 
-					    cam-variable-type="Long" 
-					    cam-variable-name="ordernumberGTA" 
-					    name="ordernumberGTA"
-					    required
-					    readonly/>
-  </div>
+    <section>
+        <h3>Order Payment</h3>
+    </section>
+    <p>Please check the order payment data for mistakes.<br></p>
 
-            <!--Payment Amount-->
-            <div class="col-md-6">
-            
-		    	<label for="amountGTA">Amount</label>
-		    	<input class="form-control" 
-				    cam-variable-type="Long" 
-				    cam-variable-name="amountGTA" 
-				    name="amountGTA"
-				    required
-				    readonly/>
-	</div>
-	</div>
-            
-      	     <div class="row">
-            <!--IBAN-->
-            <div class="col-md-6">  
-                  
-		    <label for="ibanGTA">IBAN</label>
-		    	<input class="form-control" 
-				    cam-variable-type="String" 
-				    cam-variable-name="ibanGTA" 
-				    name ="ibanGTA"
-				    ng-minlength="15"
-				    ng-maxlength="34"
-				    required
-				    readonly/>
-  </div>
+    <div class="row">
+        <!--Order Number-->
+        <div class="col-md-6 form-group">
+            <label for="ordernumberGTA">Order Number</label>
+            <input class="form-control"
+                   cam-variable-type="Long"
+                   cam-variable-name="ordernumberGTA"
+                   name="ordernumberGTA"
+                   required
+                   readonly/>
+        </div>
 
-            <!--BIC-->
-            <div class="col-md-6"> 
-            
-    <label for="bicGTA">BIC</label>
-    	<input class="form-control" 
-		    cam-variable-type="String" 
-		    cam-variable-name="bicGTA" 
-		    name ="bicGTA"
-		    ng-minlength="9"
-		    ng-maxlength="11"
-		    required
-		    readonly/>
-  </div>
-  </div>
-  
+        <!--Payment Amount-->
+        <div class="col-md-6 form-group">
 
-    
-	      <!--Due Date-->
-      	    <div class="row">
-            <div class="col-md-6">  
-                <p><b>Due Date</b></p>
-                <input class="form-control" type="text"
-                       cam-variable-type="String"
-                       cam-variable-name="duedateGTA"
-                       name="duedateGTA"
-                       required
-                       readonly/>
-            </div>
-            </div>
+            <label for="amountGTA">Amount</label>
+            <input class="form-control"
+                   cam-variable-type="Long"
+                   cam-variable-name="amountGTA"
+                   name="amountGTA"
+                   required
+                   readonly/>
+        </div>
+    </div>
+
+    <div class="row">
+        <!--IBAN-->
+        <div class="col-md-6 form-group">
+
+            <label for="ibanGTA">IBAN</label>
+            <input class="form-control"
+                   cam-variable-type="String"
+                   cam-variable-name="ibanGTA"
+                   name="ibanGTA"
+                   ng-minlength="15"
+                   ng-maxlength="34"
+                   required
+                   readonly/>
+        </div>
+
+        <!--BIC-->
+        <div class="col-md-6 form-group">
+
+            <label for="bicGTA">BIC</label>
+            <input class="form-control"
+                   cam-variable-type="String"
+                   cam-variable-name="bicGTA"
+                   name="bicGTA"
+                   ng-minlength="9"
+                   ng-maxlength="11"
+                   required
+                   readonly/>
+        </div>
+    </div>
 
 
-  <div class="row">
-  	<div class="col-md-6 col-md-offset-2">
-    <label for="correct">Is the invoice correct?</label>
-    	<input type="checkbox" 
-		    cam-variable-type="Boolean" 
-		    cam-variable-name="correct" 
-		    name="correct"
-		    /> 
-	</div>
-	</div>
-      
-       
+    <!--Due Date-->
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <p><b>Due Date</b></p>
+            <input class="form-control" type="text"
+                   cam-variable-type="String"
+                   cam-variable-name="duedateGTA"
+                   name="duedateGTA"
+                   required
+                   readonly/>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6 col-md-offset-2">
+            <label for="correct">Is the invoice correct?</label>
+            <input type="checkbox"
+                   cam-variable-type="Boolean"
+                   cam-variable-name="correct"
+                   name="correct"
+                    />
+        </div>
+    </div>
+
+
 </form>

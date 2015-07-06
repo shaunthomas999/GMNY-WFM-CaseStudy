@@ -12,92 +12,97 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
 
-      	<section>
-            <h3>Order Payment</h3>
-        </section>
-        <p>Please enter the order payment data.<br></p>
-		
-	        <div class="row">
-            <!--Order Number-->
-            <div class="col-md-6">
-			    <label for="ordernumberGTA">Order Number</label>
-			    	<input class="form-control" 
-					    cam-variable-type="Long" 
-					    cam-variable-name="ordernumberGTA" 
-					    name="ordernumberGTA"
-					    required/>
-  </div>
+    <section>
+        <h3>Order Payment</h3>
+    </section>
+    <p>Please enter the order payment data.<br></p>
 
-            <!--Payment Amount-->
-            <div class="col-md-6">
-            
-		    	<label for="amountGTA">Amount</label>
-		    	<input class="form-control" 
-				    cam-variable-type="Long" 
-				    cam-variable-name="amountGTA" 
-				    name="amountGTA"
-				    required/>
-	</div>
-	</div>
-            
-      	     <div class="row">
-            <!--IBAN-->
-            <div class="col-md-6">  
-                  
-		    <label for="ibanGTA">IBAN</label>
-		    	<input class="form-control" 
-				    cam-variable-type="String" 
-				    cam-variable-name="ibanGTA" 
-				    name ="ibanGTA"
-				    ng-minlength="15"
-				    ng-maxlength="34"
-				    required/>
-  </div>
+    <div class="row">
+        <!--Order Number-->
+        <div class="col-md-6 form-group">
+            <label for="ordernumberGTA">Order Number</label>
+            <input class="form-control"
+                   cam-variable-type="Long"
+                   cam-variable-name="ordernumberGTA"
+                   name="ordernumberGTA"
+                   required/>
+        </div>
 
-            <!--BIC-->
-            <div class="col-md-6"> 
-            
-    <label for="bicGTA">BIC</label>
-    	<input class="form-control" 
-		    cam-variable-type="String" 
-		    cam-variable-name="bicGTA" 
-		    name ="bicGTA"
-		    ng-minlength="9"
-		    ng-maxlength="11"
-		    required/>
-  </div>
-  </div>
-  
+        <!--Payment Amount-->
+        <div class="col-md-6 form-group">
 
-    <div class="form-group">
-    <label for="duedateGTA">
-      Due Date
-    </label>
-    <div class="input-group">
-      <input type="text" is-open="dateFieldOpenedduedateGTA" datepicker-popup="dd/MM/yyyy" cam-variable-name="duedateGTA" cam-variable-type="String" name="duedateGTA" class="form-control ng-pristine" ng-model="duedateGTA">
-      <div class="input-group-btn">
-        <button ng-click="openduedateGTA($event)" class="btn btn-default" type="button">
-          <i class="glyphicon glyphicon-calendar">
-          </i>
-        </button>
-      </div>
-      <script type="text/form-script" cam-script="">
-        $scope.openduedateGTA = function ($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.dateFieldOpenedduedateGTA = true;
-        };
-      </script>
+            <label for="amountGTA">Amount</label>
+            <input class="form-control"
+                   cam-variable-type="Long"
+                   cam-variable-name="amountGTA"
+                   name="amountGTA"
+                   required/>
+        </div>
     </div>
-    <!-- ngIf: this.generatedForm.duedateGTA.$invalid && this.generatedForm.duedateGTA.$dirty -->
-  </div>
+
+    <div class="row">
+        <!--IBAN-->
+        <div class="col-md-6 form-group">
+
+            <label for="ibanGTA">IBAN</label>
+            <input class="form-control"
+                   cam-variable-type="String"
+                   cam-variable-name="ibanGTA"
+                   name="ibanGTA"
+                   ng-minlength="15"
+                   ng-maxlength="34"
+                   required/>
+        </div>
+
+        <!--BIC-->
+        <div class="col-md-6 form-group">
+
+            <label for="bicGTA">BIC</label>
+            <input class="form-control"
+                   cam-variable-type="String"
+                   cam-variable-name="bicGTA"
+                   name="bicGTA"
+                   ng-minlength="9"
+                   ng-maxlength="11"
+                   required/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label for="duedateGTA">
+                Due Date
+            </label>
+
+            <div class="input-group">
+                <input type="text" is-open="dateFieldOpenedduedateGTA" datepicker-popup="dd/MM/yyyy"
+                       cam-variable-name="duedateGTA" cam-variable-type="String" name="duedateGTA"
+                       class="form-control ng-pristine" ng-model="duedateGTA">
+
+                <div class="input-group-btn">
+                    <button ng-click="openduedateGTA($event)" class="btn btn-default" type="button">
+                        <i class="glyphicon glyphicon-calendar">
+                        </i>
+                    </button>
+                </div>
+                <script type="text/form-script" cam-script="">
+                    $scope.openduedateGTA = function ($event) {
+                        $event.preventDefault();
+                        $event.stopPropagation();
+                        $scope.dateFieldOpenedduedateGTA = true;
+                    };
+
+                </script>
+            </div>
+            <!-- ngIf: this.generatedForm.duedateGTA.$invalid && this.generatedForm.duedateGTA.$dirty -->
+        </div>
+    </div>
 
 </form>
