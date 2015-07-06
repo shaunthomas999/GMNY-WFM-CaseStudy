@@ -19,20 +19,22 @@
             darkgrey
         }
     </style>
-  
-  <div class="form-group">
-    <label for="applicationResultStatus">Application Result Status</label>
-    <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required>
-        <option value="" selected style="display:none">Please select</option>
-        <option value="1">Cleanup Service</option>
-        <option value="2">Terminate</option>
-        <option value="3">Re-Apply</option>
-    </select>
+  <div class="row">
+      <div class="col-md-6 form-group">
+        <label for="applicationResultStatus">Application Result Status</label>
+        <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required>
+            <option value="" selected style="display:none">Please select</option>
+            <option value="1">Cleanup Service</option>
+            <option value="2">Terminate</option>
+            <option value="3">Re-Apply</option>
+        </select>
+      </div>
   </div>
-  
-  <div class="form-group">
-    <label for="applicationStatusComment">Application Status Comment</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" required/>
+  <div class="row">
+      <div class="form-group">
+        <label for="applicationStatusComment">Application Status Comment</label>
+        <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment" name="applicationStatusComment" readonly/>
+      </div>
   </div>
   
   <!-- Read only application data -->
@@ -46,10 +48,11 @@
             <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
         </div>
     </div>
-  
-  <div class="form-group">
-    <label for="applicationStatus">Application Status</label>
-    <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus" name="applicationStatus" readonly/>
+  <div class="row">
+      <div class="form-group">
+        <label for="applicationStatus">Application Status</label>
+        <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus" name="applicationStatus" readonly/>
+      </div>
   </div>
 
 
@@ -90,13 +93,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="email">Email Address</label>
             <input class="form-control" cam-variable-type="String" cam-variable-name="email" name ="email" readonly/>
         </div>
     </div>
     <div class="row">
-        <div class="form-group">
+        <div class="form-group col-md-6">
             <label for="phoneNumber">Phone Number</label>
             <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name ="phoneNumber" readonly/>
         </div>

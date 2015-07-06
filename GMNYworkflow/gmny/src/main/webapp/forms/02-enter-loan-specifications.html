@@ -1,5 +1,4 @@
 <form name="loan-application-received">
-
     <!--==scripts==-->
     <!-- JS - Show Hide Fields Depending on Customer Type -->
     <!-- USE IN COMBINATION WITH EXCEL FILE FOR FORM MASTERS WITH LIST OF IDs-->
@@ -7,46 +6,46 @@
 
         $(document).ready(function () {
 
-        console.log("ready!");
-        
-        //hide texts
-        $("#s4pl1").hide();
-        $("#s4pl2").hide();
-        $("#s4pl3").hide();
-        $("#s4pl4").hide();
-        $("#s4pl5").hide();
-        $("#s4bl1").hide();
-        $("#s4bl2").hide();
-        $("#s4bl3").hide();
-        $("#s4bl4").hide();
-        $("#s4bl5").hide();
-        
-       //prep togglefields2 for privateLoanType
-        $("#privateLoanType").change(function () {
-            toggleFields2();
-        });
-		//prep togglefields3 for businessLoanType
-        $("#businessLoanType").change(function () {
-            toggleFields3();
-        });
-        
-        
-        var $myText = $("#customerType");
-		$myText.data("value", $myText.val());
+            console.log("ready!");
 
-		setInterval(function() {
-    		var data = $myText.data("value"),
-        	val = $myText.val();
+            //hide texts
+            $("#s4pl1").hide();
+            $("#s4pl2").hide();
+            $("#s4pl3").hide();
+            $("#s4pl4").hide();
+            $("#s4pl5").hide();
+            $("#s4bl1").hide();
+            $("#s4bl2").hide();
+            $("#s4bl3").hide();
+            $("#s4bl4").hide();
+            $("#s4bl5").hide();
 
-    		if (data !== val) {
-        	$myText.data("value", val);
-        	console.log("Customer type changed:");
-        	console.log($("#customerType").val());
-        	toggleFields();
-    		}
-		}, 100);
+            //prep togglefields2 for privateLoanType
+            $("#privateLoanType").change(function () {
+                toggleFields2();
+            });
+            //prep togglefields3 for businessLoanType
+            $("#businessLoanType").change(function () {
+                toggleFields3();
+            });
+
+
+            var $myText = $("#customerType");
+            $myText.data("value", $myText.val());
+
+            setInterval(function () {
+                var data = $myText.data("value"),
+                        val = $myText.val();
+
+                if (data !== val) {
+                    $myText.data("value", val);
+                    console.log("Customer type changed:");
+                    console.log($("#customerType").val());
+                    toggleFields();
+                }
+            }, 100);
         });
-        
+
         //toggle function for customer type
         function toggleFields() {
             $("#s1b").show();
@@ -59,7 +58,7 @@
                 $("#s2bp").show();
                 $("#s3bp").show();
                 $("#s4ss1").show();
-                
+
                 //show for private relevant labels
                 $("#s2pl").show();
                 $("#s3pl").show();
@@ -67,7 +66,7 @@
                 $("#sProcessInfoPriv").show();
                 $("#s5pl").show();
                 $("#s5pf1").show();
-                
+
                 //hide business stuff
                 $("#s1b").hide();
                 $("#s2bl").hide();
@@ -84,14 +83,14 @@
                 $("#s2bp").show();
                 $("#s3bp").show();
                 $("#s4ss2").show();
-                
+
                 //show for business relevant labels
                 $("#s2bl").show();
                 $("#s3bl").show();
                 $("#s4bl").show();
                 $("#s5bl").show();
                 $("#sProcessInfoBus").show();
-                
+
                 $("#s5bf1").show();
                 //hide private stuff
                 $("#s2pl").hide();
@@ -112,7 +111,7 @@
 
         //toggle function private loan type
         function toggleFields2() {
-        	console.log("private loan type changed:");
+            console.log("private loan type changed:");
             $("#s4pl1").hide();
             $("#s4pl2").hide();
             $("#s4pl3").hide();
@@ -128,12 +127,13 @@
                 $("#s4pl4").show();
             } else if ($("#privateLoanType").val() == 5) {
                 $("#s4pl5").show();
-            } else{}
+            } else {
+            }
         }
 
         //toggle function for customer type
         function toggleFields3() {
-        	console.log("business loan type changed:");
+            console.log("business loan type changed:");
             $("#s4bl1").hide();
             $("#s4bl2").hide();
             $("#s4bl3").hide();
@@ -149,7 +149,8 @@
                 $("#s4bl4").show();
             } else if ($("#businessLoanType").val() == 10) {
                 $("#s4bl5").show();
-            } else{}
+            } else {
+            }
         }
 
     </script>
@@ -166,11 +167,10 @@
             height: 34px;
             -webkit-appearance: none;
         }
+
         section {
             display: block;
-            border-bottom: 1px
-            solid
-            darkgrey
+            border-bottom: 1px solid darkgrey
         }
     </style>
 
@@ -186,12 +186,14 @@
             <!--Customer ID-->
             <div class="form-group col-md-3">
                 <label for="customerID">Customer ID</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId" readonly/>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId"
+                       readonly/>
             </div>
             <!--Customer Type-->
             <div class="form-group col-md-3">
                 <label for="customerType">Customer Type</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="customerType" name="customerType" id="customerType" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="customerType"
+                       name="customerType" id="customerType" readonly/>
             </div>
         </div>
     </div>
@@ -202,16 +204,19 @@
             <h3>Business Information</h3>
         </section>
         <p>Please enter the legal name and the business area of the organization being registered as a customer.</p>
+
         <div class="row">
             <!--Organization Name-->
             <div class="col-md-6">
                 <label for="firstname">Organization Name</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="orgName" name="orgName" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="orgName" name="orgName"
+                       readonly/>
             </div>
             <!--Area of Activity-->
             <div class="col-md-6">
                 <label for="lastname">Area of Activity</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="businessArea" name="businessArea" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="businessArea"
+                       name="businessArea" readonly/>
             </div>
         </div>
     </div>
@@ -223,6 +228,7 @@
             <h3>Personal and Contact Information</h3>
         </section>
         <p id="s2bl">This fieldset shows the contact person with the organization.</p>
+
         <p id="s2pl">This fieldset shows the private contact details.</p>
         <!-- First row with gender and date of birth-->
         <div class="row">
@@ -252,12 +258,14 @@
             <!--First Name-->
             <div class="col-md-6">
                 <label for="firstname">First Name</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"
+                       readonly/>
             </div>
             <!--Last Name-->
             <div class="col-md-6">
                 <label for="lastname">Last Name</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname"
+                       readonly/>
             </div>
         </div>
         <!-- Third row with email and phone-->
@@ -283,13 +291,15 @@
             <h3>Address</h3>
         </section>
         <p id="s3bl">Shows the business address of the organization.</p>
+
         <p id="s3pl">Shows the customer's private address.</p>
         <!--two in one row / Street Name and Number-->
         <div class="row">
             <!--Organization Street Name; takes 2/3 of row-->
             <div class="form-group col-md-8">
                 <label for="street">Street Name</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street"
+                       readonly/>
             </div>
             <!--Organization Street Number; takes 1/3 of row-->
             <div class="form-group col-md-4">
@@ -303,7 +313,8 @@
             <!-- Zip Code 1/3-->
             <div class="form-group col-md-4">
                 <label for="zipCode">ZIP Code</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name="zipCode" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name="zipCode"
+                       readonly/>
             </div>
             <!-- City 2/3-->
             <div class="form-group col-md-8">
@@ -318,14 +329,15 @@
         <!--section heading + change text depending on selector-->
         <section>
             <h3>Loan Application Information</h3>
-            <br />
+            <br/>
         </section>
         <!--Private Loan Type and Descriptions-->
         <div id="s4ss1">
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="privateLoanType">Private Loan Type</label><br />
-                    <select cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType" id="privateLoanType">
+                    <label for="privateLoanType">Private Loan Type</label><br/>
+                    <select cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType"
+                            id="privateLoanType">
                         <option value="" selected style="display:none;">Please select</option>
                         <option value="1">Car Loan</option>
                         <option value="2">Debt Consolidation Loan</option>
@@ -337,16 +349,21 @@
             </div>
             <div class="styled-select-text">
                 <p id="s4pl1">Treat yourself to a new car!</p>
+
                 <p id="s4pl2">Do a debt conversion and benefit from our favourable conditions.</p>
+
                 <p id="s4pl3">Renovate your home!</p>
+
                 <p id="s4pl4">Here comes the sun!</p>
+
                 <p id="s4pl5">Fulfil a special desire!</p>
             </div>
             <div class="row">
                 <!-- Loan Occupation; takes 1/2 of row-->
                 <div class="form-group col-md-6">
                     <label for="occupation">Occupation</label>
-                    <input class="form-control" cam-variable-type="String" cam-variable-name="occupation" name="occupation">
+                    <input class="form-control" cam-variable-type="String" cam-variable-name="occupation"
+                           name="occupation">
                 </div>
                 <!--Annual Salary; takes 1/2 of row-->
                 <div class="form-group col-md-6">
@@ -359,8 +376,9 @@
         <div id="s4ss2">
             <div class="row">
                 <div class="form-group col-md-4">
-                    <label for="businessLoanType">Business Loan Type</label><br />
-                    <select cam-variable-name="businessLoanType" cam-variable-type="Long" name="businessLoanType" id="businessLoanType">
+                    <label for="businessLoanType">Business Loan Type</label><br/>
+                    <select cam-variable-name="businessLoanType" cam-variable-type="Long" name="businessLoanType"
+                            id="businessLoanType">
                         <option value="" selected style="display:none;">Please select</option>
                         <option value="6">Startup Loan</option>
                         <option value="7">Professional Loan</option>
@@ -371,26 +389,30 @@
                 </div>
             </div>
             <div class="styled-select-text">
-                <p id="s4bl1">1.	5-7.5% Interest<br>
-                    2.	Funding for 1-5 months<br>
-                    3.	Payback period: 5 years<br>
-                    4.	Loans to small businesses from private sector.
+                <p id="s4bl1">1. 5-7.5% Interest<br>
+                    2. Funding for 1-5 months<br>
+                    3. Payback period: 5 years<br>
+                    4. Loans to small businesses from private sector.
                 </p>
-                <p id="s4bl2">1.	Interest 5-10%<br>
-                    2.	Funding period 2-6 months<br>
-                    3.	Payback period: individual<br>
-                    4.	For doctors, dentists, lawyers, pharmacists, etc.
+
+                <p id="s4bl2">1. Interest 5-10%<br>
+                    2. Funding period 2-6 months<br>
+                    3. Payback period: individual<br>
+                    4. For doctors, dentists, lawyers, pharmacists, etc.
                 </p>
-                <p id="s4bl3">1.	5.8-8.5% Interest<br>
-                    2.	Funding for 1-6 months<br>
-                    3.	Payback period 5-20 years<br>
-                    4.	Government-backed loans to small businesses from private sector.
+
+                <p id="s4bl3">1. 5.8-8.5% Interest<br>
+                    2. Funding for 1-6 months<br>
+                    3. Payback period 5-20 years<br>
+                    4. Government-backed loans to small businesses from private sector.
                 </p>
-                <p id="s4bl4">1.	Interest 7%-8%<br>
-                    2.	Funding period: immediate payout<br>
-                    3.	Payback period: 10-25 years<br>
-                    4.	Loans for commercial construction.
+
+                <p id="s4bl4">1. Interest 7%-8%<br>
+                    2. Funding period: immediate payout<br>
+                    3. Payback period: 10-25 years<br>
+                    4. Loans for commercial construction.
                 </p>
+
                 <p id="s4bl5">The customized loan product for our ambitious business customers.</p>
             </div>
         </div>
