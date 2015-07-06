@@ -1,10 +1,32 @@
 <form name="02-offer-reapplication.html">
 
+    <!--CSS for select descroption and section borders-->
+    <style type="text/css">
+        .styled-select-text {
+            width: 100%;
+            padding: 5px;
+            font-size: 14px;
+            line-height: 1;
+            border: 1;
+            border-radius: 1;
+            height: 34px;
+            -webkit-appearance: none;
+        }
+        section {
+            display: block;
+            border-bottom: 1px
+            solid
+            darkgrey
+        }
+    </style>
+
   <div class="form-group">
     <label for="applicationResultStatus">Application Result Status</label>
-
- 
-    <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required> <option>terminate</option> <option>re-apply</option> </select>
+    <select name="applicationResultStatus" cam-variable-type="String" cam-variable-name="applicationResultStatus" required>
+        <option value="" selected style="style:none">Please select</option>
+        <option value="1">Terminate</option>
+        <option value="2">Re-Apply</option>
+    </select>
   </div>
   
   </form>

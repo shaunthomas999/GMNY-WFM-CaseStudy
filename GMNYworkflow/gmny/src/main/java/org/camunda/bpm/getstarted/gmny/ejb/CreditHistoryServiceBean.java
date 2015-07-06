@@ -127,7 +127,9 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		Float interestStep = interestSpread / 8.0f;
 		
 		Float individualInterestRate = product.getMaxInterestRate();
-		int scoringInt = (int) variables.get("scoring");
+		String scoringDirty = variables.get("scoring").toString();
+		int scoringInt = Integer.parseInt(scoringDirty);
+		// int scoringInt = (int) variables.get("scoring");
 		
 		switch (scoringInt) {
 			case 15: individualInterestRate = product.getMinInterestRate(); break;
