@@ -85,7 +85,7 @@ public class ApplicationInitialiser {
 	    markusL.setCity("Muenster");
 	    markusL.setCustomerType("private");
 	    
-	    markusL.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
+	    markusL.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
 	    
 	    Date today = new Date();
 	    markusL.setRegistrationDate(today);
@@ -106,7 +106,7 @@ public class ApplicationInitialiser {
 	  	jochenK.setCity("Muenster");
 	  	jochenK.setCustomerType("private");
 	    
-	  	jochenK.setPassword(Long.toHexString(Double.doubleToLongBits(Math.random())));
+	  	jochenK.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
 	    
 	  	jochenK.setRegistrationDate(today);
 
