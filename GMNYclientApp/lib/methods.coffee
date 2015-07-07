@@ -49,8 +49,9 @@ if Meteor.isServer
                     "amount" : {"value" : loanObj.amount, "type": "Long"},
                     "period" : {"value" : loanObj.period, "type": "Long"},
                     "occupation" : {"value" : loanObj.occupation, "type": "String"},
-                    "annualSalary" : {"value" : loanObj.annualSalary, "type": "Integer"},
-                    "loanType" : {"value" : loanObj.loanType, "type": "String"},
+                    "annualSalary" : {"value" : loanObj.annualSalary, "type": "Long"},
+                    "privateLoanType" : {"value" : loanObj.privateLoanType, "type": "Long"},
+                    "businessLoanType" : {"value" : loanObj.businessLoanType, "type": "Long"},
                     "applicationType" : {"value" : "online", "type": "String"}
                   }
                 }

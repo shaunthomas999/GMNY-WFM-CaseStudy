@@ -31,11 +31,13 @@ Template.applyLoan.events
     if customerObj.customerType is "private"
       loanObj.occupation = $('#occupation').val()
       loanObj.annualSalary = $('#annualSalary').val()
-      loanObj.loanType = $( "#loanType option:selected" ).text()
+      loanObj.privateLoanType = $( "#privateLoanType option:selected" ).val()
+      loanObj.businessLoanType = ""
     else
       loanObj.occupation = ""
       loanObj.annualSalary = ""
-      loanObj.loanType = $( "#loanType option:selected" ).text()
+      loanObj.privateLoanType = ""
+      loanObj.businessLoanType = $( "#businessLoanType option:selected" ).val()
 
     Meteor.call "loanApplication", loanObj, (error, result) ->
       if error
