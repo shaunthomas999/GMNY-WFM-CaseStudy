@@ -19,7 +19,7 @@ if Meteor.isServer
                     "streetNumber" : {"value" : customerObj.streetNum, "type": "String"},
                     "zipCode" : {"value" : customerObj.pincode, "type": "String"},
                     "city" : {"value" : customerObj.city, "type": "String"},
-                    "dateOfBirth" : {"value" : dateOfBirth, "type": "Date"},
+                    "dateOfBirth" : {"value" : dateOfBirth, "type": "String"},
                     "gender" : {"value" : customerObj.gender, "type": "String"},
                     "customerType" : {"value" : customerObj.customerType, "type": "String"},
                     "businessArea" : {"value" : customerObj.businessArea, "type": "String"}
