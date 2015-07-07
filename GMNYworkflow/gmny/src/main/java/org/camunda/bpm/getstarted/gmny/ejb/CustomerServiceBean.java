@@ -272,7 +272,7 @@ public void sendContractToCustomer(DelegateExecution delegateExecution) {
   // Send fancy mail
   HashMap<String, String> vars = new HashMap<String, String>();
 	vars.put("greeting", "Dear " + entityManager.find(CustomerEntity.class, customerId).getGender() + " " + entityManager.find(CustomerEntity.class, customerId).getLastname() + "!");
-  vars.put("text", "We are pleased to inform you that your" + product.getProductName() + " request has been accepted. We are willing to make the loan according to the terms and conditions set out in the loan agreement attached. <br /> <b>Please mail or fax us the signed agreement as soon as possible.</b> <br /> If there are any questions left do not hesitate to contact us." );
+  vars.put("text", "We are pleased to inform you that your " + product.getProductName() + " request has been accepted. We are willing to make the loan according to the terms and conditions set out in the loan agreement attached. <br /><br /> <b>Please mail or fax us the signed agreement as soon as possible.</b> <br /><br /> If there are any questions left do not hesitate to contact us." );
   vars.put("buttonTitle", "Go to Online-Banking!");
 	vars.put("buttonLink", "http://localhost:3000/home");
 	try {

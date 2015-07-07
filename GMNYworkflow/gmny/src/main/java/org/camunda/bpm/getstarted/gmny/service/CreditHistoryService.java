@@ -13,4 +13,6 @@ public interface CreditHistoryService {
 	public void performRiskAssessment(DelegateExecution delegateExecution);
 	
 	public void requestCreditHistoryCleanup(DelegateExecution delegateExecution);
+	
+	public void finalizeContract(DelegateExecution delegateExecution);
 }
