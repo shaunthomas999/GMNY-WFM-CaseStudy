@@ -9,11 +9,11 @@ HTTP.methods
 		if @query.loanApplicationStatus is "applied"
 			message = "Your application is being processed!"
 		else if @query.loanApplicationStatus is "accepted"
-			message = "Your loan application is #{@query.loanApplicationStatus}"
-		else if @query.loanApplicationStatus is "declined. Please contact bank for more information."
-			message = "Your loan application is #{@query.loanApplicationStatus}"
+			message = "We are pleased to tell you that your loan application is accepted!"
+		else if @query.loanApplicationStatus is "declined"
+			message = "We are sorry to tell you that your loan application is declined."
 		else if @query.loanApplicationStatus is "terminate"
-			message = "Your loan application is terminated. Please contact bank for more information."
+			message = "Your application is now terminated."
 		else
 			message = "Loan application status has changed. Please contact bank for more information."
 		
