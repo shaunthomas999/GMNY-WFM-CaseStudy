@@ -82,7 +82,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_2">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationType == "online"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="enter-loan-specifications" camunda:candidateGroups="Loan Officers" camunda:formKey="embedded:app:forms/02-enter-loan-specifications.html" name="Enter Loan Specifications">
+    <bpmn2:userTask id="enter-loan-specifications" camunda:candidateGroups="LoanOfficers" camunda:formKey="embedded:app:forms/02-enter-loan-specifications.html" name="Enter Loan Specifications">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -95,7 +95,7 @@
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_7" name="" sourceRef="ExclusiveGateway_2" targetRef="merge-xor-updated-application"/>
     <bpmn2:sequenceFlow id="SequenceFlow_8" name="" sourceRef="merge-xor-updated-application" targetRef="service-task-mobile-msg"/>
-    <bpmn2:userTask id="user-task-evaluate-loan-application" camunda:formKey="embedded:app:forms/02-evaluate-loan-application.html" camunda:candidateGroups="Loan Officers" name="Evaluate Loan Application">
+    <bpmn2:userTask id="user-task-evaluate-loan-application" camunda:formKey="embedded:app:forms/02-evaluate-loan-application.html" camunda:candidateGroups="LoanOfficers" name="Evaluate Loan Application">
       <bpmn2:documentation>This user task presents a loan officer with the relevant customer data, application data, credit rating and recommendation. The loan officer then decides based on this information whether a loan should be granted or not.</bpmn2:documentation>
       <bpmn2:incoming>flow-automatic-risk-assessment-to-evaluate-loan-application</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_10</bpmn2:outgoing>
@@ -159,7 +159,7 @@
       <bpmn2:incoming>SequenceFlow_10</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_12</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:userTask id="UserTask_5" camunda:formKey="embedded:app:forms/02-offer-reapplication.html" camunda:candidateGroups="Bank Clerks" name="Offer Reapplication">
+    <bpmn2:userTask id="UserTask_5" camunda:formKey="embedded:app:forms/02-offer-reapplication.html" camunda:candidateGroups="BankClerks" name="Offer Reapplication">
       <bpmn2:incoming>flow-wait-three-months-to-offer-reapplication</bpmn2:incoming>
       <bpmn2:outgoing>flow-offer-reapplication-to-reapply</bpmn2:outgoing>
     </bpmn2:userTask>
@@ -175,13 +175,13 @@
     <bpmn2:sequenceFlow id="flow-reapply-to-loan-application-canceled" name="No" sourceRef="xor-reapply" targetRef="ExclusiveGateway_3">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationResultStatus == "terminate"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="user-task-talk-to-customer" camunda:formKey="embedded:app:forms/02-talk-to-customer.html" camunda:candidateGroups="Bank Clerks" name="Talk to Customer">
+    <bpmn2:userTask id="user-task-talk-to-customer" camunda:formKey="embedded:app:forms/02-talk-to-customer.html" camunda:candidateGroups="BankClerks" name="Talk to Customer">
       <bpmn2:documentation>This user task has to be performed if an application is rejected. A bank clerk figures out how the customer wants to react to the rejection and offers different options. The options are to update the application with parameters that are more likely to get accepted with regards to the customers credit rating.</bpmn2:documentation>
       <bpmn2:incoming>flow-loan-granted-to-talk-to-customer</bpmn2:incoming>
       <bpmn2:outgoing>flow-talk-to-customer-to-option-selected</bpmn2:outgoing>
     </bpmn2:userTask>
     <bpmn2:sequenceFlow id="flow-talk-to-customer-to-option-selected" sourceRef="user-task-talk-to-customer" targetRef="xor-option-selected"/>
-    <bpmn2:userTask id="user-task-consult-customer" camunda:formKey="embedded:app:forms/02-consult-customer.html" camunda:candidateGroups="Bank Clerks" name="Consult Customer">
+    <bpmn2:userTask id="user-task-consult-customer" camunda:formKey="embedded:app:forms/02-consult-customer.html" camunda:candidateGroups="BankClerks" name="Consult Customer">
       <bpmn2:documentation>This user task uses the results of the cleanup-service request. The bank clerk consults the customer based on that data with the goal to improve the cusomers financial situation.</bpmn2:documentation>
       <bpmn2:incoming>flow-cleanup-recommendation-to-consult-customer</bpmn2:incoming>
       <bpmn2:outgoing>flow-consult-customer-to-wait-three-months</bpmn2:outgoing>
@@ -250,7 +250,7 @@
       <bpmn2:outgoing>flow-merge-xor-option-selected-to-prepare-updated-application</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="flow-merge-xor-option-selected-to-prepare-updated-application" sourceRef="merge-xor-option-selected" targetRef="user-task-prepare-updated-application"/>
-    <bpmn2:userTask id="user-task-prepare-updated-application" camunda:formKey="embedded:app:forms/02-prepare-updated-application.html" camunda:candidateGroups="Bank Clerks" name="Prepare&#xD;&#xA;updated Application">
+    <bpmn2:userTask id="user-task-prepare-updated-application" camunda:formKey="embedded:app:forms/02-prepare-updated-application.html" camunda:candidateGroups="BankClerks" name="Prepare&#xD;&#xA;updated Application">
       <bpmn2:documentation>This user task visualizes how a bank clerk sets more suitable parameters for the client regarding his desire to still get a loan after his original request was rejected.</bpmn2:documentation>
       <bpmn2:incoming>flow-merge-xor-option-selected-to-prepare-updated-application</bpmn2:incoming>
       <bpmn2:outgoing>flow-prepare-updated-application-to-merge-xor-updated-application</bpmn2:outgoing>
