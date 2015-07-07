@@ -267,13 +267,13 @@
       <bpmn2:incoming>SequenceFlow_15</bpmn2:incoming>
       <bpmn2:terminateEventDefinition id="TerminateEventDefinition_1"/>
     </bpmn2:endEvent>
-    <bpmn2:serviceTask id="service-task-finalize-contract" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" camunda:expression="${CreditHistoryServiceBean.finalizeContract(execution)}" name="Finalize Contract">
+    <bpmn2:serviceTask id="service-task-finalize-contract" camunda:formKey="embedded:app:forms/02-prepare-contract.html" camunda:candidateGroups="&quot;Bank Clerks&quot;" camunda:expression="${creditHistoryServiceBean.finalizeContract(execution)}" name="Finalize Contract">
       <bpmn2:documentation><![CDATA[PDF for customer as nice to have feature (Daniel) ... This user task encapsulates the work that has to be done in order to close the contract between GMNY and customer in case of a granted loan application.
 ]]></bpmn2:documentation>
       <bpmn2:incoming>flow-loan-granted-to-induce-contract-conclusion</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_4</bpmn2:outgoing>
     </bpmn2:serviceTask>
-    <bpmn2:serviceTask id="service-task-send-contract" camunda:expression="${CustomerServiceBean.sendContractToCustomer(execution)}" name="Send Contract">
+    <bpmn2:serviceTask id="service-task-send-contract" camunda:expression="${customerServiceBean.sendContractToCustomer(execution)}" name="Send Contract">
       <bpmn2:incoming>SequenceFlow_4</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
     </bpmn2:serviceTask>
