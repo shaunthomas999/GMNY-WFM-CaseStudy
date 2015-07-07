@@ -54,6 +54,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		Long customerId = (long) variables.get("customerId");
 		Long productId = (Long) variables.get("privateLoanType");
 		
+		interestRate = (float) (Math.round((interestRate / 100.0f) * 100.0 ) / 100.0);
+		
 		FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
 		
 		CustomerEntity customer = entityManager.find(CustomerEntity.class, customerId);
@@ -207,6 +209,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 				problems = problems + "WARNING: The period of " + period + " years is out of range for the " + product.getProductName() + ". ";
 			}
 		
+			delegateExecution.setVariable("problems", problems);
 			//business
 
 		} else {

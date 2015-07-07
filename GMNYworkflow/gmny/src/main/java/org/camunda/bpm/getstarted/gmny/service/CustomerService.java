@@ -15,4 +15,6 @@ public interface CustomerService {
 	
 	public void sendEmailToCustomer(DelegateExecution delegateExecution);
 	
+	public void sendContractToCustomer(DelegateExecution delegateExecution);
+	
 }
