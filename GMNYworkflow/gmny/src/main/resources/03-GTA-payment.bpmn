@@ -13,7 +13,7 @@
       <bpmn2:outgoing>SequenceFlow_1</bpmn2:outgoing>
       <bpmn2:messageEventDefinition id="MessageEventDefinition_1" messageRef="Message_1"/>
     </bpmn2:startEvent>
-    <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="clerk" camunda:formKey="embedded:app:forms/03-GTA-payment-01-checkform.html" name="Check for errors in invoice">
+    <bpmn2:userTask id="UserTask_1" camunda:candidateGroups="BankClerks" camunda:formKey="embedded:app:forms/03-GTA-payment-01-checkform.html" name="Check for errors in invoice">
       <bpmn2:documentation>Compare the invoice description and amount against the one stored in the system, i.e. check for errors in the invoice.</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_2</bpmn2:outgoing>
@@ -25,7 +25,7 @@
       <bpmn2:outgoing>SequenceFlow_6</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_2" name="" sourceRef="UserTask_1" targetRef="ExclusiveGateway_1"/>
-    <bpmn2:userTask id="UserTask_2" camunda:candidateGroups="clerk" camunda:formKey="embedded:app:forms/03-GTA-payment-02-editform.html" name="Resolve Discrepancy with GTA">
+    <bpmn2:userTask id="UserTask_2" camunda:candidateGroups="BankClerks" camunda:formKey="embedded:app:forms/03-GTA-payment-02-editform.html" name="Resolve Discrepancy with GTA">
       <bpmn2:documentation>Send an email to GTA about the discrepancy in the invoice and change the data accordingly.</bpmn2:documentation>
       <bpmn2:incoming>SequenceFlow_3</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_5</bpmn2:outgoing>
@@ -45,7 +45,7 @@
       <bpmn2:outgoing>SequenceFlow_8</bpmn2:outgoing>
     </bpmn2:exclusiveGateway>
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="" sourceRef="UserTask_2" targetRef="ExclusiveGateway_2"/>
-    <bpmn2:userTask id="UserTask_3" camunda:candidateGroups="clerk" camunda:formKey="embedded:app:forms/03-GTA-payment-03-displayform.html" name="Initiate payment">
+    <bpmn2:userTask id="UserTask_3" camunda:candidateGroups="BankClerks" camunda:formKey="embedded:app:forms/03-GTA-payment-03-displayform.html" name="Initiate payment">
       <bpmn2:incoming>SequenceFlow_8</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_9</bpmn2:outgoing>
     </bpmn2:userTask>
