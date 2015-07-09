@@ -25,8 +25,8 @@ public class FinancialProductEntity implements Serializable {
   private String productDescription;
   
   
-  private Float minInterestRate;
-  private Float maxInterestRate;
+  private Double minInterestRate;
+  private Double maxInterestRate;
   
   private Long minPeriod;
   private Long maxPeriod;
@@ -52,16 +52,16 @@ public String getProductDescription() {
 public void setProductDescription(String productDescription) {
 	this.productDescription = productDescription;
 }
-public Float getMinInterestRate() {
+public Double getMinInterestRate() {
 	return minInterestRate;
 }
-public void setMinInterestRate(Float minInterestRate) {
+public void setMinInterestRate(Double minInterestRate) {
 	this.minInterestRate = minInterestRate;
 }
-public Float getMaxInterestRate() {
+public Double getMaxInterestRate() {
 	return maxInterestRate;
 }
-public void setMaxInterestRate(Float maxInterestRate) {
+public void setMaxInterestRate(Double maxInterestRate) {
 	this.maxInterestRate = maxInterestRate;
 }
 public Long getMinPeriod() {

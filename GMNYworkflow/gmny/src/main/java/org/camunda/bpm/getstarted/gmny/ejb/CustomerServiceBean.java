@@ -264,7 +264,12 @@ public void sendContractToCustomer(DelegateExecution delegateExecution) {
   Long customerId = (Long) variables.get("customerId");
   String lastname = (String) variables.get("lastname");
   
-	Long productId = (Long) variables.get("privateLoanType");
+  Long productId;
+  if (variables.get("customerType") == "private") {
+	  productId = (Long) variables.get("privateLoanType");
+  } else {
+	  productId = (Long) variables.get("businessLoanType");
+  }
 	FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
   
   String identifier = customerId + "_" + lastname;
