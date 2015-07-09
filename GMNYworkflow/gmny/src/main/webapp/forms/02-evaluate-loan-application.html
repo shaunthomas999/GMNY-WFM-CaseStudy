@@ -1,31 +1,7 @@
 <form name="evaluate-loan-application">
     <script cam-script type="text/javascript">
-
         $(document).ready(function () {
-
             console.log("ready!");
-
-            //hide texts
-            $("#s4pl1").hide();
-            $("#s4pl2").hide();
-            $("#s4pl3").hide();
-            $("#s4pl4").hide();
-            $("#s4pl5").hide();
-            $("#s4bl1").hide();
-            $("#s4bl2").hide();
-            $("#s4bl3").hide();
-            $("#s4bl4").hide();
-            $("#s4bl5").hide();
-
-            //prep togglefields2 for privateLoanType
-            $("#privateLoanType").change(function () {
-                toggleFields2();
-            });
-            //prep togglefields3 for businessLoanType
-            $("#businessLoanType").change(function () {
-                toggleFields3();
-            });
-
 
             var $myText = $("#customerType");
             $myText.data("value", $myText.val());
@@ -45,118 +21,42 @@
 
         //toggle function for customer type
         function toggleFields() {
-            $("#s1b").show();
-            $("#s2bp").show();
-            $("#s3bp").show();
-            $("#s4bp").show();
-            $("#s5bp").show();
+            $("#businessInformation").show();
+            $("#contactInformation").show();
+            $("#addressInformation").show();
+            $("#loanApplicationInformation").show();
             if ($("#customerType").val() == "private") {
                 //show for private relevant sections
-                $("#s2bp").show();
-                $("#s3bp").show();
-                $("#s4ss1").show();
-
-                //show for private relevant labels
-                $("#s2pl").show();
-                $("#s3pl").show();
-                $("#s4pl").show();
-                $("#sProcessInfoPriv").show();
-                $("#s5pl").show();
-                $("#s5pf1").show();
-                $("#privateScoring").show();
+                $("#contactInformation").show();
+                $("#addressInformation").show();
+                $("#choosePrivateLoanType").show();
+                $("#privateRating").show();
 
                 //hide business stuff
-                $("#s1b").hide();
-                $("#s2bl").hide();
-                $("#s3bl").hide();
-                $("#s4bl").hide();
-                $("#s5bl").hide();
-                $("#s4ss2").hide();
-                $("#sProcessInfoBus").hide();
-                $("#s5bf1").hide();
+                $("#businessInformation").hide();
+                $("#chooseBusinessLoanType").hide();
                 $("#businessRating").hide();
             }
             else if ($("#customerType").val() == "business") {
                 //show for business relevant sections
-                $("#s1b").show();
-                $("#s2bp").show();
-                $("#s3bp").show();
-                $("#s4ss2").show();
-
-                //show for business relevant labels
-                $("#s2bl").show();
-                $("#s3bl").show();
-                $("#s4bl").show();
-                $("#s5bl").show();
-                $("#sProcessInfoBus").show();
+                $("#businessInformation").show();
+                $("#contactInformation").show();
+                $("#addressInformation").show();
+                $("#chooseBusinessLoanType").show();
                 $("#businessRating").show();
 
-                $("#s5bf1").show();
                 //hide private stuff
-                $("#s2pl").hide();
-                $("#s3pl").hide();
-                $("#s4pl").hide();
-                $("#s5pl").hide();
-                $("#s4ss1").hide();
-                $("#sProcessInfoPriv").hide();
-                $("#s5pf1").hide();
-                $("#privateScoring").show();
+                $("#choosePrivateLoanType").hide();
+                $("#privateRaing").hide();
             } else {
-                $("#s1b").hide();
-                $("#s2bp").hide();
-                $("#s3bp").hide();
-                $("#s4bp").hide();
-                $("#s5bp").hide();
+                $("#businessInformation").hide();
+                $("#contactInformation").hide();
+                $("#addressInformation").hide();
+                $("#loanApplicationInformation").hide();
             }
         }
-
-        //toggle function private loan type
-        function toggleFields2() {
-            console.log("private loan type changed:");
-            $("#s4pl1").hide();
-            $("#s4pl2").hide();
-            $("#s4pl3").hide();
-            $("#s4pl4").hide();
-            $("#s4pl5").hide();
-            if ($("#privateLoanType").val() == 1) {
-                $("#s4pl1").show();
-            } else if ($("#privateLoanType").val() == 2) {
-                $("#s4pl2").show();
-            } else if ($("#privateLoanType").val() == 3) {
-                $("#s4pl3").show();
-            } else if ($("#privateLoanType").val() == 4) {
-                $("#s4pl4").show();
-            } else if ($("#privateLoanType").val() == 5) {
-                $("#s4pl5").show();
-            } else {
-            }
-        }
-
-        //toggle function for customer type
-        function toggleFields3() {
-            console.log("business loan type changed:");
-            $("#s4bl1").hide();
-            $("#s4bl2").hide();
-            $("#s4bl3").hide();
-            $("#s4bl4").hide();
-            $("#s4bl5").hide();
-            if ($("#businessLoanType").val() == 6) {
-                $("#s4bl1").show();
-            } else if ($("#businessLoanType").val() == 7) {
-                $("#s4bl2").show();
-            } else if ($("#businessLoanType").val() == 8) {
-                $("#s4bl3").show();
-            } else if ($("#businessLoanType").val() == 9) {
-                $("#s4bl4").show();
-            } else if ($("#businessLoanType").val() == 10) {
-                $("#s4bl5").show();
-            } else {
-            }
-        }
-
     </script>
 
-    <!--CSS for select descroption and section borders-->
     <style type="text/css">
         section {
             display: block;
@@ -167,310 +67,291 @@
         }
     </style>
 
-    <div class="row">
-        <div class="col-md-12 form-group">
-            <label for="applicationStatus">Application Status</label><br/>
-            <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required>
-                <option value="" selected style="display:none;">Please select</option>
-                <option value="declined">Declined</option>
-                <option value="accepted">Accepted</option>
-            </select>
-        </div>
-    </div>
+    <!-- START -- NO ID -- BOTH: basicCustomerInformation -->
+    <div class="form-group">
+        <section>
+            <h3>Basic Customer Information</h3>
+        </section>
 
-    <div class="row">
-        <div class="col-md-6 form-group">
-        <label for="applicationStatusComment">Application Status comment</label><br/>
-        <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
-               name="applicationStatusComment"/>
-    </div>
-    </div>
-    <div id="s4ss1">
         <div class="row">
-            <div class="col-md-6 form-group">
-                <label for="privateLoanType">Private Loan Type</label>
-                <input class="form-control" cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType" readonly/>
+            <div class="col-md-3">
+                <label for="customerID">Customer ID</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId"
+                       readonly/>
+            </div>
+            <div class="col-md-3">
+                <label for="customerType">Customer Type</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="customerType"
+                       name="customerType" id="customerType" readonly/>
             </div>
         </div>
+    </div>
+    <!-- END -- NO ID -- BOTH: basicCustomerInformation -->
+
+    <!-- START -- BUSINESS: businessInformation -->
+    <div id="businessInformation" class="form-group">
+        <section>
+            <h3>Business Information</h3>
+        </section>
+
         <div class="row">
-            <div class="col-md-12">
-                <div id="s4pl1">
-                    <h5>Treat yourself to a new car!</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 1.000 - 100.000</li>
-                        <li>Amortisation Term: 12 - 48 months</li>
-                        <li>Interest Rate starting at 4%</li>
-                    </ol>
-                </div>
-
-                <div id="s4pl2">
-                    <h5>Do a debt conversion and benefit from our favourable conditions.</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 10.000 - 150.000</li>
-                        <li>Amortisation Term: 24 months - 8 years</li>
-                        <li>Interest Rate starting at 3%</li>
-                    </ol>
-                </div>
-                <div id="s4pl3">
-                    <h5>Renovate your home!</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 10.000 - 150.000</li>
-                        <li>Amortisation Term: 24 - 60 months</li>
-                        <li>Interest Rate starting at 3%</li>
-                    </ol>
-                </div>
-                <div id="s4pl4">
-                    <h5>Here comes the sun!</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 1.000 - 8.000</li>
-                        <li>Amortisation Term: 12 - 36 months</li>
-                        <li>Interest Rate starting at 4,6%</li>
-                    </ol>
-                </div>
-                <div id="s4pl5">
-                    <h5>Fulfil a special desire!</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 30.000 - 300.000</li>
-                        <li>Amortisation Term: 12 months - 8 years</li>
-                        <li>Interest Rate starting at 2,4%</li>
-                    </ol>
-                </div>
+            <div class="col-md-6">
+                <label for="firstname">Organization Name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="orgName" name="orgName"
+                       readonly/>
+            </div>
+            <div class="col-md-6">
+                <label for="lastname">Area of Activity</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="businessArea"
+                       name="businessArea" readonly/>
             </div>
         </div>
+    </div>
+    <!-- END -- BUSINESS: businessInformation -->
+
+    <!-- START -- BOTH: contactInformation -->
+    <div id="contactInformation" class="form-group">
+        <section>
+            <h3>Personal and Contact Information</h3>
+        </section>
+
         <div class="row">
-            <!-- Loan Occupation; takes 1/2 of row-->
-            <div class="form-group col-md-6">
-                <label for="occupation">Occupation</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="occupation"
-                       name="occupation">
+            <div class="col-md-6">
+                <label for="gender">Gender</label>
+                <input type="text" cam-variable-name="gender" cam-variable-type="String" class="form-control"
+                       name="gender" readonly/>
             </div>
-            <!--Annual Salary; takes 1/2 of row-->
-            <div class="form-group col-md-6">
-                <label for="annualSalary">Annual Salary</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="annualSalary"
-                       name="annualSalary">
+            <div class="col-md-6">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="text" cam-variable-name="dateOfBirth" cam-variable-type="String" class="form-control"
+                       name="dateOfBirth" readonly/>
             </div>
         </div>
-    </div>
-    <div id="s4ss2">
+
         <div class="row">
-            <div class="col-md-6 form-group">
-                <label for="businessLoanType">Business Loan Type</label>
-                <input class="form-control" cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType" readonly/>
+            <div class="col-md-6">
+                <label for="firstname">First Name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"
+                       readonly/>
+            </div>
+            <div class="col-md-6">
+                <label for="lastname">Last Name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname"
+                       readonly/>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-md-12">
-                <div id="s4bl1">
-                    <h5>Loans to small businesses from private sector</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 10.000 - 500.000</li>
-                        <li>Amortisation Term: 12 - 60 months</li>
-                        <li>Interest Rate starting at 1,8%</li>
-                    </ol>
+            <div class="col-md-6">
+                <label for="email">Email Address</label>
+                <div class="input-group">
+                    <div class="input-group-addon">@</div>
+                    <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email" readonly/>
                 </div>
-
-                <div id="s4bl2">
-                    <h5>For doctors, dentists, lawyers, pharmacists, etc.</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 10.000 - 500.000</li>
-                        <li>Amortisation Term: 12 - 60 months</li>
-                        <li>Interest Rate starting at 5%</li>
-                    </ol>
-                </div>
-
-                <div id="s4bl3">
-                    <h5>Government-backed loans to small businesses from private sector</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 10.000 - 500.000</li>
-                        <li>Amortisation Term: 60 months - 20 years</li>
-                        <li>Interest Rate starting at 5,8%</li>
-                    </ol>
-                </div>
-
-                <div id="s4bl4">
-                    <h5>Loan for commercial construction</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 50.000 - 5.000.000</li>
-                        <li>Amortisation Term: 60 months - 20 years</li>
-                        <li>Interest Rate starting at 5,8%</li>
-                    </ol>
-                </div>
-
-                <div id="s4bl5">
-                    <h5>The customized loan product for our ambitious business customers.</h5>
-                    <ol>
-                        <li>Loan Amount: EUR 500.000 - 8.000.000</li>
-                        <li>Amortisation Term: 36 months - 5 years</li>
-                        <li>Interest Rate starting at 2,7%</li>
-                    </ol>
+            </div>
+            <div class="col-md-6">
+                <label for="phoneNumber">Phone Number</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></div>
+                    <input id="phoneNumber" class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber"
+                           name="phoneNumber" readonly/>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Read only credit history data -->
-    <div id="privateScoring" class="row">
-        <div class="col-md-4 form-group">
-            <label for="scoring">Scoring (1-15)</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring" readonly/>
+    <!-- END -- BOTH: contactInformation -->
+
+    <!-- START -- BOTH: addressInformation -->
+    <div id="addressInformation" class="form-group">
+        <section>
+            <h3>Address</h3>
+        </section>
+
+        <div class="row">
+            <div class="col-md-8">
+                <label for="street">Street Name</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street"
+                       readonly/>
+            </div>
+            <div class="col-md-4">
+                <label for="streetNumber">Street Number</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
+                       name="streetNumber" readonly/>
+            </div>
         </div>
-        <div class="col-md-4 form-group">
-            <label for="badDepts">Bad Debts</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="badDepts" name="badDepts" readonly/>
-        </div>
-        <div class="col-md-4 form-group">
-            <label for="consumerCredits">Consumer Credits</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="consumerCredits"
-                   name="consumerCredits" readonly/>
-        </div>
-    </div>
-    <div id="businessRating" class="row">
-        <div class="col-md-6 form-group">
-            <label for="rating">Rating</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="rating" name="rating"
-                   readonly/>
-        </div>
-        <!--Bad Debts 2 Years-->
-        <div class="col-md-3 form-group">
-            <label for="badDeptsInPastTwoYears">Bad Debts in the past two years</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="badDeptsInPastTwoYears"
-                   name="badDeptsInPastTwoYears" readonly/>
-        </div>
-        <!--Debt Ratio-->
-        <div class="col-md-3 form-group">
-            <label for="deptRatioWithNewCreditAmount">New Debt Ratio</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="deptRatioWithNewCreditAmount"
-                   name="deptRatioWithNewCreditAmount" readonly/>
+
+        <div class="row">
+            <div class="col-md-4">
+                <label for="zipCode">ZIP Code</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name="zipCode"
+                       readonly/>
+            </div>
+            <div class="col-md-8">
+                <label for="city">City</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="city" name="city" readonly/>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label for="recommendation">Recommendation</label><br/>
-            <textarea cam-variable-type="String" cam-variable-name="recommendation"
-                   name="recommendation" readonly/>
+    <!-- END -- BOTH: addressInformation -->
+
+    <!-- START -- BOTH: loanApplicationInformation -->
+    <div id="loanApplicationInformation" class="form-group">
+        <section>
+            <h3>Loan Application Information</h3>
+        </section>
+
+        <!-- START -- PRIVATE: choosePrivateLoanType -->
+        <div id="choosePrivateLoanType">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="privateLoanType">Private Loan Type</label><br/>
+                    <input class="form-control" cam-variable-name="privateLoanType" cam-variable-type="Long"
+                           name="privateLoanType" id="privateLoanType" readonly />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="occupation">Occupation</label>
+                    <input class="form-control" cam-variable-type="String" cam-variable-name="occupation"
+                           name="occupation" readonly />
+                </div>
+                <div class="col-md-6">
+                    <label for="annualSalary">Annual Salary</label>
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></div>
+                        <input class="form-control" cam-variable-type="Long" cam-variable-name="annualSalary"
+                               name="annualSalary" readonly />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END -- PRIVATE: choosePrivateLoanType -->
+
+        <!-- START -- BUSINESS: chooseBusinessLoanType -->
+        <div id="chooseBusinessLoanType">
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="businessLoanType">Business Loan Type</label><br/>
+                    <input class="form-control" cam-variable-name="businessLoanType" cam-variable-type="Long"
+                           name="businessLoanType" id="privateLoanType" readonly />
+                </div>
+            </div>
+        </div>
+        <!-- END -- BUSINESS: chooseBusinessLoanType -->
+
+        <!-- BOTH: continue loanApplicationInformation -->
+        <div class="row">
+            <div class="col-md-6">
+                <label for="loanAmount">Loan Amount</label>
+                <div class="input-group">
+                    <div class="input-group-addon"><i class="glyphicon glyphicon-euro"></i></div>
+                    <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="period">Loan Period in years</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="period" name="period" />
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12 form group">
-            <label for="recommendationStatus">Recommendation Status</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="recommendationStatus"
-                   name="recommendationStatus" readonly/>
+    <!-- END -- BOTH: loanApplicationInformation -->
+
+    <!-- START -- NO ID -- BOTH: ratingInformation -->
+    <div class="form-group">
+        <section>
+            <h3>Rating Information</h3>
+        </section>
+
+        <!-- START -- PRIVATE: privateRating -->
+        <div id="privateRating" class="row">
+            <div class="col-md-4 form-group">
+                <label for="scoring">Scoring (1-15)</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring" readonly/>
+            </div>
+            <div class="col-md-4 form-group">
+                <label for="badDepts">Bad Debts</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="badDepts" name="badDepts" readonly/>
+            </div>
+            <div class="col-md-4 form-group">
+                <label for="consumerCredits">Consumer Credits</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="consumerCredits"
+                       name="consumerCredits" readonly/>
+            </div>
         </div>
-    </div>
-    <!-- Read only application data -->
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label for="customerID">Customer ID</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId"
-                   readonly/>
+        <!-- END -- PRIVATE: privateRating -->
+
+        <!-- START -- BUSINESS: businessRating -->
+        <div id="businessRating" class="row">
+            <div class="col-md-4">
+                <label for="rating">Rating</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="rating" name="rating"
+                       readonly/>
+            </div>
+            <div class="col-md-4">
+                <label for="badDeptsInPastTwoYears">Bad Debts in the past two years</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="badDeptsInPastTwoYears"
+                       name="badDeptsInPastTwoYears" readonly/>
+            </div>
+            <div class="col-md-4">
+                <label for="deptRatioWithNewCreditAmount">New Debt Ratio</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="deptRatioWithNewCreditAmount"
+                       name="deptRatioWithNewCreditAmount" readonly/>
+            </div>
+        </div>
+        <!-- END -- BUSINESS: businessRating -->
+
+        <!-- continue BOTH: ratingInformation -->
+        <div class="row">
+            <div class="col-md-4">
+                <label for="recommendationStatus">Recommendation Status</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="recommendationStatus"
+                       name="recommendationStatus" readonly/>
+            </div>
+            <div class="col-md-8">
+                <label for="recommendation">Recommendation</label><br/>
+                <textarea cam-variable-type="String" cam-variable-name="recommendation"
+                      name="recommendation" readonly/>
+            </div>
         </div>
 
     </div>
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label for="amount">Loan Amount</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
-        </div>
-        <div class="col-md-6 form-group">
-            <label for="period">Loan Period</label>
-            <input class="form-control" cam-variable-type="Long" cam-variable-name="period" name="period"/>
-        </div>
-        <div class="col-md-6 form-group">
-            <label for="interestRate">Interest Rate</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="interestRate"
-                   name="interestRate"/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 form group">
-            <label for="problems">Potential Problems</label><br/>
-            <textarea cam-variable-type="String" cam-variable-name="problems" name="problems"
-                   readonly/>
-        </div>
-    </div>
+    <!-- END -- NO ID -- BOTH: ratingInformation -->
 
-    <!-- Read only customer data from database -->
-    <section>
-        <h3>Personal and Contact Information</h3>
-    </section>
-    <p>This fieldset shows the private contact details.</p>
+    <!-- START -- NO ID -- BOTH: applicationStatus -->
+    <div class="form-group">
+        <section>
+            <h3>Loan Application Status</h3>
+        </section>
 
-    <div class="row">
-        <!--Gender-->
-        <div class="form-group col-md-6">
-            <label for="gender">Gender</label>
-            <input type="text"
-                   cam-variable-name="gender"
-                   cam-variable-type="String"
-                   class="form-control"
-                   name="gender"
-                   readonly/>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="applicationStatus">Application Status</label><br/>
+                <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required>
+                    <option value="" selected style="display:none;">Please select</option>
+                    <option value="declined">Declined</option>
+                    <option value="accepted">Accepted</option>
+                </select>
+            </div>
+            <div class="col-md-8">
+                <label for="applicationStatusComment">Application Status Comment</label><br/>
+                <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
+                          name="applicationStatusComment"/>
+            </div>
         </div>
-        <!--Date of Birth-->
-        <div class="form-group col-md-6">
-            <label for="dateOfBirth">Date of Birth</label>
-            <input type="text"
-                   cam-variable-name="dateOfBirth"
-                   cam-variable-type="String"
-                   class="form-control"
-                   name="dateOfBirth"
-                   readonly/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label for="firstname">First Name</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="firstname" name="firstname"
-                   readonly/>
-        </div>
-        <div class="col-md-6 form-group">
-            <label for="lastname">Last Name</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="lastname" name="lastname"
-                   readonly/>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label for="email">Email Address</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="email" name="email" readonly/>
-        </div>
-        <div class="col-md-6 form-group">
-            <label for="phoneNumber">Phone Number</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="phoneNumber" name="phoneNumber"
-                   readonly/>
-        </div>
-    </div>
 
-    <!-- Readonly -- Adress of private customer -->
-    <section>
-        <h3>Address</h3>
-    </section>
-    <p>Shows the customer's private address.</p>
-    <!--two in one row / Street Name and Number-->
-    <div class="row">
-        <!--Organization Street Name; takes 2/3 of row-->
-        <div class="form-group col-md-8">
-            <label for="street">Street Name</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="street" name="street" readonly/>
-        </div>
-        <!--Organization Street Number; takes 1/3 of row-->
-        <div class="form-group col-md-4">
-            <label for="streetNumber">Street Number</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="streetNumber"
-                   name="streetNumber" readonly/>
+        <div class="row">
+            <div class="col-md-4">
+                <label for="interestRate">Interest Rate</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="interestRate"
+                       name="interestRate"/>
+            </div>
+            <div class="col-md-8">
+                <label for="problems">Potential Problems</label><br/>
+                <textarea cam-variable-type="String" cam-variable-name="problems" name="problems"
+                          readonly/>
+            </div>
         </div>
     </div>
-    <!---two in one row / ZIP and City-->
-    <div class="row">
-        <!-- Zip Code 1/3-->
-        <div class="form-group col-md-4">
-            <label for="zipCode">ZIP Code</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="zipCode" name="zipCode" readonly/>
-        </div>
-        <!-- City 2/3-->
-        <div class="form-group col-md-8">
-            <label for="city">City</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="city" name="city" readonly/>
-        </div>
-    </div>
+    <!-- END -- NO ID -- BOTH: applicationStatus -->
 </form>
