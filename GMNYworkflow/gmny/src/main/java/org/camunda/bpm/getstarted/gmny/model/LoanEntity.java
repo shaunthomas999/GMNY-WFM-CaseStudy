@@ -27,7 +27,7 @@ public class LoanEntity implements Serializable {
  
   private long amount;
   private long period;
-  private float interestRate;
+  private double interestRate;
 
 
 
@@ -52,13 +52,13 @@ public void setPeriod(long period) {
 }
 
 
-public float getInterestRate() {
+public double getInterestRate() {
 	return interestRate;
 }
 
 
-public void setInterestRate(float interestRate) {
-	this.interestRate = interestRate;
+public void setInterestRate(double d) {
+	this.interestRate = d;
 }
 
 

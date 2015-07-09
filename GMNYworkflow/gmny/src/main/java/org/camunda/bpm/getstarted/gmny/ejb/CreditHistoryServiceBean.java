@@ -27,6 +27,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.core.MediaType;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,13 +50,12 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		Map<String, Object> variables = delegateExecution.getVariables();
 		
 		Long amount = (long) variables.get("amount");
-		Float interestRate = Float.parseFloat((String) variables.get("interestRate"));
+		double interestRate = Double.parseDouble((String) variables.get("interestRate"));
 		Long period = (long) variables.get("period");
 		
 		Long customerId = (long) variables.get("customerId");
 		Long productId = (Long) variables.get("privateLoanType");
 		
-		interestRate = (float) (Math.round((interestRate / 100.0f) * 100.0 ) / 100.0);
 		
 		FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
 		
@@ -158,11 +159,11 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			Long productId = (Long) variables.get("privateLoanType");
 			FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
 			
-			Float interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
-			Float interestStep = interestSpread / 8.0f;
+			double interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
+			double interestStep = interestSpread / 8.0;
 			
 			
-			Float individualInterestRate = product.getMaxInterestRate();
+			double individualInterestRate = product.getMaxInterestRate();
 			String scoringDirty = variables.get("scoring").toString();
 			int scoringInt = Integer.parseInt(scoringDirty);
 			// int scoringInt = (int) variables.get("scoring");
@@ -170,18 +171,21 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			switch (scoringInt) {
 				case 15: individualInterestRate = product.getMinInterestRate(); break;
 				case 14: individualInterestRate = product.getMinInterestRate() + interestStep; break;
-				case 13: individualInterestRate = product.getMinInterestRate() + (2.0f * interestStep); break;
-				case 12: individualInterestRate = product.getMinInterestRate() + (3.0f * interestStep); break;
-				case 11: individualInterestRate = product.getMinInterestRate() + (4.0f * interestStep); break;
-				case 10: individualInterestRate = product.getMinInterestRate() + (5.0f * interestStep); break;
-				case 9: individualInterestRate = product.getMinInterestRate() + (6.0f * interestStep); break;
-				case 8: individualInterestRate = product.getMinInterestRate() + (7.0f * interestStep); break;
+				case 13: individualInterestRate = product.getMinInterestRate() + (2.0 * interestStep); break;
+				case 12: individualInterestRate = product.getMinInterestRate() + (3.0 * interestStep); break;
+				case 11: individualInterestRate = product.getMinInterestRate() + (4.0 * interestStep); break;
+				case 10: individualInterestRate = product.getMinInterestRate() + (5.0 * interestStep); break;
+				case 9: individualInterestRate = product.getMinInterestRate() + (6.0 * interestStep); break;
+				case 8: individualInterestRate = product.getMinInterestRate() + (7.0 * interestStep); break;
 				default: individualInterestRate = product.getMaxInterestRate(); break;
 			}
 			
 			String problems = "";
 			
-			delegateExecution.setVariable("interestRate", ""+(individualInterestRate * 100.0f));
+			BigDecimal intr = new BigDecimal(individualInterestRate * 100.0);
+			intr = intr.setScale( 2, BigDecimal.ROUND_HALF_UP );
+
+			delegateExecution.setVariable("interestRate", "" + intr);
 			
 			Long amount = (Long) variables.get("amount");
 			Long period = (Long) variables.get("period");
