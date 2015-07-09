@@ -114,6 +114,30 @@ public class ApplicationInitialiser {
 	    em.flush();
 	    
 	    
+	    CustomerEntity edekaD = new CustomerEntity();
+	    
+	  	edekaD.setFirstname("Patrick");
+	  	edekaD.setLastname("Delfmann");
+	  	edekaD.setOrgName("EDEKA DELFMANN");
+	  	edekaD.setGender("Mr.");
+	  	edekaD.setEmail("edekadelfmann@rautschka.com");
+	  	edekaD.setPhoneNumber("+49 251 77 0 99");
+	  	edekaD.setStreet("Leonardocampus");
+	  	edekaD.setStreetNumber("9");
+	  	edekaD.setZipCode("48149");
+	  	edekaD.setCity("Muenster");
+	  	edekaD.setCustomerType("business");
+	  	edekaD.setBusinessArea("Food");
+	  	
+	    
+	  	edekaD.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
+	    
+	  	edekaD.setRegistrationDate(today);
+
+	    em.persist(edekaD);
+	    em.flush();
+	    
+	    
 	    LoanEntity markusLoan = new LoanEntity();
 	    markusLoan.setAmount((long) 3000);
 	    markusLoan.setFinancialProduct(carLoan);
