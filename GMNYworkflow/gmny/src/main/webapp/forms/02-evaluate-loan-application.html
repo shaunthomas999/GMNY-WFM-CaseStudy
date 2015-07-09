@@ -1,4 +1,160 @@
 <form name="evaluate-loan-application">
+    <script cam-script type="text/javascript">
+
+        $(document).ready(function () {
+
+            console.log("ready!");
+
+            //hide texts
+            $("#s4pl1").hide();
+            $("#s4pl2").hide();
+            $("#s4pl3").hide();
+            $("#s4pl4").hide();
+            $("#s4pl5").hide();
+            $("#s4bl1").hide();
+            $("#s4bl2").hide();
+            $("#s4bl3").hide();
+            $("#s4bl4").hide();
+            $("#s4bl5").hide();
+
+            //prep togglefields2 for privateLoanType
+            $("#privateLoanType").change(function () {
+                toggleFields2();
+            });
+            //prep togglefields3 for businessLoanType
+            $("#businessLoanType").change(function () {
+                toggleFields3();
+            });
+
+
+            var $myText = $("#customerType");
+            $myText.data("value", $myText.val());
+
+            setInterval(function () {
+                var data = $myText.data("value"),
+                        val = $myText.val();
+
+                if (data !== val) {
+                    $myText.data("value", val);
+                    console.log("Customer type changed:");
+                    console.log($("#customerType").val());
+                    toggleFields();
+                }
+            }, 100);
+        });
+
+        //toggle function for customer type
+        function toggleFields() {
+            $("#s1b").show();
+            $("#s2bp").show();
+            $("#s3bp").show();
+            $("#s4bp").show();
+            $("#s5bp").show();
+            if ($("#customerType").val() == "private") {
+                //show for private relevant sections
+                $("#s2bp").show();
+                $("#s3bp").show();
+                $("#s4ss1").show();
+
+                //show for private relevant labels
+                $("#s2pl").show();
+                $("#s3pl").show();
+                $("#s4pl").show();
+                $("#sProcessInfoPriv").show();
+                $("#s5pl").show();
+                $("#s5pf1").show();
+                $("#privateScoring").show();
+
+                //hide business stuff
+                $("#s1b").hide();
+                $("#s2bl").hide();
+                $("#s3bl").hide();
+                $("#s4bl").hide();
+                $("#s5bl").hide();
+                $("#s4ss2").hide();
+                $("#sProcessInfoBus").hide();
+                $("#s5bf1").hide();
+                $("#businessRating").hide();
+            }
+            else if ($("#customerType").val() == "business") {
+                //show for business relevant sections
+                $("#s1b").show();
+                $("#s2bp").show();
+                $("#s3bp").show();
+                $("#s4ss2").show();
+
+                //show for business relevant labels
+                $("#s2bl").show();
+                $("#s3bl").show();
+                $("#s4bl").show();
+                $("#s5bl").show();
+                $("#sProcessInfoBus").show();
+                $("#businessRating").show();
+
+                $("#s5bf1").show();
+                //hide private stuff
+                $("#s2pl").hide();
+                $("#s3pl").hide();
+                $("#s4pl").hide();
+                $("#s5pl").hide();
+                $("#s4ss1").hide();
+                $("#sProcessInfoPriv").hide();
+                $("#s5pf1").hide();
+                $("#privateScoring").show();
+            } else {
+                $("#s1b").hide();
+                $("#s2bp").hide();
+                $("#s3bp").hide();
+                $("#s4bp").hide();
+                $("#s5bp").hide();
+            }
+        }
+
+        //toggle function private loan type
+        function toggleFields2() {
+            console.log("private loan type changed:");
+            $("#s4pl1").hide();
+            $("#s4pl2").hide();
+            $("#s4pl3").hide();
+            $("#s4pl4").hide();
+            $("#s4pl5").hide();
+            if ($("#privateLoanType").val() == 1) {
+                $("#s4pl1").show();
+            } else if ($("#privateLoanType").val() == 2) {
+                $("#s4pl2").show();
+            } else if ($("#privateLoanType").val() == 3) {
+                $("#s4pl3").show();
+            } else if ($("#privateLoanType").val() == 4) {
+                $("#s4pl4").show();
+            } else if ($("#privateLoanType").val() == 5) {
+                $("#s4pl5").show();
+            } else {
+            }
+        }
+
+        //toggle function for customer type
+        function toggleFields3() {
+            console.log("business loan type changed:");
+            $("#s4bl1").hide();
+            $("#s4bl2").hide();
+            $("#s4bl3").hide();
+            $("#s4bl4").hide();
+            $("#s4bl5").hide();
+            if ($("#businessLoanType").val() == 6) {
+                $("#s4bl1").show();
+            } else if ($("#businessLoanType").val() == 7) {
+                $("#s4bl2").show();
+            } else if ($("#businessLoanType").val() == 8) {
+                $("#s4bl3").show();
+            } else if ($("#businessLoanType").val() == 9) {
+                $("#s4bl4").show();
+            } else if ($("#businessLoanType").val() == 10) {
+                $("#s4bl5").show();
+            } else {
+            }
+        }
+
+    </script>
 
     <!--CSS for select descroption and section borders-->
     <style type="text/css">
@@ -7,7 +163,7 @@
             border-bottom: 1px solid darkgrey
         }
         textarea {
-        min-width: 100%
+            min-width: 100%
         }
     </style>
 
@@ -29,9 +185,131 @@
                name="applicationStatusComment"/>
     </div>
     </div>
+    <div id="s4ss1">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="privateLoanType">Private Loan Type</label>
+                <input class="form-control" cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType" readonly/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="s4pl1">
+                    <h5>Treat yourself to a new car!</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 1.000 - 100.000</li>
+                        <li>Amortisation Term: 12 - 48 months</li>
+                        <li>Interest Rate starting at 4%</li>
+                    </ol>
+                </div>
 
+                <div id="s4pl2">
+                    <h5>Do a debt conversion and benefit from our favourable conditions.</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 10.000 - 150.000</li>
+                        <li>Amortisation Term: 24 months - 8 years</li>
+                        <li>Interest Rate starting at 3%</li>
+                    </ol>
+                </div>
+                <div id="s4pl3">
+                    <h5>Renovate your home!</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 10.000 - 150.000</li>
+                        <li>Amortisation Term: 24 - 60 months</li>
+                        <li>Interest Rate starting at 3%</li>
+                    </ol>
+                </div>
+                <div id="s4pl4">
+                    <h5>Here comes the sun!</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 1.000 - 8.000</li>
+                        <li>Amortisation Term: 12 - 36 months</li>
+                        <li>Interest Rate starting at 4,6%</li>
+                    </ol>
+                </div>
+                <div id="s4pl5">
+                    <h5>Fulfil a special desire!</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 30.000 - 300.000</li>
+                        <li>Amortisation Term: 12 months - 8 years</li>
+                        <li>Interest Rate starting at 2,4%</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Loan Occupation; takes 1/2 of row-->
+            <div class="form-group col-md-6">
+                <label for="occupation">Occupation</label>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="occupation"
+                       name="occupation">
+            </div>
+            <!--Annual Salary; takes 1/2 of row-->
+            <div class="form-group col-md-6">
+                <label for="annualSalary">Annual Salary</label>
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="annualSalary"
+                       name="annualSalary">
+            </div>
+        </div>
+    </div>
+    <div id="s4ss2">
+        <div class="row">
+            <div class="col-md-6 form-group">
+                <label for="businessLoanType">Business Loan Type</label>
+                <input class="form-control" cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType" readonly/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="s4bl1">
+                    <h5>Loans to small businesses from private sector</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 10.000 - 500.000</li>
+                        <li>Amortisation Term: 12 - 60 months</li>
+                        <li>Interest Rate starting at 1,8%</li>
+                    </ol>
+                </div>
+
+                <div id="s4bl2">
+                    <h5>For doctors, dentists, lawyers, pharmacists, etc.</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 10.000 - 500.000</li>
+                        <li>Amortisation Term: 12 - 60 months</li>
+                        <li>Interest Rate starting at 5%</li>
+                    </ol>
+                </div>
+
+                <div id="s4bl3">
+                    <h5>Government-backed loans to small businesses from private sector</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 10.000 - 500.000</li>
+                        <li>Amortisation Term: 60 months - 20 years</li>
+                        <li>Interest Rate starting at 5,8%</li>
+                    </ol>
+                </div>
+
+                <div id="s4bl4">
+                    <h5>Loan for commercial construction</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 50.000 - 5.000.000</li>
+                        <li>Amortisation Term: 60 months - 20 years</li>
+                        <li>Interest Rate starting at 5,8%</li>
+                    </ol>
+                </div>
+
+                <div id="s4bl5">
+                    <h5>The customized loan product for our ambitious business customers.</h5>
+                    <ol>
+                        <li>Loan Amount: EUR 500.000 - 8.000.000</li>
+                        <li>Amortisation Term: 36 months - 5 years</li>
+                        <li>Interest Rate starting at 2,7%</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Read only credit history data -->
-    <div class="row">
+    <div id="privateScoring" class="row">
         <div class="col-md-4 form-group">
             <label for="scoring">Scoring (1-15)</label>
             <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring" readonly/>
@@ -44,6 +322,25 @@
             <label for="consumerCredits">Consumer Credits</label>
             <input class="form-control" cam-variable-type="Long" cam-variable-name="consumerCredits"
                    name="consumerCredits" readonly/>
+        </div>
+    </div>
+    <div id="businessRating" class="row">
+        <div class="col-md-6 form-group">
+            <label for="rating">Rating</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="rating" name="rating"
+                   readonly/>
+        </div>
+        <!--Bad Debts 2 Years-->
+        <div class="col-md-3 form-group">
+            <label for="badDeptsInPastTwoYears">Bad Debts in the past two years</label>
+            <input class="form-control" cam-variable-type="Long" cam-variable-name="badDeptsInPastTwoYears"
+                   name="badDeptsInPastTwoYears" readonly/>
+        </div>
+        <!--Debt Ratio-->
+        <div class="col-md-3 form-group">
+            <label for="deptRatioWithNewCreditAmount">New Debt Ratio</label>
+            <input class="form-control" cam-variable-type="String" cam-variable-name="deptRatioWithNewCreditAmount"
+                   name="deptRatioWithNewCreditAmount" readonly/>
         </div>
     </div>
     <div class="row">
@@ -67,12 +364,13 @@
             <input class="form-control" cam-variable-type="Long" cam-variable-name="customerId" name="customerId"
                    readonly/>
         </div>
+
+    </div>
+    <div class="row">
         <div class="col-md-6 form-group">
             <label for="amount">Loan Amount</label>
             <input class="form-control" cam-variable-type="Long" cam-variable-name="amount" name="amount" readonly/>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6 form-group">
             <label for="period">Loan Period</label>
             <input class="form-control" cam-variable-type="Long" cam-variable-name="period" name="period"/>
