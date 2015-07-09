@@ -234,7 +234,7 @@
                 <div class="col-md-4">
                     <label for="businessLoanType">Business Loan Type</label><br/>
                     <input class="form-control" cam-variable-name="businessLoanType" cam-variable-type="Long"
-                           name="businessLoanType" id="privateLoanType" readonly />
+                           name="businessLoanType" id="businessLoanType" readonly />
                 </div>
             </div>
         </div>
@@ -251,7 +251,7 @@
             </div>
             <div class="col-md-6">
                 <label for="period">Loan Period in years</label>
-                <input class="form-control" cam-variable-type="Long" cam-variable-name="period" name="period" />
+                <input class="form-control" cam-variable-type="Long" cam-variable-name="period" name="period" readonly/>
             </div>
         </div>
     </div>
@@ -331,16 +331,19 @@
             </div>
             <div class="col-md-8">
                 <label for="applicationStatusComment">Application Status Comment</label><br/>
-                <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
-                          name="applicationStatusComment" readonly/>
+                <!-- <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
+                          name="applicationStatusComment" readonly/> -->
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-4">
                 <label for="interestRate">Interest Rate</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="interestRate"
-                       name="interestRate"/>
+                <div class="input-group">
+                    <div class="input-group-addon">%</div>
+                    <input class="form-control" cam-variable-type="String" cam-variable-name="interestRate"
+                           name="interestRate" readonly/>
+                </div>
             </div>
             <div class="col-md-8">
                 <label for="problems">Potential Problems</label><br/>
@@ -360,13 +363,7 @@
         <div class="row">
             <div class="col-md-4">
                 <label for="applicationResultStatus">Application Result Status</label>
-                <select name="applicationResultStatus" cam-variable-type="String"
-                        cam-variable-name="applicationResultStatus" required>
-                    <option value="" selected style="display:none">Please select</option>
-                    <option value="cleanup service">Cleanup Service</option>
-                    <option value="terminate">Terminate</option>
-                    <option value="re-apply">Re-Apply</option>
-                </select>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="applicationResultStatus" readonly/>
             </div>
             <div class="col-md-8">
                 <label for="applicationStatusComment">Application Status Comment</label><br/>
