@@ -19,9 +19,10 @@ if Meteor.isServer
                     "streetNumber" : {"value" : customerObj.streetNum, "type": "String"},
                     "zipCode" : {"value" : customerObj.pincode, "type": "String"},
                     "city" : {"value" : customerObj.city, "type": "String"},
-                    "dateOfBirth" : {"value" : dateOfBirth, "type": "Date"},
+                    "dateOfBirth" : {"value" : dateOfBirth, "type": "String"},
                     "gender" : {"value" : customerObj.gender, "type": "String"},
-                    "customerType" : {"value" : customerObj.customerType, "type": "String"}
+                    "customerType" : {"value" : customerObj.customerType, "type": "String"},
+                    "businessArea" : {"value" : customerObj.businessArea, "type": "String"}
                   }
                 }
 
@@ -46,10 +47,11 @@ if Meteor.isServer
                   {
                     "customerId" : {"value" : loanObj.customerId, "type": "Long"},
                     "amount" : {"value" : loanObj.amount, "type": "Long"},
-                    "period" : {"value" : loanObj.period, "type": "Integer"},
+                    "period" : {"value" : loanObj.period, "type": "Long"},
                     "occupation" : {"value" : loanObj.occupation, "type": "String"},
-                    "annualSalary" : {"value" : loanObj.annualSalary, "type": "Integer"},
-                    "loanType" : {"value" : loanObj.loanType, "type": "String"},
+                    "annualSalary" : {"value" : loanObj.annualSalary, "type": "Long"},
+                    "privateLoanType" : {"value" : loanObj.privateLoanType, "type": "Long"},
+                    "businessLoanType" : {"value" : loanObj.businessLoanType, "type": "Long"},
                     "applicationType" : {"value" : "online", "type": "String"}
                   }
                 }

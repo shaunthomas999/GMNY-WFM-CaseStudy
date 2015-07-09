@@ -2,26 +2,18 @@
 
     <!--CSS for select descroption and section borders-->
     <style type="text/css">
-        .styled-select-text {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-            line-height: 1;
-            border: 1;
-            border-radius: 1;
-            height: 34px;
-            -webkit-appearance: none;
-        }
-
         section {
             display: block;
             border-bottom: 1px solid darkgrey
+        }
+        textarea {
+        min-width: 100%
         }
     </style>
 
     <div class="row">
         <div class="col-md-12 form-group">
-            <label for="applicationStatus">Application Status</label>
+            <label for="applicationStatus">Application Status</label><br/>
             <select name="applicationStatus" cam-variable-type="String" cam-variable-name="applicationStatus" required>
                 <option value="" selected style="display:none;">Please select</option>
                 <option value="declined">Declined</option>
@@ -31,8 +23,8 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12 form-group">
-        <label for="applicationStatusComment">Application Status comment</label>
+        <div class="col-md-6 form-group">
+        <label for="applicationStatusComment">Application Status comment</label><br/>
         <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
                name="applicationStatusComment"/>
     </div>
@@ -55,9 +47,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 form-group">
-            <label for="recommendation">Recommendation</label>
-            <input class="form-control" cam-variable-type="String" cam-variable-name="recommendation"
+        <div class="col-md-6 form-group">
+            <label for="recommendation">Recommendation</label><br/>
+            <textarea cam-variable-type="String" cam-variable-name="recommendation"
                    name="recommendation" readonly/>
         </div>
     </div>
@@ -92,8 +84,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-12 form group">
-            <label for="problems">Potential Problems</label>
+        <div class="col-md-6 form group">
+            <label for="problems">Potential Problems</label><br/>
             <textarea cam-variable-type="String" cam-variable-name="problems" name="problems"
                    readonly/>
         </div>

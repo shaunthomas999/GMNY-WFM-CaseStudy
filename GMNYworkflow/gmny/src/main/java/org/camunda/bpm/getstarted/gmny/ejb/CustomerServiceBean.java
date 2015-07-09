@@ -44,7 +44,7 @@ public class CustomerServiceBean implements CustomerService{
  
     // Set customer attributes from form
     customerEntity.setOrgName((String) variables.get("orgName"));
-    customerEntity.setOrgName((String) variables.get("businessArea"));
+    customerEntity.setBusinessArea((String) variables.get("businessArea"));
     customerEntity.setFirstname((String) variables.get("firstname"));
     customerEntity.setLastname((String) variables.get("lastname"));
     customerEntity.setEmail((String) variables.get("email"));

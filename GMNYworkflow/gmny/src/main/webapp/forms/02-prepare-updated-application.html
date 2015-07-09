@@ -157,20 +157,12 @@
 
     <!--CSS for select descroption and section borders-->
     <style type="text/css">
-        .styled-select-text {
-            width: 100%;
-            padding: 5px;
-            font-size: 14px;
-            line-height: 1;
-            border: 1;
-            border-radius: 1;
-            height: 34px;
-            -webkit-appearance: none;
-        }
-
         section {
             display: block;
             border-bottom: 1px solid darkgrey
+        }
+        textarea {
+            min-width: 100%;
         }
     </style>
 
@@ -184,8 +176,8 @@
     </div>
 
     <div class="row">
-        <div class="form-group col-md-12">
-            <label for="applicationStatusComment">Application Status comment</label>
+        <div class="form-group col-md-6">
+            <label for="applicationStatusComment">Application Status comment</label><br/>
             <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
                    name="applicationStatusComment" readonly/>
         </div>
@@ -376,16 +368,18 @@
                     </select>
                 </div>
             </div>
-            <div class="styled-select-text">
-                <p id="s4pl1">Treat yourself to a new car!</p>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <p id="s4pl1">Treat yourself to a new car!</p>
 
-                <p id="s4pl2">Do a debt conversion and benefit from our favourable conditions.</p>
+                    <p id="s4pl2">Do a debt conversion and benefit from our favourable conditions.</p>
 
-                <p id="s4pl3">Renovate your home!</p>
+                    <p id="s4pl3">Renovate your home!</p>
 
-                <p id="s4pl4">Here comes the sun!</p>
+                    <p id="s4pl4">Here comes the sun!</p>
 
-                <p id="s4pl5">Fulfil a special desire!</p>
+                    <p id="s4pl5">Fulfil a special desire!</p>
+                </div>
             </div>
             <div class="row">
                 <!-- Loan Occupation; takes 1/2 of row-->
@@ -417,32 +411,34 @@
                     </select>
                 </div>
             </div>
-            <div class="styled-select-text">
-                <p id="s4bl1">1. 5-7.5% Interest<br>
-                    2. Funding for 1-5 months<br>
-                    3. Payback period: 5 years<br>
-                    4. Loans to small businesses from private sector.
-                </p>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <p id="s4bl1">1. 5-7.5% Interest<br>
+                        2. Funding for 1-5 months<br>
+                        3. Payback period: 5 years<br>
+                        4. Loans to small businesses from private sector.
+                    </p>
 
-                <p id="s4bl2">1. Interest 5-10%<br>
-                    2. Funding period 2-6 months<br>
-                    3. Payback period: individual<br>
-                    4. For doctors, dentists, lawyers, pharmacists, etc.
-                </p>
+                    <p id="s4bl2">1. Interest 5-10%<br>
+                        2. Funding period 2-6 months<br>
+                        3. Payback period: individual<br>
+                        4. For doctors, dentists, lawyers, pharmacists, etc.
+                    </p>
 
-                <p id="s4bl3">1. 5.8-8.5% Interest<br>
-                    2. Funding for 1-6 months<br>
-                    3. Payback period 5-20 years<br>
-                    4. Government-backed loans to small businesses from private sector.
-                </p>
+                    <p id="s4bl3">1. 5.8-8.5% Interest<br>
+                        2. Funding for 1-6 months<br>
+                        3. Payback period 5-20 years<br>
+                        4. Government-backed loans to small businesses from private sector.
+                    </p>
 
-                <p id="s4bl4">1. Interest 7%-8%<br>
-                    2. Funding period: immediate payout<br>
-                    3. Payback period: 10-25 years<br>
-                    4. Loans for commercial construction.
-                </p>
+                    <p id="s4bl4">1. Interest 7%-8%<br>
+                        2. Funding period: immediate payout<br>
+                        3. Payback period: 10-25 years<br>
+                        4. Loans for commercial construction.
+                    </p>
 
-                <p id="s4bl5">The customized loan product for our ambitious business customers.</p>
+                    <p id="s4bl5">The customized loan product for our ambitious business customers.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -466,19 +462,19 @@
         <!-- second row for PRIVATE with credit score bad debt and credits-->
         <div id="s5pf1" class="row">
             <!--Credit Score-->
-            <div class="col-md-6">
+            <div class="col-md-6 form-group">
                 <label for="scoring">Credit Score</label>
                 <input class="form-control" cam-variable-type="Long" cam-variable-name="scoring" name="scoring"
                        readonly/>
             </div>
             <!--Bad Debts-->
-            <div class="col-md-3">
+            <div class="col-md-3 form-group">
                 <label for="badDepts">Bad Debts</label>
                 <input class="form-control" cam-variable-type="Long" cam-variable-name="badDepts" name="badDepts"
                        readonly/>
             </div>
             <!--Credits-->
-            <div class="col-md-3">
+            <div class="col-md-3 form-group">
                 <label for="consumerCredits">Credits Taken</label>
                 <input class="form-control" cam-variable-type="Long" cam-variable-name="consumerCredits"
                        name="consumerCredits" readonly/>
@@ -487,19 +483,19 @@
         <!-- second row for Business with rating baddept and dept ratio-->
         <div id="s5bf1" class="row">
             <!--Rating-->
-            <div class="col-md-6">
+            <div class="col-md-6 form-group">
                 <label for="rating">Rating</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="rating" name="rating"
                        readonly/>
             </div>
             <!--Bad Debts 2 Years-->
-            <div class="col-md-3">
+            <div class="col-md-3 form-group">
                 <label for="badDeptsInPastTwoYears">Bad Debts in the past two years</label>
                 <input class="form-control" cam-variable-type="Long" cam-variable-name="badDeptsInPastTwoYears"
                        name="badDeptsInPastTwoYears" readonly/>
             </div>
             <!--Debt Ratio-->
-            <div class="col-md-3">
+            <div class="col-md-3 form-group">
                 <label for="deptRatioWithNewCreditAmount">New Debt Ratio</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="deptRatioWithNewCreditAmount"
                        name="deptRatioWithNewCreditAmount" readonly/>
@@ -507,8 +503,8 @@
         </div>
         <!-- Cleanup Recommendation - single row-->
         <div class="row">
-            <div class="col-md-12">
-                <label for="cleanupRecommendation">Cleanup Recommendation</label>
+            <div class="col-md-6 form-group">
+                <label for="cleanupRecommendation">Cleanup Recommendation</label><br/>
                 <textarea cam-variable-type="String" cam-variable-name="cleanupRecommendation"
                        name="cleanupRecommendation" readonly/>
             </div>
