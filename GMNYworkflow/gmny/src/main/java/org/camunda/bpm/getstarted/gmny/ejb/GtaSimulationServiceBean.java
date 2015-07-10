@@ -45,7 +45,7 @@ public class GtaSimulationServiceBean {
 			    		+"\"processVariables\" : {"
 			    		+ "\"rating\" : {\"value\" : \"" + variables.get("rating") + "\", \"type\": \"String\"},"
 			    		+ "\"badDeptsInPastTwoYears\" : {\"value\" : \"" + variables.get("badDeptsInPastTwoYears") + "\", \"type\": \"Long\"},"
-			    		+ "\"deptRatioWithNewCreditAmount\" : {\"value\" : \"" + variables.get("deptRatioWithNewCreditAmount") + "\", \"type\": \"Long\"}"
+			    		+ "\"deptRatioWithNewCreditAmount\" : {\"value\" : \"" + variables.get("deptRatioWithNewCreditAmount") + "\", \"type\": \"String\"}"
 			    		+"} }";
 		    	System.out.println("** Sending for business customer, "+ message +" **");
 		    }

@@ -120,7 +120,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    
 	    creditHistory.setRating((String) variables.get("rating"));
 	    creditHistory.setBadDeptsInPastTwoYears((Long) variables.get("badDeptsInPastTwoYears"));
-	    creditHistory.setDeptRatioWithNewCreditAmount((Long) variables.get("deptRatioWithNewCreditAmount"));
+	    creditHistory.setDeptRatioWithNewCreditAmount((String) variables.get("deptRatioWithNewCreditAmount"));
 	    
 	    // set creation date
 	    Date today = new Date();
@@ -251,8 +251,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			
 			String rating = (String) variables.get("rating");
 			Long badDeptsInPastTwoYears = (Long) variables.get("badDeptsInPastTwoYears");
-			String dirtyDeptRatioWithNewCreditAmount = "0.9";
-			//String dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
+//			String dirtyDeptRatioWithNewCreditAmount = "0.9";
+			String dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
 			double deptRatioWithNewCreditAmount = Double.parseDouble(dirtyDeptRatioWithNewCreditAmount);
 			
 			System.out.println("*** BBBBBB 2 ***");
@@ -307,7 +307,12 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			
 			String problems = "";
 			
-			delegateExecution.setVariable("interestRate", ""+(individualInterestRate * 100.0));
+			  BigDecimal intr = new BigDecimal(individualInterestRate * 100.0);
+			  intr = intr.setScale( 2, BigDecimal.ROUND_HALF_UP );
+			  String dirtyConv = ""+intr;
+			  individualInterestRate =  Double.parseDouble(dirtyConv);
+			
+			delegateExecution.setVariable("interestRate", ""+individualInterestRate);
 			
 			Long amount = (Long) variables.get("amount");
 			Long period = (Long) variables.get("period");

@@ -47,7 +47,7 @@
           </camunda:formField>
           <camunda:formField id="rating" label="Rating (for B)" type="string"/>
           <camunda:formField id="badDeptsInPastTwoYears" label="badDeptsInPastTwoYears" type="long"/>
-          <camunda:formField id="deptRatioWithNewCreditAmount" label="deptRatioWithNewCreditAmount" type="long"/>
+          <camunda:formField id="deptRatioWithNewCreditAmount" label="deptRatioWithNewCreditAmount" type="string"/>
         </camunda:formData>
       </bpmn2:extensionElements>
       <bpmn2:incoming>SequenceFlow_1</bpmn2:incoming>
