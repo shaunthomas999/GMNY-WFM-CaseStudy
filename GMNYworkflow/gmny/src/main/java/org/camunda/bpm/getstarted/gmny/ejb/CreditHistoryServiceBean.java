@@ -120,7 +120,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	    
 	    creditHistory.setRating((String) variables.get("rating"));
 	    creditHistory.setBadDeptsInPastTwoYears((Long) variables.get("badDeptsInPastTwoYears"));
-	    creditHistory.setDeptRatioWithNewCreditAmount((Long) variables.get("deptRatioWithNewCreditAmount"));
+	    creditHistory.setDeptRatioWithNewCreditAmount((String) variables.get("deptRatioWithNewCreditAmount"));
 	    
 	    // set creation date
 	    Date today = new Date();
@@ -239,6 +239,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			}
 		
 			delegateExecution.setVariable("problems", problems);
+			delegateExecution.setVariable("privateLoanTypeText", product.getProductName());
 			
 			// --------
 			// business
@@ -250,8 +251,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			
 			String rating = (String) variables.get("rating");
 			Long badDeptsInPastTwoYears = (Long) variables.get("badDeptsInPastTwoYears");
-			String dirtyDeptRatioWithNewCreditAmount = "0.9";
-			//String dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
+//			String dirtyDeptRatioWithNewCreditAmount = "0.9";
+			String dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
 			double deptRatioWithNewCreditAmount = Double.parseDouble(dirtyDeptRatioWithNewCreditAmount);
 			
 			System.out.println("*** BBBBBB 2 ***");
@@ -290,7 +291,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
 			
 			double interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
-			double interestStep = interestSpread / 8.0f;
+			double interestStep = interestSpread / 8.0;
 			
 			
 			double individualInterestRate = product.getMaxInterestRate();
@@ -306,7 +307,12 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			
 			String problems = "";
 			
-			delegateExecution.setVariable("interestRate", ""+(individualInterestRate * 100.0f));
+			  BigDecimal intr = new BigDecimal(individualInterestRate * 100.0);
+			  intr = intr.setScale( 2, BigDecimal.ROUND_HALF_UP );
+			  String dirtyConv = ""+intr;
+			  individualInterestRate =  Double.parseDouble(dirtyConv);
+			
+			delegateExecution.setVariable("interestRate", ""+individualInterestRate);
 			
 			Long amount = (Long) variables.get("amount");
 			Long period = (Long) variables.get("period");
@@ -334,6 +340,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 				problems = problems + "WARNING: The period of " + period + " years is out of range for the " + product.getProductName() + ". ";
 			}
 			
+			delegateExecution.setVariable("problems", problems);
+			delegateExecution.setVariable("businessLoanTypeText", product.getProductName());
 			
 			
 		

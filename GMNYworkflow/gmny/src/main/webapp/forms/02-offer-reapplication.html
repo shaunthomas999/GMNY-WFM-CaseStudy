@@ -1,4 +1,4 @@
-<form name="02-offer-reapplication.html">
+<form name="offer-reapplication">
     <script cam-script type="text/javascript">
         $(document).ready(function () {
             console.log("ready!");
@@ -47,7 +47,7 @@
 
                 //hide private stuff
                 $("#choosePrivateLoanType").hide();
-                $("#privateRaing").hide();
+                $("#privateRating").hide();
             } else {
                 $("#businessInformation").hide();
                 $("#contactInformation").hide();
@@ -203,10 +203,10 @@
         <!-- START -- PRIVATE: choosePrivateLoanType -->
         <div id="choosePrivateLoanType">
             <div class="row">
-                <div class="col-md-4">
-                    <label for="privateLoanType">Private Loan Type</label><br/>
-                    <input class="form-control" cam-variable-name="privateLoanType" cam-variable-type="Long"
-                           name="privateLoanType" id="privateLoanType" readonly />
+                <div class="col-md-6">
+                    <label for="privateLoanTypeText">Private Loan Type</label><br/>
+                    <input class="form-control" cam-variable-name="privateLoanTypeText" cam-variable-type="String"
+                           name="privateLoanTypeText" id="privateLoanTypeText" readonly />
                 </div>
             </div>
 
@@ -231,10 +231,10 @@
         <!-- START -- BUSINESS: chooseBusinessLoanType -->
         <div id="chooseBusinessLoanType">
             <div class="row">
-                <div class="col-md-4">
-                    <label for="businessLoanType">Business Loan Type</label><br/>
-                    <input class="form-control" cam-variable-name="businessLoanType" cam-variable-type="Long"
-                           name="businessLoanType" id="businessLoanType" readonly />
+                <div class="col-md-6">
+                    <label for="businessLoanTypeText">Business Loan Type</label><br/>
+                    <input class="form-control" cam-variable-name="businessLoanTypeText" cam-variable-type="String"
+                           name="businessLoanTypeText" id="businessLoanTypeText" readonly />
                 </div>
             </div>
         </div>
@@ -303,18 +303,12 @@
 
         <!-- continue BOTH: ratingInformation -->
         <div class="row">
-            <div class="col-md-4">
-                <label for="recommendationStatus">Recommendation Status</label>
-                <input class="form-control" cam-variable-type="String" cam-variable-name="recommendationStatus"
-                       name="recommendationStatus" readonly/>
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <label for="recommendation">Recommendation</label><br/>
-                <textarea cam-variable-type="String" cam-variable-name="recommendation"
-                          name="recommendation" readonly/>
+                <input class="form-control" cam-variable-type="String" cam-variable-name="recommendation"
+                       name="recommendation" readonly/>
             </div>
         </div>
-
     </div>
     <!-- END -- NO ID -- BOTH: ratingInformation -->
 
@@ -328,11 +322,6 @@
             <div class="col-md-4">
                 <label for="applicationStatus">Application Status</label><br/>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="applicationStatus" readonly/>
-            </div>
-            <div class="col-md-8">
-                <label for="applicationStatusComment">Application Status Comment</label><br/>
-                <!-- <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
-                          name="applicationStatusComment" readonly/> -->
             </div>
         </div>
 
@@ -361,10 +350,6 @@
         </section>
 
         <div class="row">
-            <div class="col-md-4">
-                <label for="applicationResultStatus">Application Result Status</label>
-                <!-- <input class="form-control" cam-variable-type="String" cam-variable-name="applicationResultStatus" readonly/> -->
-            </div>
             <div class="col-md-8">
                 <label for="applicationStatusComment">Application Status Comment</label><br/>
                 <textarea cam-variable-type="String" cam-variable-name="applicationStatusComment"
@@ -401,7 +386,7 @@
                 <label for="applicationResultStatus">Application Result Status</label>
                 <select name="applicationResultStatus" cam-variable-type="String"
                         cam-variable-name="applicationResultStatus" required>
-                    <option value="" selected style="style:none">Please select</option>
+                    <option value="" selected style="display:none">Please select</option>
                     <option value="terminate">Terminate</option>
                     <option value="re-apply">Re-Apply</option>
                 </select>
