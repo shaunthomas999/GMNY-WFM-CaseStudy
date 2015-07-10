@@ -47,7 +47,7 @@
 
                 //hide private stuff
                 $("#choosePrivateLoanType").hide();
-                $("#privateRaing").hide();
+                $("#privateRating").hide();
             } else {
                 $("#businessInformation").hide();
                 $("#contactInformation").hide();
@@ -206,7 +206,7 @@
                 <div class="col-md-6">
                     <label for="privateLoanTypeText">Private Loan Type</label><br/>
                     <input class="form-control" cam-variable-name="privateLoanTypeText" cam-variable-type="String"
-                           name="privateLoanTypeText" id="privateLoanTypeText" readonly /> -->
+                           name="privateLoanTypeText" id="privateLoanTypeText" readonly />
                 </div>
             </div>
 
@@ -303,11 +303,13 @@
 
         <!-- continue BOTH: ratingInformation -->
         <div class="row">
+            <!--
             <div class="col-md-4">
                 <label for="recommendationStatus">Recommendation Status</label>
                 <input class="form-control" cam-variable-type="String" cam-variable-name="recommendationStatus"
                        name="recommendationStatus" readonly/>
             </div>
+            -->
             <div class="col-md-8">
                 <label for="recommendation">Recommendation</label><br/>
                 <textarea cam-variable-type="String" cam-variable-name="recommendation"
