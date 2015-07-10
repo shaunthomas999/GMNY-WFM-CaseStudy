@@ -157,13 +157,17 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 	public void performRiskAssessment(DelegateExecution delegateExecution) {
 		
 		System.out.println("*** Performing risk assessment ***");
-		
+
 		// Get relevant variables from process memory
 		Map<String, Object> variables = delegateExecution.getVariables();
+		String customerType = (String) variables.get("customerType");
+
 		
-		System.out.println("***** " + variables.get("customerType"));
+		System.out.println(customerType);
+		System.out.println(customerType.equals("private"));
+		System.out.println(customerType.equals("business"));
 		
-		if (variables.get("customerType") == "private") {
+		if (customerType.equals("private")) {
 		
 			Long scoring = (Long) variables.get("scoring");
 			Long badDepts = (Long) variables.get("badDepts");
@@ -247,7 +251,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			// business
 			// --------
 
-		} else {
+		} else if (customerType.equals("business")) {
 			
 			System.out.println("*** BBBBBB 1 ***");
 			
