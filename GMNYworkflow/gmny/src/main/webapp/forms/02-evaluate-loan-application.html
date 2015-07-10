@@ -203,19 +203,10 @@
         <!-- START -- PRIVATE: choosePrivateLoanType -->
         <div id="choosePrivateLoanType">
             <div class="row">
-                <div class="col-md-4">
-                    <label for="privateLoanType">Private Loan Type</label><br/>
-                    <!-- <input class="form-control" cam-variable-name="privateLoanType" cam-variable-type="Long"
-                           name="privateLoanType" id="privateLoanType" readonly /> -->
-                    <select cam-variable-name="privateLoanType" cam-variable-type="Long" name="privateLoanType"
-                            id="privateLoanType" readonly>
-                        <option value="1">Car Loan</option>
-                        <option value="2">Debt Consolidation Loan</option>
-                        <option value="3">Home Improvement Loan</option>
-                        <option value="4">Holiday Loans</option>
-                        <option value="5">GMNY Ambitions Private</option>
-                    </select>
-
+                <div class="col-md-6">
+                    <label for="privateLoanTypeText">Private Loan Type</label><br/>
+                    <input class="form-control" cam-variable-name="privateLoanTypeText" cam-variable-type="String"
+                           name="privateLoanTypeText" id="privateLoanTypeText" readonly /> -->
                 </div>
             </div>
 
@@ -240,10 +231,10 @@
         <!-- START -- BUSINESS: chooseBusinessLoanType -->
         <div id="chooseBusinessLoanType">
             <div class="row">
-                <div class="col-md-4">
-                    <label for="businessLoanType">Business Loan Type</label><br/>
-                    <input class="form-control" cam-variable-name="businessLoanType" cam-variable-type="Long"
-                           name="businessLoanType" id="businessLoanType" readonly />
+                <div class="col-md-6">
+                    <label for="businessLoanTypeText">Business Loan Type</label><br/>
+                    <input class="form-control" cam-variable-name="businessLoanTypeText" cam-variable-type="String"
+                           name="businessLoanTypeText" id="businessLoanTypeText" readonly />
                 </div>
             </div>
         </div>
