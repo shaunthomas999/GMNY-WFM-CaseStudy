@@ -161,6 +161,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		// Get relevant variables from process memory
 		Map<String, Object> variables = delegateExecution.getVariables();
 		
+		System.out.println("***** " + variables.get("customerType"));
+		
 		if (variables.get("customerType") == "private") {
 		
 			Long scoring = (Long) variables.get("scoring");
@@ -250,9 +252,11 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			System.out.println("*** BBBBBB 1 ***");
 			
 			String rating = (String) variables.get("rating");
+			System.out.println("*** BBBBBB 1a ***");
 			Long badDeptsInPastTwoYears = (Long) variables.get("badDeptsInPastTwoYears");
-//			String dirtyDeptRatioWithNewCreditAmount = "0.9";
+			System.out.println("*** BBBBBB 1b ***");
 			String dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
+			System.out.println("*** BBBBBB 1c ***");
 			double deptRatioWithNewCreditAmount = Double.parseDouble(dirtyDeptRatioWithNewCreditAmount);
 			
 			System.out.println("*** BBBBBB 2 ***");
