@@ -239,6 +239,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			}
 		
 			delegateExecution.setVariable("problems", problems);
+			delegateExecution.setVariable("privateLoanTypeText", product.getProductName());
 			
 			// --------
 			// business
@@ -290,7 +291,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			FinancialProductEntity product = financialProductServiceBean.getFinancialProduct(productId);
 			
 			double interestSpread = product.getMaxInterestRate() - product.getMinInterestRate();
-			double interestStep = interestSpread / 8.0f;
+			double interestStep = interestSpread / 8.0;
 			
 			
 			double individualInterestRate = product.getMaxInterestRate();
@@ -306,7 +307,7 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			
 			String problems = "";
 			
-			delegateExecution.setVariable("interestRate", ""+(individualInterestRate * 100.0f));
+			delegateExecution.setVariable("interestRate", ""+(individualInterestRate * 100.0));
 			
 			Long amount = (Long) variables.get("amount");
 			Long period = (Long) variables.get("period");
@@ -334,6 +335,8 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 				problems = problems + "WARNING: The period of " + period + " years is out of range for the " + product.getProductName() + ". ";
 			}
 			
+			delegateExecution.setVariable("problems", problems);
+			delegateExecution.setVariable("businessLoanTypeText", product.getProductName());
 			
 			
 		
