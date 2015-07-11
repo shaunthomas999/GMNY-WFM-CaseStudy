@@ -380,19 +380,17 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_8" bpmnElement="flow-persist-credit-history-to-merge-xor-recent-credit-history-available" sourceElement="_BPMNShape_ServiceTask_102" targetElement="_BPMNShape_ExclusiveGateway_23">
         <di:waypoint xsi:type="dc:Point" x="1540.0" y="256.0"/>
         <di:waypoint xsi:type="dc:Point" x="1571.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1571.0" y="255.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1596.0" y="255.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1596.0" y="256.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1574.0" y="255.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1575.0" y="256.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_9" bpmnElement="flow-merge-xor-recent-credit-history-available-to-automatic-risk-assessment" sourceElement="_BPMNShape_ExclusiveGateway_23" targetElement="_BPMNShape_ServiceTask_103">
         <di:waypoint xsi:type="dc:Point" x="1646.0" y="255.0"/>
         <di:waypoint xsi:type="dc:Point" x="1675.0" y="255.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1675.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1704.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1704.0" y="255.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1667.0" y="319.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1668.0" y="318.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_10" bpmnElement="flow-automatic-risk-assessment-to-evaluate-loan-application" sourceElement="_BPMNShape_ServiceTask_103" targetElement="_BPMNShape_UserTask_10">
@@ -455,7 +453,6 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_19" bpmnElement="flow-talk-to-customer-to-option-selected" sourceElement="_BPMNShape_UserTask_12" targetElement="_BPMNShape_ExclusiveGateway_25">
         <di:waypoint xsi:type="dc:Point" x="2454.0" y="513.0"/>
         <di:waypoint xsi:type="dc:Point" x="2476.0" y="513.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2476.0" y="512.0"/>
         <di:waypoint xsi:type="dc:Point" x="2524.0" y="512.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="2476.0" y="513.0"/>
@@ -496,7 +493,6 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_22" bpmnElement="flow-offer-reapplication-to-reapply" sourceElement="_BPMNShape_UserTask_14" targetElement="_BPMNShape_ExclusiveGateway_26">
         <di:waypoint xsi:type="dc:Point" x="3212.0" y="434.0"/>
         <di:waypoint xsi:type="dc:Point" x="3234.0" y="434.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3234.0" y="433.0"/>
         <di:waypoint xsi:type="dc:Point" x="3268.0" y="433.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="3232.0" y="498.0"/>
@@ -557,8 +553,7 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_30" bpmnElement="flow-look-for-recent-credit-history-to-recent-credit-history-available" sourceElement="_BPMNShape_ServiceTask_101" targetElement="_BPMNShape_ExclusiveGateway_28">
         <di:waypoint xsi:type="dc:Point" x="1084.0" y="253.0"/>
         <di:waypoint xsi:type="dc:Point" x="1118.0" y="253.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1118.0" y="252.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1140.0" y="252.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1140.0" y="253.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="1105.0" y="316.0"/>
         </bpmndi:BPMNLabel>
@@ -584,10 +579,9 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_33" bpmnElement="flow-request-credit-history-to-received-credit-history" sourceElement="_BPMNShape_ServiceTask_105" targetElement="_BPMNShape_IntermediateCatchEvent_11">
         <di:waypoint xsi:type="dc:Point" x="1324.0" y="253.0"/>
         <di:waypoint xsi:type="dc:Point" x="1340.0" y="253.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1340.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="1356.0" y="256.0"/>
+        <di:waypoint xsi:type="dc:Point" x="1356.0" y="254.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="0.0" width="0.0" x="1340.0" y="255.0"/>
+          <dc:Bounds height="0.0" width="0.0" x="1342.0" y="253.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_34" bpmnElement="flow-prepare-updated-application-to-merge-xor-updated-application" sourceElement="_BPMNShape_UserTask_15" targetElement="_BPMNShape_ExclusiveGateway_22">
@@ -723,8 +717,6 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_39" bpmnElement="SequenceFlow_12" sourceElement="_BPMNShape_ServiceTask_107" targetElement="_BPMNShape_ExclusiveGateway_24">
         <di:waypoint xsi:type="dc:Point" x="2086.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2123.0" y="256.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2123.0" y="255.0"/>
         <di:waypoint xsi:type="dc:Point" x="2160.0" y="255.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="6.0" width="6.0" x="2120.0" y="256.0"/>
@@ -751,10 +743,9 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_41" bpmnElement="SequenceFlow_14" sourceElement="_BPMNShape_ExclusiveGateway_31" targetElement="_BPMNShape_ServiceTask_108">
         <di:waypoint xsi:type="dc:Point" x="3318.0" y="513.0"/>
         <di:waypoint xsi:type="dc:Point" x="3351.0" y="513.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3351.0" y="514.0"/>
-        <di:waypoint xsi:type="dc:Point" x="3372.0" y="514.0"/>
+        <di:waypoint xsi:type="dc:Point" x="3372.0" y="513.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="3348.0" y="514.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="3349.0" y="513.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_42" bpmnElement="SequenceFlow_15" sourceElement="_BPMNShape_ServiceTask_108" targetElement="_BPMNShape_EndEvent_17">
