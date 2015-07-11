@@ -46,13 +46,13 @@
         <bpmn2:flowNodeRef>end-event-loan-application-canceled</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>service-task-finalize-contract</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>service-task-send-contract</bpmn2:flowNodeRef>
-        <bpmn2:flowNodeRef>end-event-loan-contract-signed</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>service-task-get-customer-data</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ExclusiveGateway_1</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>enter-loan-specifications</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>ExclusiveGateway_2</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>merge-xor-updated-application</bpmn2:flowNodeRef>
         <bpmn2:flowNodeRef>start-event-loan-application-received</bpmn2:flowNodeRef>
+        <bpmn2:flowNodeRef>end-event-loan-contract-signed</bpmn2:flowNodeRef>
       </bpmn2:lane>
     </bpmn2:laneSet>
     <bpmn2:userTask id="user-task-evaluate-loan-application" camunda:formKey="embedded:app:forms/02-evaluate-loan-application.html" camunda:candidateGroups="LoanOfficers" name="Evaluate Loan Application">
@@ -239,10 +239,6 @@
     </bpmn2:serviceTask>
     <bpmn2:sequenceFlow id="SequenceFlow_4" name="" sourceRef="service-task-finalize-contract" targetRef="service-task-send-contract"/>
     <bpmn2:sequenceFlow id="SequenceFlow_6" name="" sourceRef="service-task-send-contract" targetRef="end-event-loan-contract-signed"/>
-    <bpmn2:endEvent id="end-event-loan-contract-signed" name="Loan &#xD;&#xA;Contract Signed">
-      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
-      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_2"/>
-    </bpmn2:endEvent>
     <bpmn2:serviceTask id="service-task-get-customer-data" camunda:expression="${customerServiceBean.loadCustomer(execution)}" camunda:async="true" name="Get Customer Data">
       <bpmn2:documentation>The service task get customer data accesses the customer database and queries for the cusomter data for the applicant handled in this workflow instance.</bpmn2:documentation>
       <bpmn2:incoming>flow-loan-application-received-to-get-customer-data</bpmn2:incoming>
@@ -283,6 +279,10 @@
       <bpmn2:outgoing>flow-loan-application-received-to-get-customer-data</bpmn2:outgoing>
     </bpmn2:startEvent>
     <bpmn2:sequenceFlow id="flow-loan-application-received-to-get-customer-data" sourceRef="start-event-loan-application-received" targetRef="service-task-get-customer-data"/>
+    <bpmn2:endEvent id="end-event-loan-contract-signed" name="Loan &#xD;&#xA;Contract Signed">
+      <bpmn2:incoming>SequenceFlow_6</bpmn2:incoming>
+      <bpmn2:terminateEventDefinition id="TerminateEventDefinition_2"/>
+    </bpmn2:endEvent>
   </bpmn2:process>
   <bpmn2:message id="MessageCreditHistoryResponse" name="CreditHistoryResponse"/>
   <bpmn2:message id="MessageCleanupResponse" name="CleanupResponse"/>
@@ -519,9 +519,9 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_EndEvent_18" bpmnElement="end-event-loan-contract-signed">
-        <dc:Bounds height="36.0" width="36.0" x="2280.0" y="503.0"/>
+        <dc:Bounds height="36.0" width="36.0" x="2280.0" y="535.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="38.0" width="99.0" x="2249.0" y="544.0"/>
+          <dc:Bounds height="38.0" width="99.0" x="2249.0" y="576.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_26" bpmnElement="flow-reapply-to-loan-application-canceled" sourceElement="_BPMNShape_ExclusiveGateway_26" targetElement="_BPMNShape_ExclusiveGateway_31">
@@ -765,10 +765,9 @@
       <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_3" bpmnElement="SequenceFlow_6" sourceElement="_BPMNShape_ServiceTask_111" targetElement="_BPMNShape_EndEvent_18">
         <di:waypoint xsi:type="dc:Point" x="2236.0" y="553.0"/>
         <di:waypoint xsi:type="dc:Point" x="2253.0" y="553.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2253.0" y="521.0"/>
-        <di:waypoint xsi:type="dc:Point" x="2280.0" y="521.0"/>
+        <di:waypoint xsi:type="dc:Point" x="2280.0" y="553.0"/>
         <bpmndi:BPMNLabel>
-          <dc:Bounds height="6.0" width="6.0" x="2250.0" y="533.0"/>
+          <dc:Bounds height="6.0" width="6.0" x="2270.0" y="553.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
