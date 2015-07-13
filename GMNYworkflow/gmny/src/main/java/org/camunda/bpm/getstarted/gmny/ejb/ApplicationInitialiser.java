@@ -78,7 +78,7 @@ public class ApplicationInitialiser {
 	    firmaK.setLastname("Kampmann");
 	    firmaK.setGender("Mr.");
 	    firmaK.setDateOfBirth("07/08/1952");
-	    firmaK.setEmail("kampmann@rautschka.com");
+	    firmaK.setEmail("tls.werner@gmail.com");
 	    firmaK.setPhoneNumber("+49 2303 335678");
 	    firmaK.setStreet("Martin-Semmelrogge-Weg");
 	    firmaK.setStreetNumber("23");
@@ -104,7 +104,7 @@ public class ApplicationInitialiser {
 	    heleneF.setLastname("Fischer");
 	    heleneF.setGender("Ms.");
 	    heleneF.setDateOfBirth("05/08/1984");
-	    heleneF.setEmail("rocknroll@rautschka.com");
+	    heleneF.setEmail("helene.rocknroll@gmail.com");
 	    heleneF.setPhoneNumber("+49 4567 8912");
 	    heleneF.setStreet("Florian-Silbereisen-Allee");
 	    heleneF.setStreetNumber("58");
