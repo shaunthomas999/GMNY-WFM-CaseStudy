@@ -266,7 +266,7 @@ public void sendContractToCustomer(DelegateExecution delegateExecution) {
   String customerType = (String) variables.get("customerType");
   
   Long productId;
-  if (customerType == "private") {
+  if (customerType.equals("private")) {
 	  productId = (Long) variables.get("privateLoanType");
   } else {
 	  productId = (Long) variables.get("businessLoanType");
