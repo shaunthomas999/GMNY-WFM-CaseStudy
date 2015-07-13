@@ -263,9 +263,10 @@ public void sendContractToCustomer(DelegateExecution delegateExecution) {
   Map<String, Object> variables = delegateExecution.getVariables();
   Long customerId = (Long) variables.get("customerId");
   String lastname = (String) variables.get("lastname");
+  String customerType = (String) variables.get("customerType");
   
   Long productId;
-  if (variables.get("customerType") == "private") {
+  if (customerType == "private") {
 	  productId = (Long) variables.get("privateLoanType");
   } else {
 	  productId = (Long) variables.get("businessLoanType");
