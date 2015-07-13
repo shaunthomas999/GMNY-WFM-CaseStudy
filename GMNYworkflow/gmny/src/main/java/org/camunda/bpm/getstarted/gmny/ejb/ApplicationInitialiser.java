@@ -72,6 +72,55 @@ public class ApplicationInitialiser {
 	    em.persist(gmnyAmbitiousBusinessLoan);
 	    em.flush();
 	    
+	    CustomerEntity firmaK = new CustomerEntity();
+		  
+	    firmaK.setFirstname("Werner");
+	    firmaK.setLastname("Kampmann");
+	    firmaK.setGender("Mr.");
+	    firmaK.setDateOfBirth("07/08/1952");
+	    firmaK.setEmail("kampmann@rautschka.com");
+	    firmaK.setPhoneNumber("+49 2303 335678");
+	    firmaK.setStreet("Martin-Semmelrogge-Weg");
+	    firmaK.setStreetNumber("23");
+	    firmaK.setZipCode("59423");
+	    firmaK.setCity("Unna");
+	    
+	    firmaK.setCustomerType("business");
+	    firmaK.setOrgName("Spedition Kampmann");
+	    firmaK.setBusinessArea("Transport and Logistic Services");
+	    
+	    firmaK.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
+	    
+	    Date today = new Date();
+	    firmaK.setRegistrationDate(today);
+	    
+	    em.persist(firmaK);
+	    em.flush();
+	    
+	    
+	    CustomerEntity heleneF = new CustomerEntity();
+		  
+	    heleneF.setFirstname("Helene");
+	    heleneF.setLastname("Fischer");
+	    heleneF.setGender("Ms.");
+	    heleneF.setDateOfBirth("05/08/1984");
+	    heleneF.setEmail("rocknroll@rautschka.com");
+	    heleneF.setPhoneNumber("+49 4567 8912");
+	    heleneF.setStreet("Florian-Silbereisen-Allee");
+	    heleneF.setStreetNumber("58");
+	    heleneF.setZipCode("65183");
+	    heleneF.setCity("Wiesbaden");
+	    
+	    heleneF.setCustomerType("private");
+	    
+	    heleneF.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
+	    
+	    heleneF.setRegistrationDate(today);
+	    
+	    em.persist(heleneF);
+	    em.flush();
+	    
+	    
 	  	CustomerEntity markusL = new CustomerEntity();
 	  
 	  	markusL.setFirstname("Markus");
@@ -87,7 +136,6 @@ public class ApplicationInitialiser {
 	    
 	    markusL.setPassword((Long.toHexString(Double.doubleToLongBits(Math.random()))).substring(0, 6));
 	    
-	    Date today = new Date();
 	    markusL.setRegistrationDate(today);
 
 	    em.persist(markusL);

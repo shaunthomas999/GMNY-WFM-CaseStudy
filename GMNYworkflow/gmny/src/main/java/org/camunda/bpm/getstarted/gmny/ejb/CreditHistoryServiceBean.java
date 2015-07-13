@@ -169,9 +169,12 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 		
 		if (customerType.equals("private")) {
 		
-			Long scoring = (Long) variables.get("scoring");
-			Long badDepts = (Long) variables.get("badDepts");
-			Long consumerCredits = (Long) variables.get("consumerCredits");
+			Long scoring = (long) 0;
+			Long badDepts = (long) 0;
+			Long consumerCredits = (long) 0;
+			scoring = (Long) variables.get("scoring");
+			badDepts = (Long) variables.get("badDepts");
+			consumerCredits = (Long) variables.get("consumerCredits");
 			
 			// apply business rules
 			boolean flag = false;
@@ -182,7 +185,11 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			recommendation = (flag == true) ? "LOAN APPROVAL RECOMMENDED" : "LOAN APPROVAL NOT RECOMMENDED";
 			
 			//set the process variable
-			delegateExecution.setVariable("recommendation", recommendation);
+			if(scoring != 0) {
+				delegateExecution.setVariable("recommendation", recommendation);
+			} else {
+				delegateExecution.setVariable("recommendation", "NO SCORING INFORMATION AVAILABLE");
+			}
 			
 			System.out.println("Outcome - recommendation: " + recommendation);
 			
@@ -253,17 +260,17 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 
 		} else if (customerType.equals("business")) {
 			
-			System.out.println("*** BBBBBB 1 ***");
+			String rating = "0";	
+			rating = (String) variables.get("rating");
 			
-			String rating = (String) variables.get("rating");
-			System.out.println("*** BBBBBB 1a ***");
-			Long badDeptsInPastTwoYears = (Long) variables.get("badDeptsInPastTwoYears");
-			System.out.println("*** BBBBBB 1b ***");
-			String dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
-			System.out.println("*** BBBBBB 1c ***");
+			Long badDeptsInPastTwoYears = (long) 0;
+			badDeptsInPastTwoYears = (Long) variables.get("badDeptsInPastTwoYears");
+			
+			String dirtyDeptRatioWithNewCreditAmount = "0";
+			dirtyDeptRatioWithNewCreditAmount = (String) variables.get("deptRatioWithNewCreditAmount");
 			double deptRatioWithNewCreditAmount = Double.parseDouble(dirtyDeptRatioWithNewCreditAmount);
 			
-			System.out.println("*** BBBBBB 2 ***");
+
 			
 			// apply business rules
 			boolean flag = false;
@@ -277,20 +284,20 @@ public class CreditHistoryServiceBean implements CreditHistoryService{
 			default: flag = false; break;
 			}
 			
-			System.out.println("*** BBBBBB 3 ***");
 			
 			flag = (flag == true && badDeptsInPastTwoYears == 0 && deptRatioWithNewCreditAmount <= 0.9) ? true : false;
 			
-			System.out.println("*** BBBBBB 4 ***");
 			
 			// convert to a clear recommendation
 			String recommendation = "LOAN APPROVAL NOT RECOMMENDED (BUSINESS RECOMMENDATION)";
 			recommendation = (flag == true) ? "LOAN APPROVAL RECOMMENDED (BUSINESS RECOMMENDATION)" : "LOAN APPROVAL NOT RECOMMENDED (BUSINESS RECOMMENDATION)";
 			
-			System.out.println("*** BBBBBB 5 ***");
 			
-			//set the process variable
-			delegateExecution.setVariable("recommendation", recommendation);
+			if(!rating.equals("0")) {
+				delegateExecution.setVariable("recommendation", recommendation);
+			} else {
+				delegateExecution.setVariable("recommendation", "NO SCORING INFORMATION AVAILABLE");
+			}
 			
 			System.out.println("Outcome - recommendation: " + recommendation);
 			
