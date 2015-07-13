@@ -179,7 +179,7 @@
     <bpmn2:sequenceFlow id="SequenceFlow_5" name="online" sourceRef="ExclusiveGateway_1" targetRef="ExclusiveGateway_2">
       <bpmn2:conditionExpression xsi:type="bpmn2:tFormalExpression"><![CDATA[${applicationType == "online"}]]></bpmn2:conditionExpression>
     </bpmn2:sequenceFlow>
-    <bpmn2:userTask id="enter-loan-specifications" camunda:candidateGroups="LoanOfficers" camunda:formKey="embedded:app:forms/02-enter-loan-specifications.html" name="Enter Loan Specifications">
+    <bpmn2:userTask id="enter-loan-specifications" camunda:candidateGroups="BankClerks" camunda:formKey="embedded:app:forms/02-enter-loan-specifications.html" name="Enter Loan Specifications">
       <bpmn2:incoming>SequenceFlow_2</bpmn2:incoming>
       <bpmn2:outgoing>SequenceFlow_3</bpmn2:outgoing>
     </bpmn2:userTask>
